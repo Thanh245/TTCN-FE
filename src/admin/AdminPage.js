@@ -25,7 +25,8 @@ export const AdminPage = () => (
       icon={PostIcon}
       edit={ProductEdit}
       create={ProductCreate}
+      options={{ label: 'Mặt Hàng' }}
     />
-    <Resource name="loai_mat_hang" list={ListGuesser} />
+    <Resource name="loai_mat_hang" list={ListGuesser} options={{ label: 'Danh mục mặt hàng' }}/>
   </Admin>
 );
