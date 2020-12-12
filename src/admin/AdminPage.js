@@ -11,7 +11,7 @@ import PostIcon from "@material-ui/icons/Book";
 import UserIcon from "@material-ui/icons/Group";
 
 const dataProvider = DataProvider(
-  "https://my-json-server.typicode.com/pmdung2711/tokidokishop-fakeJsonServer/"
+  "http://localhost:3000"
 );
 export const AdminPage = () => (
   <Admin

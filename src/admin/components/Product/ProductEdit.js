@@ -27,7 +27,7 @@ export const ProductEdit = (props) => {
       <CardContent>
         <Edit title={<ProductTitle />} {...props}>
           <SimpleForm>
-            <TextInput disabled source="id" />
+            <TextInput  source="maMatHang" />
             {/*<ReferenceInput source="ma_loai_mat_hang" reference="loaimathang">
               <SelectInput optionText="ten_loai_mat_hang" />
   </ReferenceInput>*/}
