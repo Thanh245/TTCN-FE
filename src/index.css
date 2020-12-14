@@ -14,7 +14,7 @@ code {
     monospace;
 }
 .App{
-  max-width: 1230px;
+ 
   width: 100%;
   margin: auto;
   box-shadow: 0 2px 6px #555;
@@ -63,6 +63,17 @@ ul li{
   padding: 5px;
 }
 
+input.inputSearch{
+  border-radius: 50px;
+  width: 500px;
+  height: 30px;
+  list-style: none;
+  display: inline-block;
+}
+
+input.inputSearch:focus{
+  outline: none;
+}
 
 /* ---------------Products--------------- */
 .products{

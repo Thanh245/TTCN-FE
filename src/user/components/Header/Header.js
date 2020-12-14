@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext,} from 'react'
 import Menu from '../svg/bars-solid.svg'
 import Close from '../svg/times-solid.svg'
 import Cart from '../svg/cart.svg'
@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom'
 import {DataContext} from '../Products/DataProvider'
 
 export default function Header() {
+
     const [menu, setMenu] = useState(false)
     const value = useContext(DataContext)
     const [cart] = value.cart
@@ -25,17 +26,23 @@ export default function Header() {
             </div>
 
             <div className="logo">
-                <h1><Link to="/home" >Handmade Shop</Link></h1>
+                <h1><Link to="/home" >HMS</Link></h1>
             </div>
+          
             <ul style={styleMenu}>
+                <li  >
+                
+                    <input  className="inputSearch"  type="text" placeholder="Search" />
+                    
+                </li>
                 <li><Link to="/home">Trang chủ</Link></li>
                 <li><Link to="/products">Sản phẩm</Link></li>
                 <li><Link to="/signup">Đăng nhập/ Đăng ký</Link></li>
+                <li><Link to="/profile">Người dùng</Link></li>
                 <li onClick={toggleMenu}>
                     <img src={Close} alt="" width="30" className="menu" />
                 </li>
             </ul>
-
             <div className="cart-icon">
                 <span>{cart.length}</span>
                 <Link to="/cart">

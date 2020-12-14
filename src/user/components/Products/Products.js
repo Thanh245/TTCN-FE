@@ -12,17 +12,17 @@ export default function Products() {
             {
                 products.map(product =>(
                     <div className="card" key={product._id}>
-                        <Link to={`/products/${product._id}`}>
+                        <Link to={`/product/${product._id}`}>
                             <img src={product.images[0]} alt=""/>
                         </Link>
                         <div className="box">
                         <h3 title={product.title}>
-                            <Link to={`/products/${product._id}`}>{product.title}</Link>
+                            <Link to={`/product/${product._id}`}>{product.title}</Link>
                         </h3>
                         <p>{product.description}</p>
                         <h4>${product.price}</h4>
                         <button onClick={() => addCart(product._id)}>
-                            Add to cart
+                            Thêm vào giỏ hàng
                         </button>
                         </div>
                     </div>

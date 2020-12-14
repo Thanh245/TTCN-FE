@@ -7,9 +7,8 @@ import {Link} from 'react-router-dom'
 export default function Details() {
     const {id} = useParams();
     const value = useContext(DataContext)
-    const [products] = value.products
+    const [products] = value.products// get api product
     const addCart = value.addCart
-    
     const [index, setIndex] = useState(0)
     const imgDiv = useRef();
 
@@ -24,7 +23,6 @@ export default function Details() {
         const y = (e.pageY - top) / height * 100
         imgDiv.current.style.backgroundPosition = `${x}% ${y}%`
     }
-
 
     return (
         <>
@@ -42,7 +40,7 @@ export default function Details() {
                            <p>{product.content}</p>
                            <DetailsThumb images={product.images} setIndex={setIndex} />
                            <Link to="/cart" className="cart" onClick={() => addCart(product._id)}>
-                               Add to cart
+                               Thêm vào giỏ hàng
                             </Link>
                        </div>
 

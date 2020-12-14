@@ -50,6 +50,7 @@ export default class Register extends Component {
     });
   }
   render() {
+    
     return (
       <React.Fragment>
         <div className="Register">

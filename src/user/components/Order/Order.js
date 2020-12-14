@@ -61,22 +61,7 @@ export default class Order extends Component {
           <h1>Đặt hàng</h1>
           <br />
           <form onSubmit={this.submitForm} className="form-group">
-            <input
-              type="text"
-              placeholder="Email"
-              name="email"
-              value={this.state.email}
-              onChange={this.onChange}
-            />
-            <p className="warning">{this.state.validationMsg.email}</p>
-            <br />
-            <input
-              type="text"
-              placeholder="Confirm Email"
-              name="Nhập lại email"
-              value={this.state.confirm_email}
-              onChange={this.onChange}
-            />
+            
             <p className="warning">{this.state.validationMsg.confirm_email}</p>
             <br />
             <input
