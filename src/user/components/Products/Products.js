@@ -1,35 +1,53 @@
-import React, {useContext} from 'react'
-import {DataContext} from './DataProvider'
-import {Link} from 'react-router-dom'
+import "bootstrap/dist/css/bootstrap.min.css";
+import React from "react";
+import ProductItem from "./ProductItem";
+import ProductsApi from "./api/products";
+import ReactPaginate from "react-paginate";
+import "./Product.css";
 
-export default function Products() {
-    const value = useContext(DataContext)
-    const [products] = value.products
-    const addCart = value.addCart
+export default class Products extends React.Component {
+  state = {
+    products: [],
+    cart: []
+  };
 
+  componentDidMount() {
+    ProductsApi.getAll().then((data) => {
+      this.setState({
+        products: data
+      });
+    });
+  }
+
+  render() {
+    console.log(this.state.cart);
+    // const { products } = this.state;
     return (
-        <div className="products">
-            {
-                products.map(product =>(
-                    <div className="card" key={product._id}>
-                        <Link to={`/product/${product._id}`}>
-                            <img src={product.images[0]} alt=""/>
-                        </Link>
-                        <div className="box">
-                        <h3 title={product.title}>
-                            <Link to={`/product/${product._id}`}>{product.title}</Link>
-                        </h3>
-                        <p>{product.description}</p>
-                        <h4>${product.price}</h4>
-                        <button onClick={() => addCart(product._id)}>
-                            Thêm vào giỏ hàng
-                        </button>
-                        </div>
-                    </div>
-                ))
-            }
-          
-          
+      <div>
+        <div className="container">
+
+          <div className="row">
+            {this.state.products.map((product) => (
+              <div className={"col-4"} key={product.maMatHang}>
+                <ProductItem product={product} />
+              </div>
+            ))}
+          </div>
         </div>
-    )
+
+        <ReactPaginate
+                    previousLabel={"prev"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={this.state.pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}/>
+      </div>
+    );
+  }
 }

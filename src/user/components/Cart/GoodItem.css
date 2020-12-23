@@ -1,0 +1,182 @@
+.goodsItem {
+    /* float: left; */
+    width: 70vw;
+    height: 14vw;
+    padding: 1vw;
+  }
+  hr {
+    margin-top: 13.5vw;
+  }
+  .imageItem {
+    float: left;
+    width: 12vw;
+    height: 7vw;
+    border-radius: 10px;
+  }
+  .content {
+    padding: 0.2vw;
+    float: left;
+    margin-left: 1vw;
+    font-size: 1.5vw;
+    font-style: italic;
+    font-weight: 600;
+    width: 35vw;
+    height: 16vw;
+  }
+  .removeitem {
+    width: 10vw;
+    border: none;
+    margin-top: 0.2vw;
+    border: none;
+    font-size: 1.5vw;
+    width: 10vw;
+    height: 2.5vw;
+    border-radius: 20px;
+  }
+  .removeitem:hover {
+    border-radius: 20px;
+    background-color: rgb(196, 198, 199);
+    width: 10vw;
+    height: 2.5vw;
+  }
+  
+  .description {
+    height: 8vw;
+    font-size: 1vw;
+  }
+  .title {
+    font-size: 1.5vw;
+  }
+  .cal {
+    float: left;
+    padding: 4vw;
+  }
+  .quantity {
+    float: right;
+    font-size: 2vw;
+    border-style: solid;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0px 0px 10px 2px #e9e9e9;
+    width: 6vw;
+    height: 3vw;
+    border-width: 0.1px;
+  }
+  .quantity:hover {
+    font-size: 2vw;
+    border-style: solid;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0px 0px 10px 0.2vw #dbd9d9;
+    width: 6vw;
+    height: 3vw;
+    border-width: 0.1px;
+  }
+  div.formOrder {
+    float: right;
+    margin-right: 3vw;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 4px #dbd9d9;
+    border-style: solid;
+    width: 20vw;
+    height: 15vw;
+    border-width: 0.2px;
+    border: solid;
+  }
+  h5 {
+    text-align: center;
+    margin-top: 1vw;
+    font-size: 1.5vw;
+    margin-left: 10px;
+    border: none;
+    border-radius: 10px;
+  }
+  p.howpay {
+    text-align: center;
+    font-size: 1vw;
+    font-weight: 500;
+    opacity: 0.6;
+  }
+  .tdLeft {
+    float: left;
+    font-size: 1vw;
+    width: 7vw;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    margin-left: 1vw;
+    border: solid;
+  }
+  .tdRight {
+    float: left;
+    margin-left: 10vw;
+    font-size: 1vw;
+    width: 5vw;
+    border: solid;
+  }
+  
+  /* 
+   
+  h2.mulprice {
+    font-weight: bold;
+    border: solid;
+  }
+  p.unitprice {
+    font-size: 1.2vw;
+    font-weight: 500;
+    opacity: 0.6;
+    border: solid;
+  }
+  
+  .tdLeft {
+    font-size: 1vw;
+    width: 7vw;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    margin-left: 1vw;
+    border: solid;
+  }
+  .tdRight {
+    margin-top: -2vw;
+    margin-left: 10vw;
+    font-size: 1vw;
+    width: 5vw;
+    border: solid;
+  }
+  div.totalline {
+    margin-top: 0.5vw;
+    margin-bottom: 0.5vw;
+    margin-left: 2vw;
+    width: 15vw;
+    text-align: center;
+    border: solid;
+  }
+  .pay {
+    margin-left: 2vw;
+    font-size: 1.5vw;
+    border-style: solid;
+    border-radius: 10px;
+    text-align: center;
+    width: 12vw;
+    height: 2vw;
+    border-width: 0.1px;
+    background-color: black;
+    color: #dbd9d9;
+    border: solid;
+  }
+  input.pay:hover {
+    box-shadow: 0px 0px 10px 4px #dbd9d9;
+    border: solid;
+  }
+  div.itemtotal {
+    margin-right: 5px;
+    border: none;
+    background-color: lightgreen;
+    width: 50px;
+    border: solid;
+  }
+  div.pay {
+    border: none;
+    background-color: rgb(255, 255, 255);
+    border: solid;
+  } */
+  

@@ -6,6 +6,7 @@ function Home() {
   return (
     <>     
       <Slider />
+      <br></br>
       <Products />
     </>
   );
