@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./form.css";
 import isEmpty from "validator/lib/isEmpty";
+import config from "./user/config/config";
+import requestRegister from "./user/services/RegisterService"
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -44,12 +46,23 @@ export default class Register extends Component {
       validationMsg: msg
     });
     if (Object.keys(msg).length > 0) return;
-    alert("successfully");
-    this.setState({
-      successed: true
-    });
+    const user = {
+        tenDangKy:this.state.mail,
+        matKhau:this.state.password,
+        tenNguoiDung:this.state.fullname
+    };
+    config()
+    requestRegister(user).then((data) => {
+    console.log(data.data)
+    //localStorage.setItem("token", data.data.accessToken)
+    }).catch()
+    // alert("successfully");
+    // this.setState({
+    //   successed: true
+    // });
   }
   render() {
+    
     return (
       <React.Fragment>
         <div className="Register">

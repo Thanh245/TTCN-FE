@@ -15,26 +15,37 @@ import BackButton from "../BackButton/BackButton";
 import { InputAdornment } from "@material-ui/core";
 
 const ProductTitle = ({ record }) => {
-  return <span>Post {record ? `"${record.tenMatHang}"` : ""}</span>;
+  return <span>Mặt hàng {record ? `${record.tenMatHang}` : ""}</span>;
 };
-
+const transform = data => ({
+  "maMatHang": data.maMatHang,
+  "tenMatHang": `${data.tenMatHang}`,
+  "loaiMatHang": { "maLoaiMatHang": data.maLoaiMatHang},
+  "gia": data.gia,
+  "soLuong": data.soLuong,
+  "soLuongDaBan": data.soLuongDaBan,
+  "moTa": `${data.moTa}`,
+  "rate": data.rate,
+  "soLuotDanhGia": data.soLuotDanhGia
+});
 export const ProductEdit = (props) => {
+  
   return (
     <Card>
-      <CardActions>
-        <BackButton />
-      </CardActions>
       <CardContent>
-        <Edit title={<ProductTitle />} {...props}>
+        <BackButton />
+        <Edit title={<ProductTitle />} transform={transform} {...props} undoable={false}>
           <SimpleForm>
-            <TextInput  source="maMatHang" />
-            {/*<ReferenceInput source="ma_loai_mat_hang" reference="loaimathang">
-              <SelectInput optionText="ten_loai_mat_hang" />
-  </ReferenceInput>*/}
+            <TextInput source="maMatHang" />
+            <ReferenceInput source="maLoaiMatHang" reference="loai-mat-hang" label="Loại mặt hàng">
+              <SelectInput optionText="tenLoaiMatHang" />
+            </ReferenceInput>
             <TextInput source="tenMatHang" />
             <TextInput multiline source="moTa" />
             <NumberInput source="soLuong" validate={required()} />
             <NumberInput source="soLuongDaBan" validate={required()} />
+            <NumberInput source="rate" validate={required()} />
+            <NumberInput source="soLuotDanhGia" validate={required()} />
             <NumberInput
               source="gia"
               validate={required()}

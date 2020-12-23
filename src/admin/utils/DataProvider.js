@@ -14,7 +14,7 @@ function mapPrimaryKey(name) {
       primaryKey = "id";
       break;
   }
-  return "maMatHang";
+  return primaryKey;
 }
 
 export default (apiUrl, httpClient = fetchUtils.fetchJson): DataProvider => ({
@@ -47,11 +47,17 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson): DataProvider => ({
     });
   },
 
-  getOne: (resource, params) =>
-  httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => (
-           {data: { ...json, id: json.maMatHang }}
-  )),
-
+  getOne: (resource, params) => {
+    const targetApi = `${resource}`;
+    return httpClient(`${apiUrl}/${resource}/${params.id}`).then(
+      ({ json }) => ({
+        data: json.map((resource) => ({
+          ...json,
+          id: json[mapPrimaryKey(targetApi)]
+        }))
+      })
+    );
+  },
 
   getMany: (resource, params) => {
     const query = {
@@ -103,23 +109,19 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson): DataProvider => ({
     return httpClient(`${apiUrl}/${resource}/${params.id}`, {
       method: "PUT",
       body: JSON.stringify(params.data)
-    }).then(({ json }) => ( {data : { ...json, id: json[mapPrimaryKey(targetApi)] }}));
+    }).then(({ json }) => ({ ...json, id: json[mapPrimaryKey(targetApi)] }));
   },
 
   // json-server doesn't handle filters on UPDATE route, so we fallback to calling UPDATE n times instead
-  updateMany: (resource, params) => {
-    const targetApi = `${resource}`;
-
-    return Promise.all(
+  updateMany: (resource, params) =>
+    Promise.all(
       params.ids.map((id) =>
         httpClient(`${apiUrl}/${resource}/${id}`, {
           method: "PUT",
           body: JSON.stringify(params.data)
         })
       )
-    ).then((responses) => ({ data: responses.map(({ json }) => ({ ...json, id: json[mapPrimaryKey(targetApi)] })) }))
-
-  },
+    ).then((responses) => ({ data: responses.map(({ json }) => json.id) })),
 
   create: (resource, params) => {
     const targetApi = `${resource}`;

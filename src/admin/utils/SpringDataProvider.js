@@ -1,3 +1,4 @@
+import { SystemUpdate } from "@material-ui/icons";
 import { stringify } from "query-string";
 import {
   fetchUtils,
@@ -23,7 +24,56 @@ import {
  * CREATE       => POST http://my.api.url/posts
  * DELETE       => DELETE http://my.api.url/posts/123
  */
-export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
+
+function mapPrimaryKey(name) {
+  var primaryKey = "";
+  switch (name) {
+    case "mat-hang":
+      primaryKey = "maMatHang";
+      break;
+    case "loai-mat-hang":
+      primaryKey = "maLoaiMatHang";
+      break;
+    case "nguoi-dung":
+      primaryKey = "maNguoiDung";
+      break;
+    case "don-hang":
+      primaryKey = "maDonHang"
+      break;
+    case "danh-gia":
+      primaryKey = "maDanhGia";
+      break;
+    case "gioi-tinh":
+      primaryKey = "maGioiTinh";
+      break;
+    case "trang-thai-don-hang":
+      primaryKey = "maTrangThai";
+      break;
+    default:
+      primaryKey = "id";
+      break;
+  }
+  return primaryKey;
+}
+ 
+function mapPath(name, method) {
+  if(name === "danh-gia" || name === "don-hang" || name === "nguoi-dung")
+    return `${name}-management/authorized`
+  else if (name === "trang-thai-don-hang")
+    return `don-hang-management/authorized/don-hang`
+  else if (name === "mat-hang" && (method === 'DELETE' || method === 'UPDATE'))
+    return `${name}-management/authorized`;
+  return `${name}-management`;
+}
+
+export default (apiUrl, httpClient =  (url, options = {}) => {
+  if (!options.headers) {
+      options.headers = new Headers({ Accept: 'application/json' });
+  }
+  const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNjA4NjI2MjUxLCJleHAiOjE2MTA0NDA2NTF9.2KAWsq4OKMw6dJnUbenStLh8914wJvufzsQ1orkN31Fihp3erdjb0Y53H_-cgX2YNg15-Qo-687p_1qP7A_fuw";
+  options.headers.set('Authorization', `${token}`);
+  return fetchUtils.fetchJson(url, options);
+}) => {
   /**
    * @param {String} type One of the constants appearing at the top if this file, e.g. 'UPDATE'
    * @param {String} resource Name of the resource to fetch, e.g. 'posts'
@@ -33,41 +83,50 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
   const convertDataRequestToHTTP = (type, resource, params) => {
     let url = "";
     const options = {};
+    console.log(type);
     switch (type) {
       case GET_LIST: {
         const { page, perPage } = params.pagination;
-        url = `${apiUrl}/${resource}?page=${page}&pageSize=${perPage}`;
+        const { field, order } = params.sort;
+        const query = {
+          ...fetchUtils.flattenObject(params.filter),
+          page: page - 1,
+          size: perPage,
+          sort: order
+        }
+        //url = `${apiUrl}/${resource}?page=${page-1}&size=${perPage}&sort=${order}`;
+        url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}?${stringify(query)}`;
         break;
       }
       case GET_ONE:
-        url = `${apiUrl}/${resource}/${params.id}`;
+        url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}/${params.id}`;
         break;
       case GET_MANY: {
         const query = {
-          filter: JSON.stringify({ id: params.ids })
+          id: params.ids
         };
-        let idStr = "";
-        const queryString = params.ids.map((id) => idStr + `id=${id}`);
-        url = `${apiUrl}/${resource}?${idStr}}`;
+        url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}?${stringify(query)}`;
         break;
       }
       case GET_MANY_REFERENCE: {
         const { page, perPage } = params.pagination;
-        url = `${apiUrl}/${resource}?page=${page}&pageSize=${perPage}`;
+        const { field, order } = params.sort;
+        url =  `${apiUrl}/${mapPath(resource,'GET')}/${resource}?page=${page-1}&size=${perPage}&sort=${order}`;
+        console.log("This is error in get reference, take a look: " + url);
         break;
       }
       case UPDATE:
-        url = `${apiUrl}/${resource}/${params.id}`;
+        url = `${apiUrl}/${mapPath(resource,  'UPDATE')}/${resource}/${params.id}`;
         options.method = "PUT";
         options.body = JSON.stringify(params.data);
         break;
       case CREATE:
-        url = `${apiUrl}/${resource}`;
+        url = `${apiUrl}/${mapPath(resource, 'CREATE')}/${resource}`;
         options.method = "POST";
         options.body = JSON.stringify(params.data);
         break;
       case DELETE:
-        url = `${apiUrl}/${resource}/${params.id}`;
+        url = `${apiUrl}/${mapPath(resource, 'DELETE')}/${resource}/${params.id}`;
         options.method = "DELETE";
         break;
       default:
@@ -85,22 +144,35 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
    */
   const convertHTTPResponse = (response, type, resource, params) => {
     const { headers, json } = response;
+    const targetApi = `${resource}`;
+
     switch (type) {
       case GET_LIST:
+      case GET_MANY:
       case GET_MANY_REFERENCE:
-        if (!json.hasOwnProperty("totalElements")) {
-          throw new Error(
-            "The numberOfElements property must be must be present in the Json response"
-          );
-        }
+        if (!json.hasOwnProperty("totalItems")) {
+          return {
+            data: json.map((resource) => ({
+              ...resource,
+              id: resource[mapPrimaryKey(targetApi)]
+            })),
+            total: parseInt(json.length, 10)
+          };
+        };
         return {
-          data: json.content,
-          total: parseInt(json.totalElements, 10)
+          data: json.data.map((resource) => ({
+            ...resource,
+            id: resource[mapPrimaryKey(targetApi)]
+          })),
+          total: parseInt(json.totalItems, 10)
         };
       case CREATE:
-        return { data: { ...params.data, id: json.id } };
+        return { data: { ...params.data, id: json[mapPrimaryKey(targetApi)] } };
       default:
-        return { data: json };
+        if(json === undefined){
+          return { data: {...params.data, id: params.data[mapPrimaryKey(targetApi)] }}
+        }
+        return { data: { ...json, id: json[mapPrimaryKey(targetApi)] } };
     }
   };
 
@@ -115,7 +187,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
     if (type === UPDATE_MANY) {
       return Promise.all(
         params.ids.map((id) =>
-          httpClient(`${apiUrl}/${resource}/${id}`, {
+          httpClient(`${apiUrl}/${mapPath(resource)}/${resource}/${id}`, {
             method: "PUT",
             body: JSON.stringify(params.data)
           })
@@ -128,7 +200,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
     if (type === DELETE_MANY) {
       return Promise.all(
         params.ids.map((id) =>
-          httpClient(`${apiUrl}/${resource}/${id}`, {
+          httpClient(`${apiUrl}/${mapPath(resource)}/${resource}/${id}`, {
             method: "DELETE"
           })
         )

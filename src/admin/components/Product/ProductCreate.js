@@ -17,16 +17,14 @@ import { InputAdornment } from "@material-ui/core";
 export const ProductCreate = (props) => {
   return (
     <Card>
-      <CardActions>
-        <BackButton />
-      </CardActions>
       <CardContent>
+        <BackButton />
         <Create {...props}>
           <SimpleForm>
             <TextInput disabled source="maMatHang" />
-            {/*<ReferenceInput source="ma_loai_mat_hang" reference="loaimathang">
-              <SelectInput optionText="ten_loai_mat_hang" />
-  </ReferenceInput>*/}
+            <ReferenceInput source="maLoaiMatHang" reference="loai-mat-hang" label="Loại mặt hàng">
+              <SelectInput optionText="tenLoaiMatHang"/>
+            </ReferenceInput>
             <TextInput source="tenMatHang" />
             <TextInput multiline source="moTa" />
             <NumberInput source="soLuong" validate={required()} />

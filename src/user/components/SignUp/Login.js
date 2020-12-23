@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import "./form.css";
 import isEmpty from "validator/lib/isEmpty";
+import { Redirect } from "react-router-dom";
+import config from "./user/config/config";
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       mail: "",
       password: "",
-      loggedIn: false,
       validationMsg: {}
     };
     this.onChange = this.onChange.bind(this);
@@ -34,13 +35,31 @@ export default class Login extends Component {
       validationMsg: msg
     });
     if (Object.keys(msg).length > 0) return;
-    alert("successfully");
-    this.setState({
-      loggedIn: true
-    });
+    // config()
+    // requestLogin({
+        // tenDangNhap: ,
+        // matKhau: "Hoangpv6681"
+        // }).then((data) => {
+        // console.log(data.data)
+        // localStorage.setItem("token", data.data.accessToken)
+    // }).catch()
+    // alert("successfully");
+    // localStorage.setItem("role","user")
+    // localStorage.setItem("token","successfully")
+    // this.setState({
+    //   loggedIn: true
+    // });
   }
 
   render() {
+    const role = localStorage.getItem("role")
+    const token = localStorage.getItem("token")
+    if(role==="admin")
+    {
+      return <Redirect to= "/admin" />
+    }
+    if(token&&role==="user")
+    return <Redirect to = "/home"/>
     return (
       <React.Fragment>
         <div className="Login">

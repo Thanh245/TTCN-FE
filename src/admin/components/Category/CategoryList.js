@@ -1,0 +1,43 @@
+import * as React from "react";
+
+import { FC } from 'react';
+import { Box, Chip, useMediaQuery, Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  List,
+  Filter,
+  Datagrid,
+  NumberField,
+  TextField,
+  EditButton,
+  TextInput,
+  ChipField,
+  ReferenceField,
+  ImageField,
+  ReferenceManyField,
+  SingleField
+} from 'react-admin';
+
+
+const CategoryFilter = (props) => (
+  <Filter {...props}>
+    <TextInput label="Search" source="q" alwaysOn />
+
+  </Filter>
+);
+
+const Title = ({ record }) => {
+  return <span>Danh sách Loại mặt hàng</span>;
+};
+const pictures = [
+  { url: 'product.jpeg', desc: 'First image' }
+];
+
+export const CategoryList = props => (
+    <List filters={<CategoryFilter />} title={<Title />} {...props}>
+        <Datagrid rowClick="edit">
+            <TextField source="maLoaiMatHang" />
+            <TextField source="tenLoaiMatHang" />
+        </Datagrid>
+    </List>
+);

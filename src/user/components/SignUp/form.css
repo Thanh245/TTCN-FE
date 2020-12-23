@@ -74,3 +74,8 @@ div.formOrder {
   background-color: #ffffff;
 }
 
+input.submit:hover{
+  outline: none;
+  background-color: rgb(24, 95, 202);
+  color: #ffffff;
+}

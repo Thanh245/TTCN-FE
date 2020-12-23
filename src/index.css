@@ -1,6 +1,4 @@
-* {
-  padding: 0;
-  box-sizing: border-box;
+body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -13,14 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* 
 .App{
-  max-width: 1230px;
+ 
   width: 100%;
   margin: auto;
   box-shadow: 0 2px 6px #555;
 }
-/* -------------------Header----------------- */
-header{
+
+.header{
   width: 100%;
   min-height: 100px;
   overflow: hidden;
@@ -63,8 +63,18 @@ ul li{
   padding: 5px;
 }
 
+input.inputSearch{
+  border-radius: 50px;
+  width: 500px;
+  height: 30px;
+  list-style: none;
+  display: inline-block;
+}
 
-/* ---------------Products--------------- */
+input.inputSearch:focus{
+  outline: none;
+}
+
 .products{
   width: 100%;
   display: flex;
@@ -123,7 +133,6 @@ ul li{
   text-transform: uppercase;
   letter-spacing: 2px;
 }
-/* -----------------------Details--------------- */
 .details{
   width: 100%;
   display: flex;
@@ -165,8 +174,12 @@ ul li{
   cursor: pointer;
   color: white;
   margin-right: 5px;
-  margin-top: 10px;
+  margin-top: 10px
 }
+
+
+
+
 .colors button,
 .sizes button{
   width: 35px;
@@ -241,7 +254,6 @@ ul li{
   }
 }
 
-/* ****** Cart ********************** */
 .cart{
   position: relative;
   border: 1px solid #ccc;
@@ -282,4 +294,4 @@ ul li{
 .total h3{
   margin-right: 50px;
   color: crimson;
-}
+}*/
