@@ -70,7 +70,7 @@ export default (apiUrl, httpClient =  (url, options = {}) => {
   if (!options.headers) {
       options.headers = new Headers({ Accept: 'application/json' });
   }
-  const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNjA4NjI2MjUxLCJleHAiOjE2MTA0NDA2NTF9.2KAWsq4OKMw6dJnUbenStLh8914wJvufzsQ1orkN31Fihp3erdjb0Y53H_-cgX2YNg15-Qo-687p_1qP7A_fuw";
+  const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjA4NzUzNTg3LCJleHAiOjE2MTA1Njc5ODd9.hL3lCM1ARQAt_gMBVt7n80dqhYwipSlUw0ay-t5TLLU7OKMDyEnzp1RzBOORbhgAHGHEinFcoTuI5RpXuVDEiw";
   options.headers.set('Authorization', `${token}`);
   return fetchUtils.fetchJson(url, options);
 }) => {

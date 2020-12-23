@@ -32,11 +32,15 @@ const Title = ({ record }) => {
 const pictures = [
   { url: 'product.jpeg', desc: 'First image' }
 ];
+var imageName = require('./test.jpg')
 
 export const CategoryList = props => (
     <List title={<Title />} {...props}>
         <Datagrid rowClick="edit">
+          
             <TextField source="maLoaiMatHang" label = "Mã loại mặt hàng"/>
+            <img src={imageName} width="100" label = "Ảnh loại mặt hàng"/>
+
             <TextField source="tenLoaiMatHang" label = "Tên loại mặt hàng" />
         </Datagrid>
     </List>

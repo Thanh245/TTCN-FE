@@ -6,7 +6,9 @@ import {
   TextInput,
   ReferenceInput,
   SelectInput,
-  NumberInput
+  NumberInput,
+  useRedirect,
+  useRefresh
 } from "react-admin";
 import BackButton from "../BackButton/BackButton";
 import Card from "@material-ui/core/Card";
@@ -16,11 +18,18 @@ import { InputAdornment } from "@material-ui/core";
 
 
 export const CategoryCreate = (props) => {
+    const redirect = useRedirect();
+  const refresh = useRefresh();
+
+  const onSuccess = ({ data }) => {
+    redirect('/loai-mat-hang');
+    refresh();
+};
     return(
         <Card>
             <CardContent>
                 <BackButton/>
-                <Create {...props}>
+                <Create {...props} onSuccess={onSuccess}>
                     <SimpleForm>
                         <TextInput source="tenLoaiMatHang" validate={required()} />
                     </SimpleForm>

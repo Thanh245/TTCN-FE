@@ -28,7 +28,6 @@ const useStyles = makeStyles({
       justifyContent: 'space-between',
   },
 });
-
 const CustomToolbar = props => (
   <Toolbar {...props} classes={useStyles()}>
       <SaveButton undoable={false} />
@@ -55,10 +54,15 @@ const Title = ({ record }) => {
 const pictures = [
   { url: 'product.jpeg', desc: 'First image' }
 ];
+
+var imageName = require('./test.jpg')
+
 export const ProductList = (props) => (
     <List filters={<ProductFilter />} title={<Title />} {...props}>
       <Datagrid rowClick="edit">
         <NumberField source="maMatHang" label="Mã mặt hàng" />
+        <img src={imageName} width="100" label = "Ảnh mặt hàng"/>
+
         <TextField source="tenMatHang" label="Tên mặt hàng" />
         <ReferenceField source="maLoaiMatHang" reference="loai-mat-hang" label="Loại mặt hàng" >
             <ChipField source="tenLoaiMatHang" />

@@ -11,7 +11,7 @@ import authProvider from "./utils/authProvider";
 import PostIcon from "@material-ui/icons/Book";
 import UserIcon from "@material-ui/icons/Group";
 import { Invoice } from "./components/Invoice/Invoice";
-import { Customer } from "./components/Customer/Customer";
+import { CustomerList } from "./components/Customer/CustomerList";
 import { Review } from "./components/Review/Review";
 import { theme } from "./theme";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
@@ -36,7 +36,6 @@ export const AdminPage = () => {
       dashboard={Dashboard}
       theme={theme}
       layout={MyLayout}
-      authProvider={authProvider}
     >
       <Resource
         name="mat-hang"
@@ -64,7 +63,7 @@ export const AdminPage = () => {
         icon={AddShoppingCartIcon} />
       <Resource
         name="nguoi-dung"
-        list={ListGuesser}
+        list={CustomerList}
         options={{ label: 'Người dùng' }}
         icon={AccountBoxIcon} />
       <Resource 
