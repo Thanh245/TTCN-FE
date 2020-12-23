@@ -26,10 +26,8 @@ export const CategoryEdit = (props) => {
             <BackButton />
             <Edit {...props} title={<CategoryTitle/>}>
                 <SimpleForm>
-                    <DateInput source="createdAt" label="Ngày tạo" />
-                    <NumberInput source="updatedBy" label="Cập nhật bởi"/>
-                    <NumberInput source="createdBy" label="Tạo bởi"/>
-                    <NumberInput source="maLoaiMatHang" label="Mã loại mặt hàng" />
+                    <DateInput source="createdAt" label="Ngày tạo" disabled/>
+                    <NumberInput source="maLoaiMatHang" label="Mã loại mặt hàng" disabled/>
                     <TextInput source="tenLoaiMatHang" label="Tên loại mặt hàng"/>
                 </SimpleForm>
             </Edit>

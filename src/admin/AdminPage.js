@@ -46,6 +46,7 @@ export const AdminPage = () => {
         show={ShowGuesser}
         create={ProductCreate}
         options={{ label: 'Mặt Hàng' }}
+        
       />
       <Resource
         name="loai-mat-hang"

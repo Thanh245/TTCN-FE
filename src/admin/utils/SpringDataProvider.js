@@ -61,7 +61,7 @@ function mapPath(name, method) {
     return `${name}-management/authorized`
   else if (name === "trang-thai-don-hang")
     return `don-hang-management/authorized/don-hang`
-  else if (name === "mat-hang" && (method === 'DELETE' || method === 'UPDATE'))
+  else if ( (name === "mat-hang" || name === "loai-mat-hang") && (method === 'DELETE' || method === 'UPDATE' || method === 'CREATE'))
     return `${name}-management/authorized`;
   return `${name}-management`;
 }
@@ -85,7 +85,7 @@ export default (apiUrl, httpClient =  (url, options = {}) => {
     const options = {};
     console.log(type);
     switch (type) {
-      case GET_LIST: {
+      case GET_LIST: 
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
         const query = {
@@ -97,17 +97,14 @@ export default (apiUrl, httpClient =  (url, options = {}) => {
         //url = `${apiUrl}/${resource}?page=${page-1}&size=${perPage}&sort=${order}`;
         url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}?${stringify(query)}`;
         break;
-      }
+      
       case GET_ONE:
         url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}/${params.id}`;
         break;
-      case GET_MANY: {
-        const query = {
-          id: params.ids
-        };
-        url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}?${stringify(query)}`;
+      case GET_MANY: 
+        url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}`;
+        
         break;
-      }
       case GET_MANY_REFERENCE: {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
@@ -167,12 +164,16 @@ export default (apiUrl, httpClient =  (url, options = {}) => {
           total: parseInt(json.totalItems, 10)
         };
       case CREATE:
-        return { data: { ...params.data, id: json[mapPrimaryKey(targetApi)] } };
+        return { data: { ...params.data, id: 1} };
       default:
+        let key = mapPrimaryKey(targetApi);
         if(json === undefined){
-          return { data: {...params.data, id: params.data[mapPrimaryKey(targetApi)] }}
+          if(params.data === undefined){
+            return { data: {...params, key: params.id}}
+          }
+          return { data: {...params.data, id: params.data[key] }}
         }
-        return { data: { ...json, id: json[mapPrimaryKey(targetApi)] } };
+        return { data: { ...json, id: json[key] } };
     }
   };
 
@@ -187,7 +188,7 @@ export default (apiUrl, httpClient =  (url, options = {}) => {
     if (type === UPDATE_MANY) {
       return Promise.all(
         params.ids.map((id) =>
-          httpClient(`${apiUrl}/${mapPath(resource)}/${resource}/${id}`, {
+          httpClient(`${apiUrl}/${mapPath(resource, 'UPDATE')}/${resource}/${id}`, {
             method: "PUT",
             body: JSON.stringify(params.data)
           })
@@ -200,7 +201,7 @@ export default (apiUrl, httpClient =  (url, options = {}) => {
     if (type === DELETE_MANY) {
       return Promise.all(
         params.ids.map((id) =>
-          httpClient(`${apiUrl}/${mapPath(resource)}/${resource}/${id}`, {
+          httpClient(`${apiUrl}/${mapPath(resource, 'DELETE')}/${resource}/${id}`, {
             method: "DELETE"
           })
         )

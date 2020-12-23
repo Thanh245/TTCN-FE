@@ -1,6 +1,5 @@
 import React from "react";
 import { getBymaMatHang } from "./api/products";
-import './ProductStyle.css'
 export default class Product extends React.Component {
   state = {
     loading: true,

@@ -34,10 +34,10 @@ const pictures = [
 ];
 
 export const CategoryList = props => (
-    <List filters={<CategoryFilter />} title={<Title />} {...props}>
+    <List title={<Title />} {...props}>
         <Datagrid rowClick="edit">
-            <TextField source="maLoaiMatHang" />
-            <TextField source="tenLoaiMatHang" />
+            <TextField source="maLoaiMatHang" label = "Mã loại mặt hàng"/>
+            <TextField source="tenLoaiMatHang" label = "Tên loại mặt hàng" />
         </Datagrid>
     </List>
 );

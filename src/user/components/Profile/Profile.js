@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Redirect  } from 'react-router-dom'
-import "./profile.css"
 import DatePicker  from 'react-datepicker' 
 import 'react-datepicker/dist/react-datepicker.css'
 import isEmpty from "validator/lib/isEmpty"

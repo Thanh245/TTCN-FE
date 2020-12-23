@@ -10,14 +10,12 @@ import SignUp from './user/components/SignUp/SignUp'
 import Order from './user/components/Order/Order'
 import Home from './user/components/HomePage/HomePage'
 import Profile from './user/components/Profile/Profile'
-import AdminProvider from './admin/AdminProvider';
 import { AdminPage } from './admin/AdminPage';
 
 function App() {
     
     return (
         <BrowserRouter>
-          <Header />
               <Route path="/home" exact  component={Home} />
               <Route path="/products" exact  component={Products} />
               <Route path="/products/:id" component={Product} />
@@ -26,7 +24,6 @@ function App() {
               <Route path="/order" exact component={ Order } />
               <Route path="/profile" exact component={ Profile  } />
               <Route path="/admin" exact component={ AdminPage  } />
-      
           <Footer />
           </BrowserRouter>
     );

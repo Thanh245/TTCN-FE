@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./Order.css";
 import isEmpty from "validator/lib/isEmpty";
 export default class Order extends Component {
   constructor(props) {

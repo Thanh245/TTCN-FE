@@ -4,7 +4,6 @@ import Close from '../svg/times-solid.svg'
 //import Cart from '../svg/cart.svg'
 import {Link} from 'react-router-dom'
 //import {DataContext} from '../Products/DataProvider'
-import './Header.css'
 
 export default function Header() {
 

@@ -17,9 +17,24 @@ import {
   SelectInput,
   ImageField,
   ReferenceManyField,
-  SingleField
+  SingleField,
+  Toolbar,
+  SaveButton,
+  DeleteButton
 } from 'react-admin';
+const useStyles = makeStyles({
+  toolbar: {
+      display: 'flex',
+      justifyContent: 'space-between',
+  },
+});
 
+const CustomToolbar = props => (
+  <Toolbar {...props} classes={useStyles()}>
+      <SaveButton undoable={false} />
+      <DeleteButton undoable={false} />
+  </Toolbar>
+);
 const useQuickFilterStyles = makeStyles(theme => ({
   root: {
     marginBottom: theme.spacing(3),
@@ -28,8 +43,7 @@ const useQuickFilterStyles = makeStyles(theme => ({
 
 const ProductFilter = (props) => (
   <Filter {...props}>
-    <TextInput label="Search" source="q" alwaysOn />
-    <ReferenceInput label="Tên mặt hàng" source="maLoaiMatHang" reference="loai-mat-hang" allowEmpty>
+    <ReferenceInput label="Loại mặt hàng" source="maLoaiMatHang" reference="loai-mat-hang" alwaysOn>
             <SelectInput optionText="tenLoaiMatHang" />
     </ReferenceInput>
   </Filter>
