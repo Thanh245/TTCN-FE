@@ -1,5 +1,4 @@
 {
-  "homepage": "https://devat-youtuber.github.io/react-router-v6-product-details",
   "name": "web-ttcn",
   "version": "0.1.0",
   "private": true,
@@ -8,10 +7,10 @@
     "react": "17.0.0",
     "react-dom": "17.0.0",
     "react-paginate": "^6.5.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "react-star-rating-component": "^1.4.1"
   },
   "devDependencies": {
-    "typescript": "3.8.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -33,6 +32,7 @@
     "react-spring": "^8.0.27",
     "reactstrap": "^8.7.1",
     "swiper": "^6.4.1",
+    "typescript": "3.8.3",
     "validator": "^13.5.2",
     "web-vitals": "^0.2.4"
   },

@@ -1,13 +1,19 @@
 import React from 'react';
-import Products from '../Products/Products'
+import ProductsList from '../Products/ProductsList'
 import Slider from '../Slider/Slider';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 function Home() {
   return (
     <>     
-      <Slider />
-      <br></br>
-      <Products />
+      <Header />
+      <div className="container">
+        <Slider />
+        <br></br>
+        <ProductsList />
+      </div>
+      <Footer />
     </>
   );
 }

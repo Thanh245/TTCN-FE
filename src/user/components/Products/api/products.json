@@ -8,7 +8,12 @@
         "https://www.upsieutoc.com/images/2020/07/18/img2.jpg"
       ],
       "gia": "3",
-      "soLuongHienCo": "5"
+      "soLuongHienCo": "5",
+      "danhGia": [
+          "Sản phẩm đẹp",
+          "Shop giao hàng nhanh",
+          "Đóng gói cẩn thận"
+      ]
     },
     {
       "maMatHang": 124,
@@ -19,7 +24,12 @@
         "https://www.upsieutoc.com/images/2020/07/18/img3.jpg"
       ],
       "gia": "4",
-      "soLuongHienCo": "5"
+      "soLuongHienCo": "5",
+      "danhGia": [
+        "Sản phẩm đẹp",
+        "Shop giao hàng nhanh",
+        "Đóng gói cẩn thận"
+      ]
     },
     {
       "maMatHang": 125,
@@ -30,7 +40,12 @@
         "https://www.upsieutoc.com/images/2020/07/18/img4.jpg"
       ],
       "gia": "5",
-      "soLuongHienCo": "5"
+      "soLuongHienCo": "5",
+      "danhGia": [
+        "Sản phẩm đẹp",
+        "Shop giao hàng nhanh",
+        "Đóng gói cẩn thận"
+    ]
     },
     {
       "maMatHang": 126,
@@ -41,7 +56,12 @@
         "https://www.upsieutoc.com/images/2020/07/18/img6.jpg"
       ],
       "gia": "6",
-      "soLuongHienCo": "5"
+      "soLuongHienCo": "5",
+      "danhGia": [
+        "Sản phẩm đẹp",
+        "Shop giao hàng nhanh",
+        "Đóng gói cẩn thận"
+    ]
     },
     {
       "maMatHang": 127,
@@ -52,7 +72,12 @@
         "https://www.upsieutoc.com/images/2020/07/18/img1.jpg"
       ],
       "gia": "7",
-      "soLuongHienCo": "5"
+      "soLuongHienCo": "5",
+      "danhGia": [
+        "Sản phẩm đẹp",
+        "Shop giao hàng nhanh",
+        "Đóng gói cẩn thận"
+    ]
     }
   ]
   

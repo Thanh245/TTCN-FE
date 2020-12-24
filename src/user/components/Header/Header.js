@@ -4,6 +4,7 @@ import Close from '../svg/times-solid.svg'
 import Cart from '../svg/cart.svg'
 import {Link} from 'react-router-dom'
 //import {DataContext} from '../Products/DataProvider'
+import './Header.css'
 
 export default function Header() {
 
@@ -26,16 +27,16 @@ export default function Header() {
             </div>
 
             <div className="logo">
-                <h1><Link to="/home" >HMS</Link></h1>
+                <h1><Link to="/" >HMS</Link></h1>
             </div>
           
             <ul style={styleMenu}>
                 <li  >
                 
-                    <input  className="inputSearch"  type="text" placeholder="Search" />
+                    <input  className="inputSearch"  type="text" placeholder="   Search" />
                     
                 </li>
-                <li><Link to="/home">Trang chủ</Link></li>
+                <li><Link to="/">Trang chủ</Link></li>
                 <li><Link to="/products">Sản phẩm</Link></li>
                 <li><Link to="/signup">Đăng nhập/ Đăng ký</Link></li>
                 <li><Link to="/profile">Người dùng</Link></li>
