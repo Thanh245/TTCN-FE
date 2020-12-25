@@ -1,9 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import ProductItem from "./ProductItem";
-import ProductsApi from "./api/products";
+//import ProductsApi from "./api/products";
 import ReactPaginate from "react-paginate";
 import "./Product.css";
+// import "../../services/ItemService";
+import { fetchItemsList } from "../../services/ItemService";
 
 export default class Products extends React.Component {
   state = {
@@ -11,17 +13,30 @@ export default class Products extends React.Component {
     cart: []
   };
 
+  getList = async() => {
+      const res = await fetchItemsList();
+      if (res.status === 201) {
+          this.setState({
+            // ...this.state,
+            products: res.data.data
+          })
+      }
+  }
+     
   componentDidMount() {
-    ProductsApi.getAll().then((data) => {
-      this.setState({
-        products: data
-      });
-    });
+    // ProductsApi.getAll().then((data) => {
+    //   this.setState({
+        // products: data
+    //   });
+    // });
+    this.getList()
+   
   }
 
   render() {
-    console.log(this.state.cart);
+    // console.log(this.state.cart);
     // const { products } = this.state;
+    console.log(this.state.products.length)
     return (
         <>
             <div className="container">

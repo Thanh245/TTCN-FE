@@ -10,7 +10,7 @@ export default function ProductItem(props) {
 
   return (
     <div className="card">
-      <img src={product.URL[0]} className="card-img-top" alt="..." />
+      {/* <img src={product.URL[0]} className="card-img-top" alt="..." /> */}
       <div className="card-body">
         <h5 className="card-title">{product.tenMatHang}</h5>
         <p className="card-text">Price {product.gia}$</p>

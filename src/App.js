@@ -16,7 +16,7 @@ function App() {
     <BrowserRouter>         
         <Route path="/" exact  component={Home} />
         <Route path="/products" exact  component={Products} />
-        <Route path="/products/:id" component={Product} />
+        <Route path="/products/:id" render={(props)=>(<Product {...props}></Product>)} />
         <Route path="/signup" exact  component={ SignUp } />
         <Route path="/cart" exact  component={ Cart } />
         <Route path="/order" exact component={ Order } />

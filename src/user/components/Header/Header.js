@@ -33,7 +33,7 @@ export default function Header() {
             <ul style={styleMenu}>
                 <li  >
                 
-                    <input  className="inputSearch"  type="text" placeholder="   Search" />
+                    <input  className="inputSearch"  type="text" placeholder="   Search..." />
                     
                 </li>
                 <li><Link to="/">Trang chủ</Link></li>

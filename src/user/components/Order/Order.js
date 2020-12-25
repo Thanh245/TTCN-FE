@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./Order.css";
 import isEmpty from "validator/lib/isEmpty";
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+
 export default class Order extends Component {
   constructor(props) {
     super(props);
@@ -54,8 +57,13 @@ export default class Order extends Component {
       successed: true
     });
   }
+
+
+  
   render() {
     return (
+        <>
+        <Header />
       <React.Fragment>
         <div className="Order">
           <h1>Đặt hàng</h1>
@@ -108,6 +116,8 @@ export default class Order extends Component {
           </form>
         </div>
       </React.Fragment>
+      <Footer />
+      </>
     );
   }
 }
