@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./form.css";
 import isEmpty from "validator/lib/isEmpty";
 import config from "../../config/config";
-import RequestRegister from "../../../user/services/RegisterService"
+import requestRegister from "../../../user/services/RegisterService"
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -52,11 +52,11 @@ export default class Register extends Component {
         tenNguoiDung:this.state.fullname
     };
     config()
-    RequestRegister(user).then((data) => {
+    requestRegister(user).then((data) => {
         if(data.status===201) alert("Đăng ký thành công");
     //localStorage.setItem("token", data.data.accessToken)
     }).catch((err) => {
-         alert("Đăng ký thất bại");
+         alert("Đăng ký thất bại")
     });
     // alert("successfully");
     // this.setState({

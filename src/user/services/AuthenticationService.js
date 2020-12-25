@@ -1,5 +1,8 @@
 import axios from "axios";
+import config from "../config/config"
+
 async function requestLogin(user) {
+    config()
     const body = {
       tenDangNhap: user.tenDangNhap,
       matKhau: user.matKhau,
