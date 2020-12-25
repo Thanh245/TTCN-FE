@@ -58,8 +58,8 @@ export default class Cart extends Component {
   }
   render() {
     return (
-        <div className={"row"}>
-          <div className="col-8">
+        <div >
+          <div >
             {this.state.items.map((item, index) => (
               <GoodsItem
                 key={index}
@@ -70,8 +70,7 @@ export default class Cart extends Component {
               />
             ))}
           </div>
-
-          <div className="col-4">
+          <div>
             <FormOrder
               shipping={this.state.shipping}
               price={this.price()}

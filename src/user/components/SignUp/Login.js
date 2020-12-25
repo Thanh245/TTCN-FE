@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import "./form.css";
 import isEmpty from "validator/lib/isEmpty";
 import { Redirect } from "react-router-dom";
-import config from "./user/config/config";
+import config from "../../config/config";
+import requestLogin from "../../services/AuthenticationService"
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -35,15 +36,18 @@ export default class Login extends Component {
       validationMsg: msg
     });
     if (Object.keys(msg).length > 0) return;
-    // config()
-    // requestLogin({
-        // tenDangNhap: ,
-        // matKhau: "Hoangpv6681"
-        // }).then((data) => {
-        // console.log(data.data)
-        // localStorage.setItem("token", data.data.accessToken)
-    // }).catch()
-    // alert("successfully");
+    const user = {
+        tenDangNhap: this.state.mail,
+        matKhau: this.state.password,
+    }
+    console.log(user)
+    config()
+    requestLogin(user).then((data) => {
+            console.log("logined")
+            console.log(data);
+            localStorage.setItem("role","user")
+            localStorage.setItem("token","successfully")
+    }).catch()
     // localStorage.setItem("role","user")
     // localStorage.setItem("token","successfully")
     // this.setState({
