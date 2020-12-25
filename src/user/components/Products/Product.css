@@ -102,3 +102,23 @@
     flex-direction: column;
     display: inline-block
 }
+
+.search-item{
+    width: 100%;
+    border-radius: solid 50px ;
+}
+
+.gia {
+    margin: 5px 15px;
+    border: none;
+    color: #6b5ee0;
+    background-color: #fff;
+}
+
+.gia:hover{
+    color: black;
+}
+
+.gia:focus{
+    outline: none;
+}

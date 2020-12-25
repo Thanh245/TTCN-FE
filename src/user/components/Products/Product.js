@@ -2,8 +2,6 @@ import React from "react";
 //import { getBymaMatHang } from "./api/products";
 // import DetailsThumb from "./DetailsThumb";
 import "./Product.css"
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import RatingStar from "./RatingStar";
 import { fetchItem } from "../../services/ItemService";
 
@@ -11,10 +9,10 @@ export default class Product extends React.Component {
  constructor(props)
  { super( props)
      this.state = {
-    loading: true,
+    //loading: true,
     product: {},
-    index: 0,
-  };console.log()
+    //index: 0,
+  };
  }
   getItem = async() => {
     const params = this.props.match.params
@@ -51,11 +49,10 @@ export default class Product extends React.Component {
   render() {
     if (this.state.loading) return "Loading ..";
     const product = this.state.product;
-    const index = this.state.index;
+   // const index = this.state.index;
 
     return (
         <>
-            <Header />
             <div className="container">
                 <div className={"row"}>
                     <div className="col-2"></div>
@@ -88,7 +85,6 @@ export default class Product extends React.Component {
                  </div>
 
             </div>
-            <Footer />
       </>
     );
   }

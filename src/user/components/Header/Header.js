@@ -37,7 +37,7 @@ export default function Header() {
                     
                 </li>
                 <li><Link to="/">Trang chủ</Link></li>
-                <li><Link to="/products">Sản phẩm</Link></li>
+                <li><Link to="/productslist">Sản phẩm</Link></li>
                 <li><Link to="/signup">Đăng nhập/ Đăng ký</Link></li>
                 <li><Link to="/profile">Người dùng</Link></li>
                 <li onClick={toggleMenu}>

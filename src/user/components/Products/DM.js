@@ -9,7 +9,6 @@ import { fetchItemsList, fetchItemsListFilter } from "../../services/ItemService
 import Filter from "./Filter";
 import PriceButton from "./PriceButton";
 import DropList from "./DropList";
-import history from "../../../history";
 
 
 import {
@@ -20,16 +19,16 @@ import {
 import { useHistory } from "react-router-dom";
 // import { useLocation } from "react-router";
 
-export default class ProductsList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        products: [],
-        cart: [],
-        search: "",
-        to: 0,
-        from: 0
-      };
+export default function ProductsList () {
+//   constructor(props) {
+    // super(props);
+    // this.state = {
+        // products: [],
+        // cart: [],
+        // search: "",
+        // to: 0,
+        // from: 0
+    //   };
     //   console.log(this.props.match)
       
     // this.handleChange = this.handleChange.bind(this);
@@ -39,17 +38,15 @@ export default class ProductsList extends React.Component {
   
   handleClick = (from, to) =>{
     // alert(from + to)
-    // const history = this.props.history
+    const history = this.props.history
     const path = `/productslist/filter/price/${from}/${to}`
-    // alert(path)
-    
+    alert(path)
+    history.push(path)
       this.setState({
         ...this.state,
         to: to,
         from: from
       })
-      console.log(this.state)
-      history.push(path)
   }
 
   getList = async() => {
@@ -76,24 +73,23 @@ export default class ProductsList extends React.Component {
     }
   }
 
-  componentDidMount() {
-    console.log("vao")
-    const params = this.props.params
-    const path = this.props.path
+//   componentDidMount() {
+    // const params = this.props.params
+    // const path = this.props.path
     // ProductsApi.getAll().then((data) => {
     //   this.setState({
         // products: data
     //   });
-    // });
-    
-    
-    if (params !== undefined && path !== undefined && path.includes("filter/price")){
-        const filter = `?giaBatDau=${params.from}&giaKetThuc=${params.to}`
-        this.getFilter(filter)
-    }
-    else this.getList()
-   
-  }
+   // });
+    // 
+    // 
+    // if (params !== undefined && path !== undefined && path.includes("filter/price")){
+        // const filter = `?giaBatDau=${params.from}&giaKetThuc=${params.to}`
+        // this.getFilter(filter)
+    // }
+    // else this.getList()
+//    
+//   }
 
 //   handleSubmit(event) {
     // this.setState({})
@@ -108,27 +104,27 @@ onchange = (e) => {
     this.setState({ search: e.target.value });
   };
   
-  addToCart(product) {
-    const cartItem = {
-      matHang: {},
-      soLuong: 1
-    };
-    let trung = false;
-    const newCart = Object.assign([], this.state.cart);
-    for (let item of newCart) {
-      if (product.maMatHang === item.matHang.maMatHang) {
-        // console.log(item.matHang.maMatHang);
-        item.soLuong++;
-        trung = true;
-        this.setState({ cart: newCart });
-      }
-    }
-    if (trung === false) {
-      cartItem.matHang = product;
-      newCart.push(cartItem);
-      this.setState({ cart: newCart });
-    }
-  }
+//   addToCart(product) {
+    // const cartItem = {
+    //   matHang: {},
+    //   soLuong: 1
+    // };
+    // let trung = false;
+    // const newCart = Object.assign([], this.state.cart);
+    // for (let item of newCart) {
+    //   if (product.maMatHang === item.matHang.maMatHang) {
+       // console.log(item.matHang.maMatHang);
+        // item.soLuong++;
+        // trung = true;
+        // this.setState({ cart: newCart });
+    //   }
+    // }
+    // if (trung === false) {
+    //   cartItem.matHang = product;
+    //   newCart.push(cartItem);
+    //   this.setState({ cart: newCart });
+    // }
+//   }
 
   
   renderProduct = (product) => {
@@ -160,9 +156,6 @@ onchange = (e) => {
     );
   };
 
-
-
-  render() {
     // console.log(this.state.cart);
     // const { products } = this.state;
     // console.log(this.state.products.length)
@@ -187,8 +180,8 @@ onchange = (e) => {
                     <div className = "col-6">
                     {/* <div className="col-9"> */}
   <PriceButton to={1000000} handleClick = {this.handleClick}/>
-  <PriceButton from={1000000} to={3000000} handleClick = {this.handleClick}/>
-  <PriceButton from={3000000} handleClick = {this.handleClick}/>
+  <PriceButton from={1000000} to={3000000}/>
+  <PriceButton from={3000000}/>
 {/* /</div> */}
                         {/* <Filter /> */}
                     </div>
@@ -218,5 +211,4 @@ onchange = (e) => {
             </div>
       </>
     );
-  }
-}
+  

@@ -28,11 +28,22 @@ async function fetchItemsListByType(id) {
 }
 
 async function fetchItemsListFilter(filter) {
+    console.log(filter)
+    alert(filter)
     return await axios({
       headers: { "Access-Control-Allow-Origin": "*" },
       method: "GET",
-      url: `/mat-hang-management/mat-hang?${filter}`
+      url: `/mat-hang-management/mat-hang${filter}`
     })
 }
 
-export {fetchItem, fetchItemsList, fetchItemsListByType,fetchItemsListFilter};
+async function fetchItemsTypeList() {
+    config()
+    return await axios({
+      headers: { "Access-Control-Allow-Origin": "*" },
+      method: "GET",
+      url: `/loai-mat-hang-management/loai-mat-hang`})
+}
+
+
+export {fetchItem, fetchItemsList, fetchItemsListByType,fetchItemsListFilter, fetchItemsTypeList};
