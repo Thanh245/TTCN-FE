@@ -37,6 +37,7 @@ export default class GoodsItem extends Component {
         <div className="content">
           <div className="title">{this.state.title}</div>
           <div className="description">{this.state.descriptionItem}</div>
+          <p className="unitprice">Đơn giá: {this.state.unitprice} VND</p>
           <button onClick={this.props.deleteItem} className="removeitem">
             Xóa
           </button>
@@ -51,8 +52,7 @@ export default class GoodsItem extends Component {
             onChange={this.props.changeQuantity}
           ></input>
           <div idName="price">
-            <h2 className="mulprice">{price} VND</h2>
-            <p className="unitprice">({this.state.unitprice} VND each)</p>
+            <h2 className="mulprice">Tổng: {price} VND</h2>
           </div>
         </div>
         <hr></hr>

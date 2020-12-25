@@ -20,8 +20,19 @@ export default class Profile extends Component {
             thanhPho: "",
             sdt:"",
             validationMsg:{},
-            token:""
+            role:""
         })
+        if(JSON.parse(localStorage.getItem("user")===null))
+        {
+            const user = {
+                token:"",
+                id:0,
+                tenDangNhap:"",
+                role: "ROLE_GUEST",
+                tokenType:""
+            }
+            localStorage.setItem("user",JSON.stringify(user))
+        }
     } 
     
     componentWillMount(){
@@ -75,16 +86,25 @@ export default class Profile extends Component {
     onChangePhone = (e) =>{
         this.setState({sdt:e.target.value})
     }
-    onclickLogout=()=>{
-        localStorage.removeItem("token");
-        localStorage.removeItem("role");
-        this.setState({token:""})
+    onclickLogout = () => {
+        localStorage.removeItem("user");
+        const user = {
+            token:"",
+            id:0,
+            tenDangNhap:"",
+            role: "ROLE_GUEST",
+            tokenType:""
+        }
+        localStorage.setItem("user",JSON.stringify(user))
+        this.setState({
+            thanhPho:""
+        })
     }
 
     render() {
         var birthday = new Date(this.state.ngaySinh)
-        const token = localStorage.getItem("token")
-        if (!token)
+        const role = JSON.parse(localStorage.getItem("user")).role
+        if (role==="ROLE_GUEST")
         return <Redirect to='/signup'  />
         return(
             <div>

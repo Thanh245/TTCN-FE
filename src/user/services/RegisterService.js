@@ -12,3 +12,4 @@ async function requestRegister(user) {
       data: body,
     });
 }
+export default requestRegister
