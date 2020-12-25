@@ -22,7 +22,8 @@ async function updateUserProfileData(userInfo) {
     return await axios({
         headers: { "Access-Control-Allow-Origin": "*" },
         method: "PUT",
-        url: `nguoi-dung-management/authorized/nguoi-dung/${maNguoiDung}`,
+        url: `nguoi-dung-management/authorized/nguoi-dung/${JSON.parse(localStorage.getItem("user")).id}`,
         data: body,
     })
 }
+ export {fetchUserProfileData}

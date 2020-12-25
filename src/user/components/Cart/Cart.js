@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import FormOrder from "./FormOrder";
 import GoodsItem from "./GoodsItem";
+import Header from "../Header/Header";
 export default class Cart extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +18,7 @@ export default class Cart extends Component {
           unitprice: 3
         },
         {
-          src: "/itemgoods.jpg",
+          src: "https://vietnamleather.com/wp-content/uploads/2020/05/do-handmade-8.jpg",
           alt: "item1",
           title:"mon2",
           descriptionItem: "day la mon 2 ",
@@ -59,7 +60,16 @@ export default class Cart extends Component {
   render() {
     return (
         <div >
-          <div >
+            <Header />
+            <div>
+            <FormOrder
+             className="FormOrder"
+             shipping={this.state.shipping}
+            price={this.price()}
+            total={this.total()}
+            />
+            </div>
+            <div>
             {this.state.items.map((item, index) => (
               <GoodsItem
                 key={index}
@@ -67,17 +77,10 @@ export default class Cart extends Component {
                 deleteItem={this.deleteGoodsItem.bind(index, this)}
                 //setquantity={item => this.setState(item)}
                 changeQuantity={this.changeQuantity.bind(this, index)}
+                className="GoodItem"
               />
             ))}
-          </div>
-          <div>
-            <FormOrder
-              shipping={this.state.shipping}
-              price={this.price()}
-              total={this.total()}
-            />
-            <br></br>
-          </div>
+            </div> 
         </div>
     );
   }

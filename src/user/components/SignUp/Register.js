@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./form.css";
 import isEmpty from "validator/lib/isEmpty";
-import config from "./user/config/config";
-import requestRegister from "./user/services/RegisterService"
+import config from "../../config/config";
+import requestRegister from "../../../user/services/RegisterService"
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +31,7 @@ export default class Register extends Component {
       msg.fullname = "Vui lòng nhập họ tên";
     }
     if (isEmpty(mail)) {
-      msg.mail = "Vui lòng nhập email";
+      msg.mail = "Vui lòng nhập tên đăng nhập";
     }
     if (isEmpty(password)) {
       msg.password = "Vui lòng nhập mật khẩu";
@@ -53,9 +53,11 @@ export default class Register extends Component {
     };
     config()
     requestRegister(user).then((data) => {
-    console.log(data.data)
+        if(data.status===201) alert("Đăng ký thành công");
     //localStorage.setItem("token", data.data.accessToken)
-    }).catch()
+    }).catch((err) => {
+         alert("Đăng ký thất bại")
+    });
     // alert("successfully");
     // this.setState({
     //   successed: true
@@ -67,7 +69,7 @@ export default class Register extends Component {
       <React.Fragment>
         <div className="Register">
           <br />
-          <form onSubmit={this.submitForm} className="form-group">
+          <div className="form-group">
             <input
               type="text"
               placeholder="Họ tên"
@@ -79,7 +81,7 @@ export default class Register extends Component {
             <br />
             <input
               type="text"
-              placeholder="Đia chỉ email"
+              placeholder="Tên đăng nhập"
               name="mail"
               value={this.state.mail}
               onChange={this.onChange}
@@ -112,7 +114,7 @@ export default class Register extends Component {
               value="Đăng ký"
               onClick={this.submitForm}
             />
-          </form>
+          </div>
         </div>
       </React.Fragment>
     );

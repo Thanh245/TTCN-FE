@@ -79,3 +79,6 @@ input.submit:hover{
   background-color: rgb(24, 95, 202);
   color: #ffffff;
 }
+input.submit:focus{
+    outline: none;
+}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./form.css";
 import isEmpty from "validator/lib/isEmpty";
 import { Redirect } from "react-router-dom";
-import config from "../../config/config";
+import config from "../../../user/config/config";
 import requestLogin from "../../services/AuthenticationService"
 export default class Login extends Component {
   constructor(props) {
@@ -10,8 +10,21 @@ export default class Login extends Component {
     this.state = {
       mail: "",
       password: "",
-      validationMsg: {}
+      validationMsg: {},
+      user:{}
     };
+    console.log("constructor login");
+    if(JSON.parse(localStorage.getItem("user")===null))
+    {
+        const user = {
+            token:"",
+            id:0,
+            tenDangNhap:"",
+            role: "ROLE_GUEST",
+            tokenType:""
+        }
+        localStorage.setItem("user",JSON.stringify(user))
+    }
     this.onChange = this.onChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
@@ -27,7 +40,7 @@ export default class Login extends Component {
     const msg = {};
     const { mail, password } = this.state;
     if (isEmpty(mail)) {
-      msg.mail = "Vui lòng nhập email";
+      msg.mail = "Vui lòng nhập tên đăng nhập";
     }
     if (isEmpty(password)) {
       msg.password = "Vui lòng nhập mật khẩu";
@@ -40,38 +53,38 @@ export default class Login extends Component {
         tenDangNhap: this.state.mail,
         matKhau: this.state.password,
     }
-    console.log(user)
     config()
-    requestLogin(user).then((data) => {
-            console.log("logined")
-            console.log(data);
-            localStorage.setItem("role","user")
-            localStorage.setItem("token","successfully")
-    }).catch()
-    // localStorage.setItem("role","user")
-    // localStorage.setItem("token","successfully")
-    // this.setState({
-    //   loggedIn: true
-    // });
-  }
-
+    requestLogin(user).then((res) => {
+        console.log(res.data)
+        const userInfor = {
+            token: res.data.accessToken,
+            id: res.data.id,
+            tenDangNhap: res.data.tenDangNhap,
+            role: res.data.role,
+            tokenType: res.data.tokenType
+        }
+        localStorage.removeItem("user");
+        localStorage.setItem('user', JSON.stringify(userInfor));
+        this.setState({user:userInfor})
+    }).catch( ()=> {alert("Đăng nhập thất bại")})
+}
   render() {
-    const role = localStorage.getItem("role")
-    const token = localStorage.getItem("token")
-    if(role==="admin")
+    const userInfor = JSON.parse(localStorage.getItem('user'));
+    const role = userInfor.role
+    if(role==="ROLE_ADMIN")
     {
       return <Redirect to= "/admin" />
     }
-    if(token&&role==="user")
-    return <Redirect to = "/home"/>
+    if(role==="ROLE_USER")
+    return <Redirect to = "/"/>
     return (
       <React.Fragment>
         <div className="Login">
           <br />
-          <form onSubmit={this.submitForm} className="form-group">
+          <div className="form-group">
             <input
               type="text"
-              placeholder="Địa chỉ email"
+              placeholder="Tên đăng nhập"
               name="mail"
               value={this.state.mail}
               onChange={this.onChange}
@@ -94,7 +107,7 @@ export default class Login extends Component {
               value="Đăng nhập"
               onClick={this.submitForm}
             />
-          </form>
+          </div>
         </div>
       </React.Fragment>
     );
