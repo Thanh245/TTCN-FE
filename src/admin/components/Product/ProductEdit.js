@@ -107,7 +107,7 @@ export const ProductEdit = (props) => {
               <TextInput source="tenMatHang" validate={required()} resettable />
               
               <ReferenceInput source="loaiMatHang.maLoaiMatHang" reference="loai-mat-hang" label="Loại mặt hàng" allowEmpty>
-                <RadioButtonGroupInput optionText="tenLoaiMatHang" source="maLoaiMatHang"/>
+                <SelectInput optionText="tenLoaiMatHang" source="maLoaiMatHang"/>
               </ReferenceInput>
             </FormTab>
             <FormTab label="Mô tả">

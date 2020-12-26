@@ -24,6 +24,8 @@ import MyLayout from "./components/Layout/MyLayout";
 import { CategoryCreate } from "./components/Category/CategoryCreate";
 import { Provider } from 'react-redux';
 import { OrderList } from "./components/Order/OrderList";
+import { OrderEdit } from "./components/Order/OrderEdit";
+
 
 
 const dataProvider = SpringDataProvider(
@@ -59,7 +61,7 @@ export const AdminPage = () => {
         name="don-hang"
         list={OrderList}
         options={{ label: 'Đơn đặt hàng' }}
-        edit={EditGuesser}
+        edit={OrderEdit}
         icon={AddShoppingCartIcon} />
       <Resource
         name="nguoi-dung"

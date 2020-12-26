@@ -113,9 +113,15 @@ export default (apiUrl, httpClient =  (url, options = {}) => {
         break;
       }
       case UPDATE:
-        url = `${apiUrl}/${mapPath(resource,  'UPDATE')}/${resource}/${params.id}`;
-        options.method = "PUT";
-        options.body = JSON.stringify(params.data);
+        if(resource === "don-hang"){
+          options.method = "PUT";
+          url = `${apiUrl}/${mapPath(resource,  'UPDATE')}/${resource}/${params.id}/trang-thai-don-hang/${params.data.maTrangThai}`;
+        } else{
+          url = `${apiUrl}/${mapPath(resource,  'UPDATE')}/${resource}/${params.id}`;
+          options.method = "PUT";
+          options.body = JSON.stringify(params.data);
+        }
+        
         break;
       case CREATE:
         url = `${apiUrl}/${mapPath(resource, 'CREATE')}/${resource}`;
