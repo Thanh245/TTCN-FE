@@ -6,7 +6,7 @@ import React from "react";
 import ReactPaginate from "react-paginate";
 import "./Product.css";
 import { fetchItemsList, fetchItemsListFilter } from "../../services/ItemService";
-import Filter from "./Filter";
+// import Filter from "./Filter";
 import PriceButton from "./PriceButton";
 import DropList from "./DropList";
 import history from "../../../history";
@@ -17,7 +17,7 @@ import {
     Col,
     Button
   } from "reactstrap";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 // import { useLocation } from "react-router";
 
 export default class ProductsList extends React.Component {
@@ -132,8 +132,6 @@ onchange = (e) => {
 
   
   renderProduct = (product) => {
-    //const { search } = this.state;
-
     return (
         <div className= "col-4">
             <div className="card">
@@ -176,13 +174,16 @@ onchange = (e) => {
         <>
             <div className="container">
                 <div className = "row">
-                    <div className = "col-6">
+                    <div className = "col-4">
                         <input
                             className = "search-item"
                           placeholder = "Tìm kiếm sản phẩm"
                         //   icon="search"
                           onChange={this.onchange}
                         />
+                    </div>
+                    <div className= "col-2 droplist">
+                        <DropList />
                     </div>
                     <div className = "col-6">
                     {/* <div className="col-9"> */}

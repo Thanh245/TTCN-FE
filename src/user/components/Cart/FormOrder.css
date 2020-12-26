@@ -53,13 +53,22 @@
     margin-top: 1vw;
     width: 20vw;
     height: 2.5vw;
+    width: 80%;
   }
-  .pay:hover {
+  .pay:hover  {
     box-shadow: 0px 5px 8px 4px #dbd9d9;
+    background-color: rgb(0, 162, 255);
   }
-  .pay:focus{
-    color: #ffffff;
-    background-color:#000;
-      outline: 0px;
+  /* .pay:focus{ */
+    /* color: #ffffff; */
+    /* background-color:#000; */
+    /* outline: 0px; */
+  /* } */
+
+  .btn:hover{
+    color: #ffffff; 
   }
+
+  
+  
   

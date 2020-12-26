@@ -10,7 +10,6 @@ class DropList extends React.Component{
       }
 
     getItemsTypeList = async() => {
-
         const res = await fetchItemsTypeList();
         if (res.status === 200) {
           this.setState({
@@ -23,8 +22,6 @@ class DropList extends React.Component{
         this.getItemsTypeList()
     }
     
-    
-
     render (){
         return(
             <div>
@@ -33,10 +30,6 @@ class DropList extends React.Component{
                 </select>
             </div>
         )
-       
-       
-       
-       
     }
     
 }

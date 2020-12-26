@@ -21,7 +21,6 @@ function App() {
     <Header />     
         <Switch>
         <Route path="/" exact  component={Home} />
-
         <Route path="/productslist/filter/price/:from/:to"  render={({match})=>(<ProductsList params={match.params} path={match.path}></ProductsList>)} />
         <Route path="/productslist" exact  component={ProductsList} />
         <Route path="/productslist/:id" render={(props)=>(<Product {...props}></Product>)} />

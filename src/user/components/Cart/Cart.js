@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import FormOrder from "./FormOrder";
 import GoodsItem from "./GoodsItem";
-import Header from "../Header/Header";
 export default class Cart extends Component {
   constructor(props) {
     super(props);
@@ -59,28 +58,29 @@ export default class Cart extends Component {
   }
   render() {
     return (
-        <div >
-            <Header />
-            <div>
-            <FormOrder
-             className="FormOrder"
-             shipping={this.state.shipping}
-            price={this.price()}
-            total={this.total()}
-            />
+        <div className="">
+            <div className="row">
+                <div className = "col-8">
+                    {this.state.items.map((item, index) => (
+                      <GoodsItem
+                        key={index}
+                        item={item}
+                        deleteItem={this.deleteGoodsItem.bind(index, this)}
+                        //setquantity={item => this.setState(item)}
+                        changeQuantity={this.changeQuantity.bind(this, index)}
+                        className="GoodItem"
+                      />
+                    ))}
+                </div> 
+                <div className="col-4">
+                    <FormOrder
+                     className="FormOrder"
+                     shipping={this.state.shipping}
+                     price={this.price()}
+                     total={this.total()}
+                    />
+                </div>
             </div>
-            <div>
-            {this.state.items.map((item, index) => (
-              <GoodsItem
-                key={index}
-                item={item}
-                deleteItem={this.deleteGoodsItem.bind(index, this)}
-                //setquantity={item => this.setState(item)}
-                changeQuantity={this.changeQuantity.bind(this, index)}
-                className="GoodItem"
-              />
-            ))}
-            </div> 
         </div>
     );
   }

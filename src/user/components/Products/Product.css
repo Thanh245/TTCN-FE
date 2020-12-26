@@ -96,16 +96,26 @@
 .label {
     font-weight: bold;
     text-align: center;
-  
     justify-content: center;
     align-items: center;
     flex-direction: column;
     display: inline-block
 }
 
-.search-item{
+.search-item {
+    margin: 5px 15px;
     width: 100%;
     border-radius: solid 50px ;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.droplist{
+    margin: 10px 0px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .gia {

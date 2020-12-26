@@ -1,6 +1,4 @@
 import React from "react";
-import {NavLink, Route} from "react-router-dom"
-import ProductsList from "./ProductsList";
 import {useHistory, useLocation} from "react-router-dom"
 function PriceButton(props){
     // constructor(props) {

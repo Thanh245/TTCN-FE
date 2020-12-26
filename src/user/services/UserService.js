@@ -26,4 +26,4 @@ async function updateUserProfileData(userInfo) {
         data: body,
     })
 }
- export {fetchUserProfileData}
+ export {fetchUserProfileData, updateUserProfileData }
