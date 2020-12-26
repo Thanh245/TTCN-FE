@@ -15,22 +15,21 @@ export default class GoodsItem extends Component {
   }
   componentWillMount() {
     this.setState({
-      src: this.props.item.src,
-      alt: this.props.item.alt,
-      title: this.props.item.title,
-      descriptionItem: this.props.item.descriptionItem,
-      quantityvalid: this.props.item.quantityvalid,
-      quantity: this.props.item.quantity,
-      unitprice: this.props.item.unitprice
+      src: this.props.matHang.danhSachHinhAnh[0],
+      title: this.props.matHang.tenMatHang,
+      descriptionItem: this.props.matHang.moTa,
+      quantityvalid: this.props.matHang.soLuong,
+      quantity: this.props.soLuong,
+      unitprice: this.props.matHang.gia
     });
   }
   render() {
-    const price = this.props.item.quantity * this.state.unitprice;
+    const src=`data:image/*;base64, ${this.props.matHang.danhSachHinhAnh[0] !== undefined ? this.props.matHang.danhSachHinhAnh[0].anh: ""}`
     return (
       <div className="goodsItem">
         <img
           //src={process.env.PUBLIC_URL + this.state.src}
-          src={this.state.src}
+          src={src}
           alt={this.state.alt}
           className="imageItem"
         />
@@ -52,7 +51,7 @@ export default class GoodsItem extends Component {
             onChange={this.props.changeQuantity}
           ></input>
           <div idName="price">
-            <h2 className="mulprice">Tổng: {price} VND</h2>
+            <h2 className="mulprice">Tổng: {this.props.soLuong*this.state.unitprice} VND</h2>
           </div>
         </div>
         <hr></hr>

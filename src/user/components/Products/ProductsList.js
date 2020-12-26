@@ -1,24 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
-//import {userLocation, useParams} from "react-router-dom";
-//import ProductItem from "./ProductItem";
-//import ProductsApi from "./api/products";
 import ReactPaginate from "react-paginate";
 import "./Product.css";
-import { fetchItemsList, fetchItemsListFilter } from "../../services/ItemService";
-// import Filter from "./Filter";
+import {  fetchItemsList, fetchItemsListFilter,fetchItemsTypeList,fetchItemsListByType } from "../../services/ItemService";
 import PriceButton from "./PriceButton";
-import DropList from "./DropList";
 import history from "../../../history";
+import { Row, Col, Button } from "reactstrap";
 
-
-import {
-    Row,
-    Col,
-    Button
-  } from "reactstrap";
-// import { useHistory } from "react-router-dom";
-// import { useLocation } from "react-router";
+import {Link } from "react-router-dom";
 
 export default class ProductsList extends React.Component {
   constructor(props) {
@@ -28,180 +17,179 @@ export default class ProductsList extends React.Component {
         cart: [],
         search: "",
         to: 0,
-        from: 0
+        from: 0,
+        loaiMatHangList: [],
       };
-    //   console.log(this.props.match)
-      
-    // this.handleChange = this.handleChange.bind(this);
-    //  this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  
-  
-  handleClick = (from, to) =>{
-    // alert(from + to)
-    // const history = this.props.history
-    const path = `/productslist/filter/price/${from}/${to}`
-    // alert(path)
-    
-      this.setState({
-        ...this.state,
-        to: to,
-        from: from
-      })
-      console.log(this.state)
-      history.push(path)
   }
 
   getList = async() => {
       const res = await fetchItemsList();
-      if (res.status === 201) {
+      if (res.status === 200) {
           this.setState({
-            // ...this.state,
+            ...this.state,
             products: res.data.data
-
           })
       }
   }
 
-  getFilter = async(filter) => {
-    //   console.log(filter)
-      const res = await fetchItemsListFilter(filter);
-    //   console.log(res)
-      if (res.status === 201) {
+  getFilter = async(from, to) => {
+    const path = `/productslist/filter/price/${from}/${to}`
+    history.push(path)
+    const filter = `?giaBatDau=${from}&giaKetThuc=${to}`
+    const res = await fetchItemsListFilter(filter);
+    if (res.status === 200) {
         this.setState({
-          // ...this.state,
+          ...this.state,
+          products: res.data.data,
+          loading: false
+        })
+    }
+  }
+ 
+  getItemsListFilter = async(filter) =>{
+      const res = await fetchItemsListFilter(filter);
+      if (res.status === 200) {
+        this.setState({
+          ...this.state,
           products: res.data.data,
           loading: false
         })
     }
   }
 
-  componentDidMount() {
-    console.log("vao")
-    const params = this.props.params
-    const path = this.props.path
-    // ProductsApi.getAll().then((data) => {
-    //   this.setState({
-        // products: data
-    //   });
-    // });
-    
-    
-    if (params !== undefined && path !== undefined && path.includes("filter/price")){
-        const filter = `?giaBatDau=${params.from}&giaKetThuc=${params.to}`
-        this.getFilter(filter)
+  getItemsTypeList = async() =>{
+      const res = await fetchItemsTypeList();
+      if (res.status === 200) {
+        this.setState({
+            ...this.state,
+          loaiMatHangList: res.data.data,
+        })
     }
-    else this.getList()
-   
   }
 
-//   handleSubmit(event) {
-    // this.setState({})
-//   }
+  getItemsListByType = async() => {
+    const selectedIndex = document.getElementById('select').selectedIndex - 1
+    const id = this.state.loaiMatHangList[selectedIndex].maLoaiMatHang
+    history.push(`/productslist/filter/type/${id}`)
+    const res = await fetchItemsListByType(id);
+    if (res.status === 200) {
+      this.setState({
+          ...this.state,
+        products: res.data.data
+      })
+    }
+  }
 
-//   handleChange = event => {
-    // this.setState({ value: event.target.value });
-//   };
+  componentDidMount() {
+    const params = this.props.params
+    const path = this.props.path
+    this.getItemsTypeList()
+    if (params !== undefined && path !== undefined && path.includes("filter/price")){
+        this.getFilter(params.from, params.to)
+    }
+    else if (params !== undefined && path !== undefined && path.includes("filter/price")){
+        this.getItemsListByType(params.id)
+    }
+    else {
+        this.getList()
+        
+    }
+  }
 
-
-onchange = (e) => {
-    this.setState({ search: e.target.value });
-  };
-  
   addToCart(product) {
     const cartItem = {
       matHang: {},
       soLuong: 1
     };
     let trung = false;
-    const newCart = Object.assign([], this.state.cart);
+    const cart = JSON.parse(sessionStorage.getItem("cart"))
+    if(cart !==null) {
+         var newCart = cart
+    }
+    else { newCart = Object.assign([], this.state.cart);}
     for (let item of newCart) {
       if (product.maMatHang === item.matHang.maMatHang) {
-        // console.log(item.matHang.maMatHang);
         item.soLuong++;
         trung = true;
-        this.setState({ cart: newCart });
+        console.log(newCart)
+        sessionStorage.removeItem("cart")
+        sessionStorage.setItem("cart", JSON.stringify(newCart))
+        this.setState({
+            ...this.state,
+             cart: newCart
+        });
       }
     }
     if (trung === false) {
+        if(newCart.length===9) {
+            alert("Giỏ hàng đã đầy")
+            return
+    }
       cartItem.matHang = product;
       newCart.push(cartItem);
-      this.setState({ cart: newCart });
+      sessionStorage.removeItem("cart")
+      sessionStorage.setItem("cart", JSON.stringify(newCart))
+      this.setState({ ...this.state,
+        cart: newCart });
     }
   }
-
-  
+ 
   renderProduct = (product) => {
+    const src=`data:image/*;base64, ${product.danhSachHinhAnh[0] !== undefined ? product.danhSachHinhAnh[0].anh: ""}`
     return (
         <div className= "col-4">
             <div className="card">
-                {/* <img src={product.URL[0]} className="card-img-top" alt="..." /> */}
+                <img src={src} className="card-img-top" alt="..." />
                 <div className="card-body">
                   <h5 className="card-title">{product.tenMatHang}</h5>
                   <p className="card-text">Price {product.gia}</p>
                   <Row>
-                    <Col sm="5" xs="12">
+                    <Col sm="6" xs="12">
                       <Button onClick={() => this.addToCart(product)}>Add to cart</Button>
                     </Col>
                     <Col sm="4" xs="12">
-                      <a
-                        href={"/productslist/" + product.maMatHang}
+                        
+                      <Link 
+                        to={"/productslist/" + product.maMatHang}
                         className="btn btn-primary"
                       >
                         Details
-                      </a>
+                      </Link>
+
                     </Col>
                   </Row>
                 </div>
             </div>
+            <br></br>
         </div>
     );
   };
 
-
-
   render() {
-    // console.log(this.state.cart);
-    // const { products } = this.state;
-    // console.log(this.state.products.length)
-    const { search } = this.state;
-    const filteredProduct = this.state.products.filter((product) => {
-        return (
-            product.tenMatHang.toLowerCase().indexOf(search.toLowerCase()) !== -1
-        );
-      });
     return (
         <>
             <div className="container">
                 <div className = "row">
-                    <div className = "col-4">
-                        <input
-                            className = "search-item"
-                          placeholder = "Tìm kiếm sản phẩm"
-                        //   icon="search"
-                          onChange={this.onchange}
-                        />
+                    <p className="FilterContent">Chọn mức giá: </p>
+                    <div className = "col-6">
+                        <PriceButton to={1000000} handleClick = {this.getFilter.bind(this)}/>
+                        <PriceButton from={1000000} to={3000000} handleClick = {this.getFilter.bind(this)}/>
+                        <PriceButton from={3000000} handleClick = {this.getFilter.bind(this)}/>
                     </div>
                     <div className= "col-2 droplist">
-                        <DropList />
-                    </div>
-                    <div className = "col-6">
-                    {/* <div className="col-9"> */}
-  <PriceButton to={1000000} handleClick = {this.handleClick}/>
-  <PriceButton from={1000000} to={3000000} handleClick = {this.handleClick}/>
-  <PriceButton from={3000000} handleClick = {this.handleClick}/>
-{/* /</div> */}
-                        {/* <Filter /> */}
+                        <select id="select" onChange={this.getItemsListByType.bind(this)}>
+                            <option disabled selected>Loại mặt hàng</option>
+                            {this.state.loaiMatHangList.map((item)=>(<option> {item.tenLoaiMatHang} </option>)) }
+                        </select>
                     </div>
                 </div>
                 <br></br>
                 <div>
                   <div className="row">
-                    {filteredProduct.map((product) => {
-                        return this.renderProduct(product);
-                    })}
+                    {this.state.products.map((product) => {return this.renderProduct(product);})}                  
                   </div>
                 </div>
+                
                 <div className="page">
                     <ReactPaginate
                         previousLabel={"prev"}

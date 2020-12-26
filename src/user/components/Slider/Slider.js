@@ -63,6 +63,7 @@ const data = [
 ];
 export default function Slider() {
   return (
+      <div className="Slider">
     <Swiper
       effect="fade"
       spaceBetween={20}
@@ -77,7 +78,7 @@ export default function Slider() {
         <SwiperSlide key={user.id} className="slide">
           <div className="slide-content">
             <div className="user-image">
-              <img src={process.env.PUBLIC_URL +  user.url} alt="dm" className="user-photo" />
+              <img src={process.env.PUBLIC_URL +  user.url} alt="" className="user-photo" />
             </div>
             <h2>{user.username}</h2>
             {/* <p className="user-testimonial"> */}
@@ -87,5 +88,6 @@ export default function Slider() {
         </SwiperSlide>
       ))}
     </Swiper>
+    </div>
   );
 }

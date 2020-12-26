@@ -1,20 +1,34 @@
 import React, { Component } from "react";
 import "./Order.css";
 import isEmpty from "validator/lib/isEmpty";
+import requestOrderInfo from "../../services/OrderService";
+import { Redirect } from "react-router-dom";
 
 export default class Order extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      confirm_email: "",
       fullname: "",
       phonenumber: "",
       address: "",
       note: "",
       validationMsg: {},
-      successed: false
+      inforOrder: {}
     };
+    if(JSON.parse(localStorage.getItem("inforOrder")===null))
+    {
+        const inforOrder = {
+            token:"",
+            id:0,
+            tenNguoiNhanHang:"",
+            role: "ROLE_GUEST",
+            tokenType:"",
+            diaChiGiaoHang: "",
+            SDTGiaoHang: "",
+            chuThich: ""
+        }
+        localStorage.setItem("inforOrder",JSON.stringify(inforOrder))
+    }
     this.onChange = this.onChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
@@ -26,17 +40,8 @@ export default class Order extends Component {
   }
   submitForm(e) {
     e.preventDefault();
-    const { email, confirm_email, fullname, phonenumber, address } = this.state;
+    const { fullname, phonenumber, address } = this.state;
     const msg = {};
-    if (isEmpty(email)) {
-      msg.email = "Vui lòng nhập email";
-    }
-    if (isEmpty(confirm_email)) {
-      msg.confirm_email = "Vui lòng xác nhận email";
-    }
-    if (email !== confirm_email) {
-      msg.confirm_email = "Email không trùng khớp";
-    }
     if (isEmpty(fullname)) {
       msg.fullname = "Vui lòng nhập họ tên";
     }
@@ -50,15 +55,39 @@ export default class Order extends Component {
       validationMsg: msg
     });
     if (Object.keys(msg).length > 0) return;
-    alert("successfully");
-    this.setState({
-      successed: true
-    });
+    const inforOrder = {
+        tenNguoiNhanHang:this.state.fullname,
+        diaChiGiaoHang: this.state.address,
+        SDTGiaoHang: this.state.phonenumber,
+        chuThich: this.state.note
+    }
+    requestOrderInfo(inforOrder).then((res) => {
+        // console.log(res.data)
+        const userInforOrder = {
+            token:res.data.accessToken,
+            id:res.data.id,
+            tenNguoiNhanHang:res.data.tenNguoiNhanHang,
+            role: res.data.role,
+            tokenType: res.data.tokenType,
+            diaChiGiaoHang:  res.data.diaChiGiaoHang,
+            SDTGiaoHang: res.data.SDTGiaoHang,
+            chuThich: res.data.chuThich
+        }
+        localStorage.removeItem("inforOrder");
+        localStorage.setItem('inforOrder', JSON.stringify(userInforOrder));
+        this.setState({inforOrder:userInforOrder})
+    })
   }
-
-
   
   render() {
+    const userInforOrder = JSON.parse(localStorage.getItem('inforOrder'));
+    const role = userInforOrder.role
+    if(role==="ROLE_ADMIN")
+    {
+      return <Redirect to= "/admin" />
+    }
+    if(role==="ROLE_USER")
+    return <Redirect to = "/"/>
     return (
         <>
       <React.Fragment>

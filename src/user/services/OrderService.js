@@ -26,3 +26,5 @@ async function getOrderInfoList() {
       url: `/don-hang-management/authorized/don-hang/tai-khoan/${localStorage.getItem("maTaiKhoan")}`,
     });
 }
+
+export default {requestOrderInfo, getOrderInfoList}

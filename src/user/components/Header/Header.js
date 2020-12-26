@@ -3,14 +3,10 @@ import Menu from '../svg/bars-solid.svg'
 import Close from '../svg/times-solid.svg'
 import Cart from '../svg/cart.svg'
 import {Link} from 'react-router-dom'
-//import {DataContext} from '../Products/DataProvider'
 import './Header.css'
 
 export default function Header() {
-
     const [menu, setMenu] = useState(false)
-   // const value = useContext(DataContext)
-    //const [cart] = value.cart
 
     const toggleMenu = () =>{
         setMenu(!menu)
@@ -25,16 +21,12 @@ export default function Header() {
             <div className="menu" onClick={toggleMenu}>
                 <img src={Menu} alt="" width="30" />
             </div>
-
             <div className="logo">
                 <h1><Link to="/" >HMS</Link></h1>
             </div>
-          
             <ul style={styleMenu}>
                 <li  >
-                
                     <input  className="inputSearch"  type="text" placeholder="   Search..." />
-                    
                 </li>
                 <li><Link to="/">Trang chủ</Link></li>
                 <li><Link to="/productslist">Sản phẩm</Link></li>
@@ -45,7 +37,7 @@ export default function Header() {
                 </li>
             </ul>
             <div className="cart-icon">
-                {/* <span>{cart.length}</span> */}
+                {/* <span>{Cart.length}</span> */}
                 <Link to="/cart">
                     <img src={Cart} alt="" width="30" />
                 </Link>

@@ -2,6 +2,7 @@ import axios from "axios";
 import config from "../config/config"
 async function fetchItem(id) {
     config()
+    // alert()
     return await axios({
       headers: { "Access-Control-Allow-Origin": "*" },
       method: "GET",
@@ -11,6 +12,7 @@ async function fetchItem(id) {
 
 async function fetchItemsList() {
     config()
+    // alert()
     return await axios({
       headers: { "Access-Control-Allow-Origin": "*" },
       method: "GET",
@@ -28,8 +30,7 @@ async function fetchItemsListByType(id) {
 }
 
 async function fetchItemsListFilter(filter) {
-    console.log(filter)
-    alert(filter)
+    config()
     return await axios({
       headers: { "Access-Control-Allow-Origin": "*" },
       method: "GET",
