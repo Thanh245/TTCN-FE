@@ -1,37 +1,19 @@
 import React, { Component } from "react";
 import FormOrder from "./FormOrder";
 import GoodsItem from "./GoodsItem";
-import Header from "../Header/Header";
+import "./Cart.css";
+
 export default class Cart extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      shipping: 20,
-      items: [
-        {
-          src: "https://appay.vn/wp-content/uploads/2020/01/viec-lam-cho-ba-bau5-min.jpg",
-          alt: "123",
-          title:"mon1",
-          descriptionItem: "day la mon 1",
-          quantityvalid: 30,
-          quantity: 2,
-          unitprice: 3
-        },
-        {
-          src: "https://vietnamleather.com/wp-content/uploads/2020/05/do-handmade-8.jpg",
-          alt: "item1",
-          title:"mon2",
-          descriptionItem: "day la mon 2 ",
-          quantityvalid: 30,
-          quantity: 3,
-          unitprice: 3
-        }
-      ]
-    };
+    this.state = ({
+      shipping: 10000,
+      cart:[]
+    });
   }
   price() {
-    return this.state.items.reduce(function (total, item) {
-      return total + item.quantity * item.unitprice;
+    return this.state.cart.reduce(function (total, item) {
+      return total + item.soLuong * item.matHang.gia;
     }, 0);
   }
 
@@ -40,47 +22,58 @@ export default class Cart extends Component {
   };
 
   deleteGoodsItem = (index, e) => {
-    const items = Object.assign([], this.state.items);
+    const items = Object.assign([], this.state.cart);
     items.splice(index, 1);
-    this.setState({
-      items: items
-    });
+    sessionStorage.removeItem("cart")
+    sessionStorage.setItem("cart",JSON.stringify(items))
+    window.location.reload();
   };
 
   changeQuantity = (index, e) => {
-    const item = Object.assign([], this.state.items);
-    item[index].quantity = e.target.valueAsNumber;
+    const item = Object.assign([], this.state.cart);
+    item[index].soLuong = e.target.valueAsNumber;
+    sessionStorage.removeItem("cart")
+    sessionStorage.setItem("cart",JSON.stringify(item))
     this.setState({
-      items: item
+      cart: item
     });
   };
-  shouldComponentUpdate() {
-    return true;
+  componentDidMount(){
+    const cart =JSON.parse(sessionStorage.getItem("cart"))
+    if(cart!==null)
+    this.setState({
+        ...this.state,
+        cart:cart
+    })
+    else this.state.cart.length=0
   }
   render() {
+    if(this.state.cart.length === 0) return (<div><h1>Giỏ hàng trống</h1></div>)
     return (
-        <div >
-            <Header />
-            <div>
-            <FormOrder
-             className="FormOrder"
-             shipping={this.state.shipping}
-            price={this.price()}
-            total={this.total()}
-            />
+        <div className="cart">
+            <div className="row">
+                <div className = "col-8">
+                    {this.state.cart.map((item, index) => (
+                      <GoodsItem
+                        key={index}
+                        matHang={item.matHang}
+                        soLuong ={item.soLuong}
+                        deleteItem={this.deleteGoodsItem.bind(this, index)}
+                        //setquantity={item => this.setState(item)}
+                        changeQuantity={this.changeQuantity.bind(this, index)}
+                        className="GoodItem"
+                      />
+                    ))}
+                </div> 
+                <div className="col-4">
+                    <FormOrder
+                     className="FormOrder"
+                     shipping={this.state.shipping}
+                     price={this.price()}
+                     total={this.total()}
+                    />
+                </div>
             </div>
-            <div>
-            {this.state.items.map((item, index) => (
-              <GoodsItem
-                key={index}
-                item={item}
-                deleteItem={this.deleteGoodsItem.bind(index, this)}
-                //setquantity={item => this.setState(item)}
-                changeQuantity={this.changeQuantity.bind(this, index)}
-                className="GoodItem"
-              />
-            ))}
-            </div> 
         </div>
     );
   }

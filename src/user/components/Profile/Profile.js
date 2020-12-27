@@ -7,13 +7,12 @@ import isEmpty from "validator/lib/isEmpty"
 import validator from "validator"
 import config from "../../config/config";
 import {fetchUserProfileData, updateUserProfileData, updateUserAvatar} from "../../services/UserService"
-let userInfor;
 export default class Profile extends Component {
     constructor(props){
         super(props)
         this.state = {
             userInfor:{
-                anhDaiDien:"",
+                anhDaiDien:null,
                 gioiTinh:3,
                 ngaySinh: "1999-11-20",
                 hoTen:"",
@@ -45,10 +44,6 @@ export default class Profile extends Component {
             hoTen:data.data.hoTen,
             thanhPho: data.data.thanhPho,
             sdt:data.data.sdt,
-        }
-        console.log(data.data)
-        if(userInfor.anhDaiDien===null||userInfor.anhDaiDien===""){
-            userInfor.anhDaiDien = "https://www.minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg"
         }
         if(userInfor.ngaySinh===null)
         {
@@ -95,7 +90,7 @@ export default class Profile extends Component {
                     ...this.state,
                     userInfor: {
                         ...this.state.userInfor,
-                        anhDaiDien: reader.result
+                        anhDaiDien: reader.result.substr(23)
                     },
                     modified: true
                 })
@@ -145,13 +140,13 @@ export default class Profile extends Component {
         dataForm.set("maGioiTinh","")
         dataForm.set("ngaySinh","")
         dataForm.set("anhDaiDien","")
-        const entries = dataForm.entries()
-        console.log(typeof(this.state.userInfor.gioiTinh))
+        // const entries = dataForm.entries()
         // dataForm.append("anhDaiDien",userForm["anhDaiDien"].src)
         updateUserProfileData(this.state.userInfor).then((data) => {
             alert()
             }).catch((err) => {
                 alert("thất bại")
+                console.log(this.state.userInfor)
             })
         if (this.state.modified) {
             updateUserAvatar(userForm).then(res => {
@@ -224,9 +219,10 @@ export default class Profile extends Component {
     }
 
     render() {
-        console.log(this.state.userInfor.ngaySinh)
+        console.log(this.state.userInfor.gioiTinh)
         var birthday = new Date(this.state.userInfor.ngaySinh)
         const role = JSON.parse(localStorage.getItem("user")).role
+        let src = (this.state.userInfor.anhDaiDien===null||this.state.userInfor.anhDaiDien.length===0)? `${process.env.PUBLIC_URL}/images/default-avatar.jpg` :`data:image/*;base64, ${this.state.userInfor.anhDaiDien}`
         if (role==="ROLE_GUEST")
         return <Redirect to='/signup'  />
         return(
@@ -236,44 +232,35 @@ export default class Profile extends Component {
               <button className="btn_logout" onClick={this.onclickLogout}> Đăng xuất</button>
               <div className="contain_profile">
                     <div className="choose_new_avatar">
-                        <label> Ảnh đại diện: </label>
-                        <input type="file" accept="image/*" onChange={this.imageHandler} name="anhDaiDien" ></input>
-                        <img src={this.state.userInfor.anhDaiDien}  alt="this is avatar" className="avatar_image" ></img>
+                        <div className="anhDaiDien">Ảnh đại diện <input type="file" accept="image/*" onChange={this.imageHandler} name="anhDaiDien" ></input></div>
+                        <div className="avatar_image"><img src={src} alt="this is avatar" className="avatar_image" ></img></div>
                     </div>
                     <hr/>
-                    <div className="your_name" >
-                        <label> Họ Và Tên: </label>
-                        <input className="your_name" name="hoTen" type="text" defaultValue={this.state.userInfor.hoTen} onChange={this.onChangeName}></input>
-                        <p className="warning">{this.state.validationMsg.hoTen}</p>
-                    </div>
+                   
+                    <div className="hoTen">Họ Và Tên:</div>
+                    <input className="your_name" name="hoTen" type="text" defaultValue={this.state.userInfor.hoTen} onChange={this.onChangeName}></input>
+                    <p className="warning">{this.state.validationMsg.hoTen}</p>
                     <hr/>
-                    <div className="gender">
-                    <label> Giới Tính: </label>
+                    <div className="gioiTinh">Giới Tính: </div>
                     <input type="radio"  name="maGioiTinh" value={1} defaultChecked={this.state.userInfor.gioiTinh === 1} onClick={this.onChangeGender}/>
                     <label htmlFor={1} className="gender">Nam</label> 
                     <input type="radio"  name="maGioiTinh" value={2} defaultChecked={this.state.userInfor.gioiTinh === 2} onClick={this.onChangeGender}/>
                     <label htmlFor={2} className="gender" >Nữ</label>
                     <input type="radio" name="maGioiTinh" value={3} defaultChecked={this.state.userInfor.gioiTinh === 3} onClick={this.onChangeGender}/>
                     <label htmlFor={3} className="gender" >Khác</label>
-                    </div>
                     <hr/>
-                    <div className="address">
-                        <label htmlFor="address"> Thành Phố:  </label>
-                        <input type="text" id="address" name="thanhPho" className="address" defaultValue={this.state.userInfor.thanhPho} onChange={this.onChangeCity}></input>
-                    </div>
+                    <div className="address">Thành Phố: </div>
+                    <input type="text" id="address" name="thanhPho" className="address" defaultValue={this.state.userInfor.thanhPho} onChange={this.onChangeCity}></input>
                     <hr/>
-                    <div className="birthday">
-                    <label> Ngày Sinh: </label>
-                    <DatePicker name="ngaySinh" dateFormat="yyyy-MM-dd" selected={birthday} onChange={this.onChangeDay}/>
-                    </div>
+                    <div className="birthday">Ngày Sinh: </div>
+                    <DatePicker className="ngaySinh" name="ngaySinh" dateFormat="yyyy-MM-dd" selected={birthday} onChange={this.onChangeDay}/>
+                   
                     <hr/>
-                    <div className="about">
-                        <label> SDT: </label>
-                        <input type="text" className="about" name="sdt"  defaultValue={this.state.userInfor.sdt} onChange={this.onChangePhone}></input>
+                    <div className="sdt"> SDT: </div>
+                        <input type="text" className="sdt" name="sdt"  defaultValue={this.state.userInfor.sdt} onChange={this.onChangePhone}></input>
                         <p className="warning">{this.state.validationMsg.sdt}</p>
-                    </div>
                     <hr/>
-                        <button className="button_save" onClick={this.saveChange} >Lưu</button>
+                      <div className="button_save"  > <button className="button_save" onClick={this.saveChange} >Lưu</button></div> 
               </div>
               </form>
             </div>    

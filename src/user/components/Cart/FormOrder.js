@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import "./FormOrder.css";
 class FormOrder extends Component {
     render() {
@@ -13,7 +14,8 @@ class FormOrder extends Component {
             <hr className="totalLine"/>
             <div className="tdLeft" style={{fontWeight:"bold"}}>Tổng:</div>
             <div className="tdRight" >{this.props.total} VND</div>
-            <button className="pay" >Đặt hàng</button>
+            {/* <button className="pay">Đặt hàng</button> */}
+            <Link to="/order" className="btn pay">Đặt hàng</Link>
         </div>
         );
     }

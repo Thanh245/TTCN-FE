@@ -12,7 +12,8 @@ import App from './App';
     // console.log(data.data)
     // localStorage.setItem("token", data.data.accessToken)
 // }).catch()
-// const rootElement = document.getElementById("root");
+
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

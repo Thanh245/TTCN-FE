@@ -38,15 +38,17 @@
     border-radius: unset;
   }
   
-  .colors button,
+.colors button,
 .sizes button{
   width: 35px;
   height: 35px;
 }
 .box-details p{
   line-height: 1.5;
-  margin: 10px 0;
+  margin: 10px 10px;
   opacity: 0.8;
+  align-items: left;
+  text-align: left;
 }
 .box-details h3{
   color: crimson;
@@ -56,8 +58,8 @@
   cursor: pointer;
 }
 .box-details .thumb img{
-  width: 50px;
-  height: 45px;
+  width: 10vw;
+  height: 10vw;
   display: block;
   object-fit: cover;
   margin: 20px;
@@ -73,17 +75,12 @@
   .comment {
       border: none;
       text-align: center;
-      /* width: 100%; */
-      /* margin: 1vw 1vw; */
+      width: 100%;
+      text-align: left;
   }
 
   .page{
       text-align: center;
-  }
-  .comment{
-     
-      width: 100%;
-      text-align: left;
   }
 
   .comment:focus{
@@ -96,9 +93,104 @@
 .label {
     font-weight: bold;
     text-align: center;
-  
     justify-content: center;
     align-items: center;
     flex-direction: column;
     display: inline-block
 }
+
+.search-item {
+    margin: 5px 15px;
+    width: 100%;
+    border-radius: solid 50px ;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.droplist{
+    margin: 10px 0px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.gia {
+    margin: 5px 15px;
+    border: none;
+    color: #6b5ee0;
+    background-color: #fff;
+}
+.FilterContent{
+    margin: 10px 15px;
+    border: none;
+    align-items: center;
+    text-align: center;
+    font-size: larger;
+}
+.gia:hover{
+    color: black;
+}
+
+.gia:focus{
+    outline: none;
+}
+
+select {
+    margin-bottom: 1em;
+    /* padding: .25em; */
+    border: 0;
+    border-bottom: 1px solid currentcolor; 
+    font-weight: bold;
+    letter-spacing: .15em;
+    border-radius: 0;
+    font-size: larger;
+  }
+
+  select:focus{
+    outline: 0;
+    border-bottom-color: rgb(0, 140, 255);
+  }
+
+  select:active{
+    outline: 0;
+    border-bottom-color: rgb(0, 140, 255);
+  }
+
+.card-img-top{
+    height: 20vw;
+}
+
+.image-show{
+    width: 24vw;
+    height: 24vw;
+}
+
+/* .btn-primary{ */
+    /* float: right; */
+/* } */
+
+.btn-comment{
+    color: white;
+    background-color: tomato;
+    border: none;
+}
+
+/* .btn-comment:hover{ */
+    /* background-color: rgb(64, 120, 224); */
+    /* outline: none; */
+/* } */
+/*  */
+/* .btn-comment:active{ */
+    /* background-color: rgb(64, 120, 224); */
+    /* outline: none; */
+/* } */
+
+.danhgia{
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+
