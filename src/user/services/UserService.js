@@ -12,18 +12,24 @@ async function fetchUserProfileData(maNguoiDung) {
 
 async function updateUserProfileData(userInfo) {
     config()
-    const body = {
-        hoTen: userInfo.hoTen,
-        ngaySinh: userInfo.ngaySinh,
-        sdt: userInfo.sdt,
-        thanhPho: userInfo.thanhPho,
-        maGioiTinh:userInfo.maGioiTinh
-    }
+    userInfo.anhDaiDien = []
+    userInfo.gioiTinh = {maGioiTinh: userInfo.gioiTinh}
     return await axios({
         headers: { "Access-Control-Allow-Origin": "*" },
         method: "PUT",
         url: `nguoi-dung-management/authorized/nguoi-dung/${JSON.parse(localStorage.getItem("user")).id}`,
-        data: body,
+        data: userInfo,
     })
 }
- export {fetchUserProfileData}
+
+async function updateUserAvatar(data) {
+    config()
+    const dataForm = new FormData(data)
+    return await axios({
+        headers: { "Access-Control-Allow-Origin": "*" },
+        method: "PUT",
+        url: `nguoi-dung-management/authorized/nguoi-dung/avatar/${JSON.parse(localStorage.getItem("user")).id}`,
+        data: dataForm,
+    })
+}
+ export {fetchUserProfileData,updateUserProfileData,updateUserAvatar}
