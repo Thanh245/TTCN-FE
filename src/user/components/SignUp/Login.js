@@ -28,7 +28,7 @@ export default class Login extends Component {
     this.onChange = this.onChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
-
+  
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value

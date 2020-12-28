@@ -24,15 +24,16 @@ export default class Cart extends Component {
   deleteGoodsItem = (index, e) => {
     const items = Object.assign([], this.state.cart);
     items.splice(index, 1);
-    this.setState({
-        ...this.state,
-      cart: items
-    });
+    sessionStorage.removeItem("cart")
+    sessionStorage.setItem("cart",JSON.stringify(items))
+    window.location.reload();
   };
 
   changeQuantity = (index, e) => {
     const item = Object.assign([], this.state.cart);
     item[index].soLuong = e.target.valueAsNumber;
+    sessionStorage.removeItem("cart")
+    sessionStorage.setItem("cart",JSON.stringify(item))
     this.setState({
       cart: item
     });
@@ -40,11 +41,11 @@ export default class Cart extends Component {
   componentDidMount(){
     const cart =JSON.parse(sessionStorage.getItem("cart"))
     if(cart!==null)
-    console.log(cart)
     this.setState({
         ...this.state,
         cart:cart
     })
+    else this.state.cart.length=0
   }
   render() {
     if(this.state.cart.length === 0) return (<div><h1>Giỏ hàng trống</h1></div>)
@@ -57,7 +58,7 @@ export default class Cart extends Component {
                         key={index}
                         matHang={item.matHang}
                         soLuong ={item.soLuong}
-                        deleteItem={this.deleteGoodsItem.bind(index, this)}
+                        deleteItem={this.deleteGoodsItem.bind(this, index)}
                         //setquantity={item => this.setState(item)}
                         changeQuantity={this.changeQuantity.bind(this, index)}
                         className="GoodItem"

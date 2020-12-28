@@ -4,60 +4,103 @@ div.contain_profile {
     border-width: 0.1px;
     margin:auto;
     width: 70vw;
-    border:solid;
+    box-shadow: 0px 2px 15px 0px;
+    margin-bottom: 2vw;
 }
-hr{
-    border: solid;
-    border-width:0.1px;
-    opacity: 30%;
-    width: 60vw;
+.anhDaiDien{
+    width: 100%;
+    margin: auto;
+    margin-top: 1vw;
+    text-align: center;
+}
+div.avatar_image{
+    margin: center;
+    text-align:center;
 }
 img.avatar_image{
-    margin-left: 30vw;
-    border:solid;
     margin-top: 2vw;
     width: 15vw;
     height: 15vw;
     border-radius: 360px;
     border-width: 1px;
+    margin:center;
+    box-shadow: 0px 2px 15px 1px;
+}
+div.hoTen{
+    float: left;
+    margin-left: 20%;
+    width: 30%;
 }
 input.your_name{
     margin-top: 1vw;
     margin-bottom: 1vw;
     border: none;
-   
+}
+hr{
+    border: solid;
+    border-width: 0.1px;
+    opacity: 30%;
+    width: 60vw;
+    margin: auto;
+    margin-bottom: 1vw;
+    margin-top: 1vw;
 }
 input.your_name:focus{
-    border: none;
-  
+    outline: none;
+    box-shadow: 0px 1px 3px 0px;
 } 
-div.gender{
+div.gioiTinh{
     margin-top: 1vw;
     margin-bottom:1vw;
-}
-
-label{
-    font-weight: bold;
-    margin-left: 20vw;
-    text-align: center;
+    float: left;
+    margin-left: 20%;
+    width: 30%;
 }
 label.gender{
-    margin-left: -0vw;
     margin-top: 1vw;
     margin-bottom: 1vw;
     font-weight: normal;
 }
+div.address{
+    float: left;
+    margin-left: 20%;
+    width: 30%;
+}
 input.address{
     margin-top: 1vw;
     margin-bottom: 1vw;
+    border-radius: 20px;
+    border-width: 0.1px;
+}
+input.address:focus{
+outline: none;
 }
 div.birthday{
     margin-top: 1vw;
     margin-bottom: 1vw;
+    float: left;
+    margin-left: 20%;
+    width: 30%;
 }
-input.about{
+.ngaySinh{
+    border:none;
+    margin-bottom: 1vw;
+}
+.ngaySinh:focus{
+    outline: none;
+}
+div.sdt{
     margin-top: 1vw;
     margin-bottom: 1vw;
+    float: left;
+    margin-left: 20%;
+    width: 30%;
+}
+input.sdt{
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    border-radius: 20px;
+    border-width: 0.1px;
 }
 p,h1 {
     text-align: center;
@@ -71,24 +114,31 @@ div.button{
     width: 20vw;
     height: 2vw;
 }
+div.button_save{
+    margin-top: 2vw;
+    margin: auto;
+    text-align: center;
+}
 button.button_save{ 
-    width: 10vw;
-    height: 3vw;
-    margin-left: 30vw;
+    width: 20vw;
+    height: 4vw;
     margin-bottom: 1vw;
-    border-radius: 10px;
+    border-radius:30px;
     background-color: #ffffff;
+    box-shadow: 0px 0px 10px 4px #dbd9d9;
 }
 button.button_save:hover{
     box-shadow: 0px 0px 10px 4px #dbd9d9;
-    border-radius: 10px;
+    width: 22vw;
+    height: 5vw;
+    border-radius:40px;
 }
 p.warning{
     color: rgb(204, 122, 29);
 }
 
 button.btn_logout{
-    margin-left:45vw;
+    float:right;
     margin-top: 1vw;
     margin-bottom: 1vw;
     border-radius: 5px  ;
