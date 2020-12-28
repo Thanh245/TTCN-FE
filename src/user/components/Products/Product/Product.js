@@ -3,12 +3,14 @@ import "./Product.css"
 import DetailsThumb from "./DetailsThumb";
 import RatingStar from "../RatingStar/RatingStar";
 import { fetchItem } from "../../../services/ItemService";
+import Header from '../../Header/Header'
 
 export default class Product extends React.Component {
  constructor(props)
  { super( props)
     this.state = {
     index: 0,
+    cart: [],
   };
  }
 
@@ -46,6 +48,44 @@ export default class Product extends React.Component {
     //  this.myRef.current.children[index].className = "active";
   }
 
+  addToCart(product) {
+    const cartItem = {
+      matHang: {},
+      soLuong: 1
+    };
+    let trung = false;
+    const cart = JSON.parse(sessionStorage.getItem("cart"))
+    if(cart !==null) {
+         var newCart = cart
+    }
+    else { newCart = Object.assign([], this.state.cart);}
+    for (let item of newCart) {
+      if (product.maMatHang === item.matHang.maMatHang) {
+        item.soLuong++;
+        trung = true;
+        console.log(newCart)
+        sessionStorage.removeItem("cart")
+        sessionStorage.setItem("cart", JSON.stringify(newCart))
+        this.setState({
+            ...this.state,
+             cart: newCart
+        });
+      }
+    }
+    if (trung === false) {
+        if(newCart.length===9) {
+            alert("Giỏ hàng đã đầy")
+            return
+    }
+      cartItem.matHang = product;
+      newCart.push(cartItem);
+      sessionStorage.removeItem("cart")
+      sessionStorage.setItem("cart", JSON.stringify(newCart))
+      this.setState({ ...this.state,
+        cart: newCart });
+    }
+  }
+
   render() {
     const product = this.state.product;
     const index = this.state.index;
@@ -54,6 +94,7 @@ export default class Product extends React.Component {
     return (
         
         <>
+            <Header />
             <div className="container">
                 <div className={"row"}>
                     <div className="col-1"></div>
@@ -69,7 +110,7 @@ export default class Product extends React.Component {
                           tab={this.handleTab}
                           myRef={this.myRef} 
                         />}
-                        <button className="btn btn-primary ">Thêm vào giở hàng </button>
+                        <button className="btn btn-primary " onClick={() => this.addToCart(product)}>Thêm vào giở hàng </button>
                     </div>
                 </div>  
                 <br></br>

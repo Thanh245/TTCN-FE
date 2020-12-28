@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import FormOrder from "./FormOrder";
 import GoodsItem from "./GoodsItem";
 import "./Cart.css";
+import Header from '../Header/Header'
 
 export default class Cart extends Component {
   constructor(props) {
@@ -48,8 +49,16 @@ export default class Cart extends Component {
     else this.state.cart.length=0
   }
   render() {
-    if(this.state.cart.length === 0) return (<div><h1>Giỏ hàng trống</h1></div>)
+    if(this.state.cart.length === 0){
+        return (
+        <div>
+            <Header />
+            <h1>Giỏ hàng trống</h1>
+        </div>)
+    } 
     return (
+        <>
+        <Header /> 
         <div className="cart">
             <div className="row">
                 <div className = "col-8">
@@ -75,6 +84,7 @@ export default class Cart extends Component {
                 </div>
             </div>
         </div>
+        </>
     );
   }
   

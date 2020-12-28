@@ -2,7 +2,7 @@ import React from 'react'
 import { Navbar,Nav,NavDropdown,Form,FormControl,Button } from 'react-bootstrap'
 import Cart from '../svg/cart.svg'
 import './Header.css'
-class BootstrapNavbar extends React.Component{
+class Header extends React.Component{
 
     render(){
         return(
@@ -45,4 +45,4 @@ class BootstrapNavbar extends React.Component{
     }
 }
 
-export default BootstrapNavbar;
+export default Header;

@@ -13,7 +13,8 @@ export default class ProductsList extends React.Component {
 
     render() {
         return (
-            <div id="navPage">
+            <div className="container">
+            <div className="navPage" >
                 <ReactPaginate
                     previousLabel={"prev"}
                     nextLabel={"next"}
@@ -27,6 +28,7 @@ export default class ProductsList extends React.Component {
                     containerClassName={"pagination"}
                     subContainerClassName={"pages pagination"}
                     activeClassName={"active"}/>
+            </div>
             </div>
         )
     }

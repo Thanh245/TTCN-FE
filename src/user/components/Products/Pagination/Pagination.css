@@ -3,7 +3,8 @@
     align-items: center;
     list-style: none;
     outline: none;
-    
+    text-align: center;
+    width: 20vw
   }
   .pagination > .active > a {
     background-color: #47ccde;
@@ -37,6 +38,6 @@
     border-radius: unset;
   }
 
-  #navPage{
+  .navPage{
     text-align: center;
 }
