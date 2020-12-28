@@ -54,7 +54,7 @@ export default class Profile extends Component {
             userInfor:userInfor
             })
         }).catch((err) => {
-            alert("tải du lieu thất bại")
+            alert("tải dữ liệu thất bại")
         })
         
     } 

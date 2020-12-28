@@ -1,7 +1,6 @@
 .pagination {
     margin: 15px auto;
     align-items: center;
-    display: block;
     list-style: none;
     outline: none;
     
@@ -37,3 +36,7 @@
   .pagination > li:last-child > span {
     border-radius: unset;
   }
+
+  #navPage{
+    text-align: center;
+}
