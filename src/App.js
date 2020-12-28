@@ -4,7 +4,7 @@ import React from 'react';
 import ProductsList from './user/components/Products/ProductsList'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 //import {DataProvider} from './user/components/Products/DataProvider'
-import Product from './user/components/Products/Product'
+import Product from './user/components/Products/Product/Product'
 import Cart from './user/components/Cart/Cart'
 //import Footer from './user/components/Footer/Footer'
 import SignUp from './user/components/SignUp/SignUp'
@@ -18,7 +18,7 @@ import history from "./history";
 function App() {
   return(    
     <BrowserRouter history={history}>    
-    <Header />     
+        
         <Switch>
         <Route path="/" exact  component={Home} />
         <Route path="/productslist/filter/price/:from/:to"  render={({match})=>(<ProductsList params={match.params} path={match.path}></ProductsList>)} />

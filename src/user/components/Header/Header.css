@@ -1,54 +1,84 @@
-.header{
+header{
     width: 100%;
-    min-height: 100px;
-    overflow: hidden;
+    min-height: 70px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    flex-wrap: wrap;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 20px;
-  }
-  a{
+    overflow: hidden;
+}
+header .logo a{
+    text-decoration: none;
+    text-transform: uppercase;
+    color: black;
+}
+header nav{
+    display: flex;
+}
+nav ul li{
+    list-style: none;
+    display: inline-block;
+}
+nav ul li a{
     text-decoration: none;
     text-transform: uppercase;
     color: #555;
-    letter-spacing: 2px;
-  }
-  a:hover{
-    color: lightseagreen;
-  }
-  ul li{
-    list-style: none;
-    display: inline-block;
     padding: 0 15px;
-  }
-  .menu{
-    display: none;
-  }
-  .cart-icon{
+}
+nav ul li a:hover{
+    color: lightseagreen;
+}
+nav .nav-cart{
+    cursor: pointer;
     position: relative;
-    margin-right: 15px;
-  }
-  .cart-icon span{
-    background: crimson;
-    border-radius: 20px;
-    color: white;
+}
+nav .nav-cart span{
     position: absolute;
-    top:-10px;
-    right: -10px;
+    top:-12px;
+    right: -7px;
+    background: crimson;
     font-size: 10px;
-    padding: 5px;
-  }
-  
-  input.inputSearch{
-    border-radius: 50px;
-    width: 500px;
-    height: 30px;
-    list-style: none;
-    display: inline-block;
-  }
-  
-  input.inputSearch:focus{
-    outline: none;
-  }
+    color: white;
+    padding: 3px 5px;
+    border-radius: 50%;
+    z-index: -1;
+}
+header .menu,
+header .close{
+    cursor: pointer;
+    display: none;
+}
+@media (max-width: 650px){
+    header ul{
+        position: fixed;
+        top:0;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        background: white;
+        z-index: 99;
+        opacity: 0.97;
+        transition: 0.5s linear;
+    }
+    header .menu,
+    header .close{
+        display: block;
+    }
+    header .close{
+        position: absolute;
+        top:10px;
+        right: 20px;
+    }
+    header ul.toggle{
+        left: 0;
+    }
+}
+
+.droplist{
+    width: auto !important;
+    float: none !important;
+    /* display: block; */
+}

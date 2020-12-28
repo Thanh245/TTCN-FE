@@ -1,8 +1,8 @@
 import React from "react";
 import "./Product.css"
 import DetailsThumb from "./DetailsThumb";
-import RatingStar from "./RatingStar";
-import { fetchItem } from "../../services/ItemService";
+import RatingStar from "../RatingStar/RatingStar";
+import { fetchItem } from "../../../services/ItemService";
 
 export default class Product extends React.Component {
  constructor(props)

@@ -5,44 +5,51 @@ import Cart from '../svg/cart.svg'
 import {Link} from 'react-router-dom'
 import './Header.css'
 
-export default function Header() {
-    const [menu, setMenu] = useState(false)
 
-    const toggleMenu = () =>{
-        setMenu(!menu)
-    }
+export class Header extends React.Component {
 
-    const styleMenu = {
-        left: menu ? 0 : "-100%"
-    }
-
-    return (
-        <div className="header">
-            <div className="menu" onClick={toggleMenu}>
-                <img src={Menu} alt="" width="30" />
-            </div>
-            <div className="logo">
-                <h1><Link to="/" >HMS</Link></h1>
-            </div>
-            <ul style={styleMenu}>
-                <li  >
-                    <input  className="inputSearch"  type="text" placeholder="   Search..." />
-                </li>
-                <li><Link to="/">Trang chủ</Link></li>
-                <li><Link to="/productslist">Sản phẩm</Link></li>
-                <li><Link to="/signup">Đăng nhập/ Đăng ký</Link></li>
-                <li><Link to="/profile">Người dùng</Link></li>
-                <li onClick={toggleMenu}>
-                    <img src={Close} alt="" width="30" className="menu" />
-                </li>
+    state = {
+      toggle: false
+    };
+  
+    menuToggle = () => {
+      this.setState({ toggle: !this.state.toggle });
+    };
+  
+    render() {
+      const { toggle } = this.state;
+      return (
+        <header>
+          <div className="menu" onClick={this.menuToggle}>
+            <img src={Menu} alt="" width="20" />
+          </div>
+          <div className="logo">
+            <h1>
+              <Link to="/" onClick={this.props.onHomePageBtn}><img src= {process.env.PUBLIC_URL + "/logo/logo.png"} alt='..'/></Link>
+            </h1>
+          </div>
+          <nav>
+            <ul className={toggle ? "toggle" : ""}>
+                  <li><Link to="/" onClick={this.props.onHomePageBtn}>Trang chủ</Link></li>
+                  <li><Link to="/productslist">Sản phẩm</Link></li>
+                  <li><Link to="/signup">Đăng nhập/ Đăng ký</Link></li>
+                  <li><Link to="/profile">Người dùng</Link></li>
+                  
+              <li className="close" onClick={this.menuToggle}>
+                <img src={Close} alt="" width="20" />
+              </li>
             </ul>
-            <div className="cart-icon">
-                {/* <span>{Cart.length}</span> */}
-                <Link to="/cart">
-                    <img src={Cart} alt="" width="30" />
-                </Link>
+            <div className="nav-cart">
+              {/* <span>{cart.length}</span> */}
+              <Link to="/cart">
+                <img src={Cart} alt="" width="20" />
+              </Link>
             </div>
-            
-      </div>
-    )
-}
+          </nav>
+        </header>
+      );
+    }
+  }
+  
+  export default Header;
+  

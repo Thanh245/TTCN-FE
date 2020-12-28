@@ -1,4 +1,5 @@
 import React from "react";
+import './PriceButton.css'
 function PriceButton(props){
     const from = props.from
     const to = props.to
