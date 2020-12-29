@@ -32,4 +32,28 @@ async function updateUserAvatar(data) {
         data: dataForm,
     })
 }
- export {fetchUserProfileData,updateUserProfileData,updateUserAvatar}
+async function fetchUserOrder() {
+    config()
+    return await axios({
+      headers: { "Access-Control-Allow-Origin": "*" },
+      method: "GET",
+      url: `don-hang-management/authorized/don-hang/tai-khoan/${JSON.parse(localStorage.getItem("user")).id}`
+    })
+}
+async function fetchUserOrderById(maDonHang) {
+    config()
+    return await axios({
+      headers: { "Access-Control-Allow-Origin": "*" },
+      method: "GET",
+      url: `don-hang-management/authorized/don-hang/${maDonHang}`
+    })
+}
+async function fetchListStatusOrder() {
+    config()
+    return await axios({
+      headers: { "Access-Control-Allow-Origin": "*" },
+      method: "GET",
+      url: `don-hang-management/authorized/don-hang/trang-thai-don-hang`
+    })
+}
+export {fetchListStatusOrder,fetchUserOrderById,fetchUserProfileData,updateUserProfileData,updateUserAvatar,fetchUserOrder}

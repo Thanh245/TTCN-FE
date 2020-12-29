@@ -27,7 +27,7 @@ class Header extends React.Component{
         if (!isLoggedIn()) return (<Nav.Link href="/signup">Đăng nhập/ Đăng ký</Nav.Link>)
         else return (<NavDropdown title="Người dùng" id="basic-nav-dropdown">
                         <NavDropdown.Item><Link to='profile'>Thông tin cá nhân</Link></NavDropdown.Item>
-                        <NavDropdown.Item><Link to='order'>Đơn hàng</Link></NavDropdown.Item>
+                        <NavDropdown.Item><Link to='purchase'>Đơn hàng</Link></NavDropdown.Item>
                         <NavDropdown.Item onClick={this.onLogout.bind(this)}>Đăng xuất</NavDropdown.Item>
                     </NavDropdown>)
     }

@@ -49,7 +49,7 @@ function isLoggedIn() {
 }
 
 function getUserId() {
-    if (isLoggedIn()) return localStorage.getItem("maTaiKhoan")
+    if (isLoggedIn()) return JSON.parse(localStorage.getItem('user')).id
     else return null;
 }
 

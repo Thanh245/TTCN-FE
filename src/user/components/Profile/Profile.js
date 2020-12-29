@@ -62,7 +62,7 @@ export default class Profile extends Component {
         // if(userInfor.ngaySinh===null)
         // {
         //     userInfor.ngaySinh=this.state.userInfor.ngaySinh
-        // }else userInfor.ngaySinh = ngaySinh
+        // }
         this.setState(
             {...this.state,
             userInfor:userInfor
@@ -137,7 +137,7 @@ export default class Profile extends Component {
             })
         if (this.state.modified) {
             updateUserAvatar(userForm).then(res => {
-               
+               console.log(res)
             }).catch(err => {
                 
             })
@@ -211,7 +211,7 @@ export default class Profile extends Component {
         console.log(this.state.userInfor)
         var birthday = new Date(this.state.userInfor.ngaySinh)
         const role = JSON.parse(localStorage.getItem("user")).role
-        console.log(this.state.userInfor.sdt)
+        console.log(this.state.userInfor.gioiTinh)
         let src = (this.state.userInfor.anhDaiDien===null||this.state.userInfor.anhDaiDien.length===0)? `${process.env.PUBLIC_URL}/images/default-avatar.jpg` :`data:image/*;base64,${this.state.userInfor.anhDaiDien}`
         if (role==="ROLE_GUEST")
         return <Redirect to='/signup' />

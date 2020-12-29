@@ -7,6 +7,7 @@ class FormOrder extends Component {
       }
     
     render() {
+        const permission = JSON.parse(localStorage.getItem("user"))===null?"":"ROLE_USER"
         const priceSplit = this.formatCash(this.props.price)
         const shippingSplit = this.formatCash(this.props.shipping)
         const totalSplit =  this.formatCash(this.props.total)
@@ -23,7 +24,7 @@ class FormOrder extends Component {
             <div className="tdRight" >{totalSplit} VND</div>
             <div className="cont_btnpay">
             <button className="pay" >
-            <Link to = "/order">
+            <Link to = {permission==="ROLE_USER"?"/order":"/signup"} onClick={(e)=>{console.log(e)}}>
                Đặt hàng 
             </Link>
             </button>

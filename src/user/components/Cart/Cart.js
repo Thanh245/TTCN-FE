@@ -50,8 +50,8 @@ export default class Cart extends Component {
   render() {
     if(this.state.cart.length === 0){
         return (
-        <div style = {{textAlign: "center", height: "25vw"}}>
-            <h1 style = {{margin: "0 auto"}}>Giỏ hàng trống</h1>
+        <div>
+            <h1>Giỏ hàng trống</h1>
         </div>)
     } 
     return (

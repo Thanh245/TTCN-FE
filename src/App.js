@@ -13,7 +13,9 @@ import Home from './user/components/HomePage/HomePage'
 import Profile from './user/components/Profile/Profile'
 import Header from "./user/components/Header/Header"
 import Footer from "./user/components/Footer/Footer"
+import Purchase from "./user/components/Purchase/Purchase"
 import history from "./history";
+
 import UserPage from './user/components/UserPage/UserPage';
 import {AdminPage} from './admin/AdminPage'
 function App() {

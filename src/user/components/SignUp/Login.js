@@ -17,17 +17,17 @@ export default class Login extends Component {
       returnUrl: history.location.pathname
     };
     console.log("constructor login");
-    if(JSON.parse(localStorage.getItem("user")===null))
-    {
-        const user = {
-            token:"",
-            id:0,
-            tenDangNhap:"",
-            role: "ROLE_GUEST",
-            tokenType:""
-        }
-        localStorage.setItem("user",JSON.stringify(user))
-    }
+    // if(JSON.parse(localStorage.getItem("user")===null))
+    // {
+    //     const user = {
+    //         token:"",
+    //         id:0,
+    //         tenDangNhap:"",
+    //         role: "",
+    //         tokenType:""
+    //     }
+    //     localStorage.setItem("user",JSON.stringify(user))
+    // }
     this.onChange = this.onChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
@@ -65,9 +65,9 @@ export default class Login extends Component {
         }
         localStorage.removeItem("user");
         localStorage.setItem('user', JSON.stringify(userInfor));
+        window.history.back()
         this.setState({user:userInfor})
         // console.log(isLoggedIn())
-        
         this.props.onLogIn()
         this.setState({
             ...this.state,
@@ -77,12 +77,13 @@ export default class Login extends Component {
     }).catch( ()=> {alert("Đăng nhập thất bại")})
 }
   render() {
-
+    if(JSON.parse(localStorage.getItem('user'))!==null){
     const userInfor = JSON.parse(localStorage.getItem('user'));
-    const role = userInfor.role
-    if(isLoggedIn()){
-        return <Redirect to = {this.state.returnUrl} />
-    }
+    var role = userInfor.role
+    }else role =""
+    // if(isLoggedIn()){
+    //     return <Redirect to = {this.state.returnUrl} />
+    // }
     if(role==="ROLE_ADMIN")
     {
       return <Redirect to= "/admin" />

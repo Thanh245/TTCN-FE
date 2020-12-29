@@ -17,14 +17,14 @@
   display: flex;
   cursor: pointer;
 }
-.box-details .thumb img{
+/* .box-details .thumb img{
   width: 10vw;
   height: 10vw;
   display: block;
   object-fit: cover;
   margin: 20px;
   overflow: hidden;
-}
+} */
 .box-details .cart{
   padding: 10px 25px;
   text-transform: uppercase;

@@ -17,6 +17,7 @@ import history from "../../../history";
 import './UserPage.css'
 import Login from '../SignUp/Login';
 import {isLoggedIn} from '../../services/AuthenticationService'
+import Containpurchase from '../../components/Purchase/Containpurchase';
 export default class UserPage extends React.Component {
   constructor(props) {
       super(props)
@@ -65,6 +66,7 @@ export default class UserPage extends React.Component {
                 <Route path="/cart" exact  component={ Cart } />
                 <Route path="/order" exact component={ Order } />
                 <Route path="/profile" exact component={ Profile  } />
+                <Route path="/purchase" exact component= {Containpurchase}/>
                 </Switch>
             </div>
         </BrowserRouter>

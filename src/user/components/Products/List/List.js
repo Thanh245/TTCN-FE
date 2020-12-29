@@ -103,8 +103,7 @@ export default class ProductsList extends React.Component {
                     {this.props.list.map((product) => {return this.renderProduct(product);})}                  
                   </div>
                 </div>
-                
-            </div>
+         </div>
       </>
     );
   }
