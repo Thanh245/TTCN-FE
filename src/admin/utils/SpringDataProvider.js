@@ -234,6 +234,17 @@ export default (apiUrl, httpClient = (url, options = {}) => {
    */
   return (type, resource, params) => {
 
+    //Handle Revenue 
+
+    if(resource === "doanh-thu"){
+      return httpClient(`${apiUrl}/don-hang-management/authorized/don-hang/doanh-thu`, {
+        method: "GET"      
+      }).then((response) => ({
+        data: response.json
+      }))
+    }
+
+
     //Handle Uploading fi(le
     try {
       if (!(params.data.type === undefined)) {

@@ -37,6 +37,7 @@
     "tsutils": "^3.17.1",
     "typescript": "3.8.3",
     "validator": "^13.5.2",
+    "recharts": "^1.8.5",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

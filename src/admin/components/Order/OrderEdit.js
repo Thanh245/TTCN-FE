@@ -115,7 +115,7 @@ export const OrderEdit = (props) => {
             <FormTab label="Thông tin đặt hàng">
               <TextField source="maDonHang" label="Mã đơn hàng" />
               <TextField source="tenNguoiNhanHang"  label="Tên người nhận hàng"/>
-              <NumberField source="giaTongcong" label="Tổng cộng giá tiền"/>
+              <NumberField source="giaTongCong" label="Tổng cộng giá tiền"/>
               <TextField source="chuThich"  label="Chú thích từ người mua"/>
               <NumberField source="sdtgiaoHang" label="Số điện thoại giao hàng" />
               <TextField source="diaChiGiaoHang" label="Địa chỉ giao hàng" />

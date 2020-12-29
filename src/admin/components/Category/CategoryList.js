@@ -41,7 +41,6 @@ export const CategoryList = props => (
     <List title={<Title />} {...props}>
         <Datagrid rowClick="edit">          
             <TextField source="maLoaiMatHang" label = "Mã loại mặt hàng" style={{width:1}}/>
-            <img src={imageName} width="100" label = "Ảnh loại mặt hàng"/>
             <TextField source="tenLoaiMatHang" label = "Tên loại mặt hàng" />
         </Datagrid>
     </List>
