@@ -31,11 +31,12 @@ import {
   useRedirect,
   useRefresh
 } from "react-admin";
+import Typography from '@material-ui/core/Typography';
+
 import RichTextInput from 'ra-input-rich-text';
 
-import Card from "@material-ui/core/Card";
+import { Card, CardContent, withStyles } from '@material-ui/core';
 import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import BackButton from "../BackButton/BackButton";
 import { InputAdornment } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
@@ -71,6 +72,28 @@ const OrderTitle = ({ record }) => {
 const transform = data => ({
   "maTrangThai": data.trangThaiDonHang.maTrangThai
 });
+const CustomCard = withStyles(theme => ({
+    root: {
+        [theme.breakpoints.up('sm')]: {
+            order: -1, // display on the left rather than on the right of the list
+            width: '15em',
+            marginRight: '1em',
+        },
+        [theme.breakpoints.down('sm')]: {
+            display: 'none',
+        },
+    },
+}))(Card);
+
+const Aside = ({ record }) => (
+    <CustomCard style={{ padding:'20px'}}>
+        <Typography variant="h6">Thông tin đơn hàng</Typography>
+        {record && (
+            <TextField inputProps={record.maDonHang} label="Mã đơn hàng" />
+      
+        )}
+        </CustomCard>
+);
 
 export const OrderEdit = (props) => {
 
@@ -87,15 +110,15 @@ export const OrderEdit = (props) => {
       <CardContent>
         <BackButton />
         
-        <Edit title={<OrderTitle />} transform={transform} {...props} undoable={false} actions={<EditActions />} onSuccess={onSuccess}>
+        <Edit aside={<Aside />} title={<OrderTitle />} transform={transform} {...props} undoable={false} actions={<EditActions />} onSuccess={onSuccess}>
           <TabbedForm warnWhenUnsavedChangeses toolbar={<CustomToolbar />}>
             <FormTab label="Thông tin đặt hàng">
-              <TextField source="maDonHang"  />
-              <TextField source="tenNguoiNhanHang"  />
-              <NumberField source="giaTongcong" />
-              <TextField source="chuThich"  />
-              <NumberField source="sdtgiaoHang" />
-              <TextField source="diaChiGiaoHang" />
+              <TextField source="maDonHang" label="Mã đơn hàng" />
+              <TextField source="tenNguoiNhanHang"  label="Tên người nhận hàng"/>
+              <NumberField source="giaTongcong" label="Tổng cộng giá tiền"/>
+              <TextField source="chuThich"  label="Chú thích từ người mua"/>
+              <NumberField source="sdtgiaoHang" label="Số điện thoại giao hàng" />
+              <TextField source="diaChiGiaoHang" label="Địa chỉ giao hàng" />
               <ReferenceInput source="trangThaiDonHang.maTrangThai" reference="trang-thai-don-hang" label="Tình trạng đơn hàng" >
                 <RadioButtonGroupInput optionText="tenTrangThai"/>
               </ReferenceInput>

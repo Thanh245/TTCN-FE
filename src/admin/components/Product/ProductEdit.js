@@ -40,6 +40,7 @@ import {
 import RichTextInput from 'ra-input-rich-text';
 
 import Card from "@material-ui/core/Card";
+import Paper from "@material-ui/core/Paper";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import BackButton from "../BackButton/BackButton";
@@ -71,43 +72,85 @@ const CustomToolbar = props => (
   </Toolbar>
 );
 
+
+
 const ProductTitle = ({ record }) => {
   return <span>Mặt hàng {record ? `${record.tenMatHang}` : ""}</span>;
 };
-const transform = data => ({
-  "maMatHang": data.maMatHang,
-  "tenMatHang": `${data.tenMatHang}`,
-  "loaiMatHang": { "maLoaiMatHang": data.loaiMatHang.maLoaiMatHang },
-  "gia": data.gia,
-  "soLuong": data.soLuong,
-  "soLuongDaBan": data.soLuongDaBan,
-  "moTa": `${data.moTa}`,
-  "rate": data.rate,
-  "soLuotDanhGia": data.soLuotDanhGia
-});
+const transform = data => {
+
+  let type = 'ADD IMAGE';
+  const newLen = data.danhSachHinhAnhNew.length;
+  if (newLen < data.danhSachHinhAnh.length) {
+    type = 'DELETE'
+  }
+
+  if (type === 'DELETE') {
+    let idList = data.danhSachHinhAnh.map((image) => {
+      return image.maAnhMatHang;
+    })
+    let idToBeKept = data.danhSachHinhAnhNew.map((image) => {
+      return image.maAnhMatHang;
+    })
+    let idToBeRemoved = idList.filter( 
+      p => (idToBeKept.indexOf(p) == -1)
+    )
+    return ({
+      "type" : "DELETE",
+      "maMatHang": data.maMatHang,
+      "imagesIdTobeDeleted": idToBeRemoved
+    })
+    
+  }
+
+  const newPictures = data.danhSachHinhAnhNew.filter(
+    p => p.rawFile instanceof File
+  );
+  if (newPictures.length > 0) {
+    return ({
+      "type": "CREATE",
+      "maMatHang": data.maMatHang,
+      "newImages": newPictures
+    })
+  }
+  return ({
+    "maMatHang": data.maMatHang,
+    "tenMatHang": `${data.tenMatHang}`,
+    "loaiMatHang": { "maLoaiMatHang": data.loaiMatHang.maLoaiMatHang },
+    "gia": data.gia,
+    "soLuong": data.soLuong,
+    "soLuongDaBan": data.soLuongDaBan,
+    "moTa": `${data.moTa}`,
+    "rate": data.rate,
+    "soLuotDanhGia": data.soLuotDanhGia,
+  })
+
+}
+  ;
 export const ProductEdit = (props) => {
 
   const redirect = useRedirect();
   const refresh = useRefresh();
+  const id = props.id;
 
   const onSuccess = ({ data }) => {
     redirect('/mat-hang');
     refresh();
-};
+  };
 
   return (
-    <Card>
+    <Card style={{ width: 1000 }} overflow="visible">
       <CardContent>
         <BackButton />
-        
-        <Edit title={<ProductTitle />} transform={transform} {...props} undoable={false} actions={<EditActions />} onSuccess={onSuccess}>
+
+        <Edit title={<ProductTitle />} {...props} transform={transform} undoable={false} actions={<EditActions />} onSuccess={onSuccess}>
           <TabbedForm warnWhenUnsavedChangeses toolbar={<CustomToolbar />}>
             <FormTab label="Thông tin chung">
               <TextInput source="maMatHang" disabled />
               <TextInput source="tenMatHang" validate={required()} resettable />
-              
+
               <ReferenceInput source="loaiMatHang.maLoaiMatHang" reference="loai-mat-hang" label="Loại mặt hàng" allowEmpty>
-                <SelectInput optionText="tenLoaiMatHang" source="maLoaiMatHang"/>
+                <SelectInput optionText="tenLoaiMatHang" source="maLoaiMatHang" />
               </ReferenceInput>
             </FormTab>
             <FormTab label="Mô tả">
@@ -132,6 +175,15 @@ export const ProductEdit = (props) => {
                   )
                 }}
               />
+            </FormTab>
+            <FormTab label="Danh sách Hình ảnh">
+              <ImageInput
+                multiple source="danhSachHinhAnhNew"
+                accept="image/*"
+                label="Tải lên ảnh mới">
+                <ImageField source="anh" addLabel={false} />
+              </ImageInput>
+
             </FormTab>
           </TabbedForm>
         </Edit>

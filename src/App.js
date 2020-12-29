@@ -16,7 +16,7 @@ function App() {
     
     return (
         <BrowserRouter>
-              <Route path="/home" exact  component={Home} />
+              <Route path="/" exact  component={Home} />
               <Route path="/products" exact  component={Products} />
               <Route path="/products/:id" component={Product} />
               <Route path="/signup" exact  component={ SignUp } />

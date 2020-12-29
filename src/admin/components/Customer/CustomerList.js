@@ -38,9 +38,7 @@ export const CustomerList = props => {
             <Datagrid rowClick="edit">
                 <NumberField source="maNguoiDung" label="Mã người dùng"/>
                 <Avatar alt="Remy Sharp" src={imageName} label="Ảnh người dùng"/>
-
                 <TextField source="hoTen" label = "Họ và tên" />
-                <TextField source="gioiTinh" label = "Giới tính"/>
                 <TextField source="sdt" label="Số điện thoại" />
                 <TextField source="thanhPho" label="Thành phố"/>
             </Datagrid>

@@ -55,20 +55,28 @@ function mapPrimaryKey(name) {
   }
   return primaryKey;
 }
- 
+
 function mapPath(name, method) {
-  if(name === "danh-gia" || name === "don-hang" || name === "nguoi-dung")
+  if (name === "danh-gia" || name === "don-hang" || name === "nguoi-dung")
     return `${name}-management/authorized`
   else if (name === "trang-thai-don-hang")
     return `don-hang-management/authorized/don-hang`
-  else if ( (name === "mat-hang" || name === "loai-mat-hang") && (method === 'DELETE' || method === 'UPDATE' || method === 'CREATE'))
+  else if ((name === "mat-hang" || name === "loai-mat-hang") && (method === 'DELETE' || method === 'UPDATE' || method === 'CREATE'))
     return `${name}-management/authorized`;
   return `${name}-management`;
 }
 
-export default (apiUrl, httpClient =  (url, options = {}) => {
+const convertFileToBase64 = file => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file.rawFile);
+
+  reader.onload = () => resolve(reader.result);
+  reader.onerror = reject;
+});
+
+export default (apiUrl, httpClient = (url, options = {}) => {
   if (!options.headers) {
-      options.headers = new Headers({ Accept: 'application/json' });
+    options.headers = new Headers({ Accept: 'application/json' });
   }
   const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjA4NzUzNTg3LCJleHAiOjE2MTA1Njc5ODd9.hL3lCM1ARQAt_gMBVt7n80dqhYwipSlUw0ay-t5TLLU7OKMDyEnzp1RzBOORbhgAHGHEinFcoTuI5RpXuVDEiw";
   options.headers.set('Authorization', `${token}`);
@@ -85,7 +93,7 @@ export default (apiUrl, httpClient =  (url, options = {}) => {
     const options = {};
     console.log(type);
     switch (type) {
-      case GET_LIST: 
+      case GET_LIST:
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
         const query = {
@@ -97,31 +105,30 @@ export default (apiUrl, httpClient =  (url, options = {}) => {
         //url = `${apiUrl}/${resource}?page=${page-1}&size=${perPage}&sort=${order}`;
         url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}?${stringify(query)}`;
         break;
-      
+
       case GET_ONE:
         url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}/${params.id}`;
         break;
-      case GET_MANY: 
+      case GET_MANY:
         url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}`;
-        
+
         break;
       case GET_MANY_REFERENCE: {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
-        url =  `${apiUrl}/${mapPath(resource,'GET')}/${resource}?page=${page-1}&size=${perPage}&sort=${order}`;
+        url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}?page=${page - 1}&size=${perPage}&sort=${order}`;
         console.log("This is error in get reference, take a look: " + url);
         break;
       }
       case UPDATE:
-        if(resource === "don-hang"){
+        if (resource === "don-hang") {
           options.method = "PUT";
-          url = `${apiUrl}/${mapPath(resource,  'UPDATE')}/${resource}/${params.id}/trang-thai-don-hang/${params.data.maTrangThai}`;
-        } else{
-          url = `${apiUrl}/${mapPath(resource,  'UPDATE')}/${resource}/${params.id}`;
+          url = `${apiUrl}/${mapPath(resource, 'UPDATE')}/${resource}/${params.id}/trang-thai-don-hang/${params.data.maTrangThai}`;
+        } else {
+          url = `${apiUrl}/${mapPath(resource, 'UPDATE')}/${resource}/${params.id}`;
           options.method = "PUT";
           options.body = JSON.stringify(params.data);
         }
-        
         break;
       case CREATE:
         url = `${apiUrl}/${mapPath(resource, 'CREATE')}/${resource}`;
@@ -162,6 +169,29 @@ export default (apiUrl, httpClient =  (url, options = {}) => {
             total: parseInt(json.length, 10)
           };
         };
+        if (resource === "don-hang") {
+          return {
+            data: json.data.map((resource) => ({
+              ...resource,
+              id: resource[mapPrimaryKey(targetApi)],
+              maTaiKhoan: resource["createdBy"]
+            })),
+            total: parseInt(json.totalItems, 10)
+          };
+        }
+        if (resource === "mat-hang") {
+          return {
+            data: json.data.map((resource) => ({
+              ...resource,
+              id: resource[mapPrimaryKey(targetApi)],
+              danhSachHinhAnhNew: resource.danhSachHinhAnh.map((item) => ({
+                maAnhMatHang: item.maAnhMatHang,
+                anh: `data:image/jpeg;base64,${item.anh}`
+              }))
+            })),
+            total: parseInt(json.totalItems, 10)
+          };
+        }
         return {
           data: json.data.map((resource) => ({
             ...resource,
@@ -170,14 +200,27 @@ export default (apiUrl, httpClient =  (url, options = {}) => {
           total: parseInt(json.totalItems, 10)
         };
       case CREATE:
-        return { data: { ...params.data, id: 1} };
+        return { data: { ...params.data, id: 1 } };
       default:
         let key = mapPrimaryKey(targetApi);
-        if(json === undefined){
-          if(params.data === undefined){
-            return { data: {...params, key: params.id}}
+
+        if (json === undefined) {
+          if (params.data === undefined) {
+            return { data: { ...params, key: params.id } }
           }
-          return { data: {...params.data, id: params.data[key] }}
+          return { data: { ...params.data, id: params.data[key] } }
+        }
+        if (resource === "mat-hang") {
+          return {
+            data: {
+              ...json,
+              id: json[key],
+              danhSachHinhAnhNew: json.danhSachHinhAnh.map((item) => ({
+                maAnhMatHang: item.maAnhMatHang,
+                anh: `data:image/jpeg;base64,${item.anh}`
+              })),
+            }
+          }
         }
         return { data: { ...json, id: json[key] } };
     }
@@ -190,7 +233,43 @@ export default (apiUrl, httpClient =  (url, options = {}) => {
    * @returns {Promise} the Promise for a data response
    */
   return (type, resource, params) => {
-    // simple-rest doesn't handle filters on UPDATE route, so we fallback to calling UPDATE n times instead
+
+    //Handle Uploading fi(le
+    try {
+      if (!(params.data.type === undefined)) {
+        if (params.data.type === "CREATE") {
+          if (!(params.data.newImages === undefined)) {
+            return Promise.all(
+              params.data.newImages.map((image) => {
+                let formData = new FormData();
+                formData.append("image", image.rawFile);
+                console.log(formData);
+                return httpClient(`${apiUrl}/mat-hang-management/authorized/mat-hang/${params.id}/anh-mat-hang`, {
+                  method: "POST",
+                  body: formData
+                })
+              })
+            ).then((response) => ({
+              data: { id: params.id }
+            }))
+          }
+        }
+        if (params.data.type === "DELETE") {
+          return Promise.all(
+            params.data.imagesIdTobeDeleted.map((imageId) => {
+              return httpClient(`${apiUrl}/mat-hang-management/authorized/mat-hang/anh-mat-hang/${imageId}`, {
+                method: "DELETE"
+              })
+            })
+          ).then((response) => ({
+            data: { id: params.id }
+          }))
+        }
+      }
+    } catch {
+    } finally {
+      
+    }
     if (type === UPDATE_MANY) {
       return Promise.all(
         params.ids.map((id) =>
@@ -220,5 +299,8 @@ export default (apiUrl, httpClient =  (url, options = {}) => {
     return httpClient(url, options).then((response) =>
       convertHTTPResponse(response, type, resource, params)
     );
-  };
+  }
+
+  // simple-rest doesn't handle filters on UPDATE route, so we fallback to calling UPDATE n times instead
+
 };

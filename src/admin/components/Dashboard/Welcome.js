@@ -12,10 +12,10 @@ const useStyles = makeStyles(theme => ({
     root: {
         background:
             theme.palette.type === 'dark'
-                ? '#61b15a'
-                : '#61b15a',
+                ? '#6070a8'
+                : '#6070a8',
 
-        color: '#fcf8ec',
+        color: '#ffffff',
         padding: 20,
         marginTop: theme.spacing(2),
         marginBottom: '1em',
@@ -48,21 +48,21 @@ const Welcome = () => {
                         Chào mừng đến với Trang Admin của Toki Doki Shop
                     </Typography>
                     <Box maxWidth="40em">
-                        <Typography variant="body1" component="p" gutterBottom>
+                        <Typography variant="h9" component="p" gutterBottom>
                             Truy cập các danh mục phía dưới để làm việc
                         </Typography>
                     </Box>
                     <CardActions className={classes.actions}>
                         <Button
                             variant="contained"
-                            href=""
+                            href="/admin#/don-hang"
                             startIcon={<HomeIcon />}
                         >
                             Xem Đơn đặt hàng
                         </Button>
                         <Button
                             variant="contained"
-                            href="mat_hang"
+                            href="/admin#/mat-hang"
                         >
                             Xem Mặt hàng
                         </Button>

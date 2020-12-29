@@ -50,6 +50,7 @@ const MySidebar = props => {
 
 
 const MyAppBar = props => {
+var imageName = require('./logo.png')
 const classes = useStyles();
   return  (<AppBar {...props} userMenu={<MyUserMenu />}>
             <Typography

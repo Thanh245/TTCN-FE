@@ -48,11 +48,10 @@ export const OrderList = props => (
         <Datagrid rowClick="edit">
             <NumberField source="maDonHang" label="Mã đơn hàng"/>
             <DateField source="createdAt" label="Ngày đặt hàng"/>
-            <ReferenceField source="createdBy" label="Người mua">
-                <TextField source="hoTen" />
+            <NumberField source="maTaiKhoan" label="Mã tài khoản"/>
+            <ReferenceField source="maTaiKhoan" reference="nguoi-dung" label="Người mua">
+                <TextField source="maTaiKhoan" />
             </ReferenceField>
-
-
             <NumberField source="giaTongCong" label="Giá tổng cộng"/>
             <TextField source="SDTGiaoHang" label="Số điện thoại giao hàng"/>
             <TextField source="tenNguoiNhanHang" label="Tên người nhận hàng" />

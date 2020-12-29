@@ -7,10 +7,10 @@ import defaultMuiTheme from "@material-ui/core/styles/defaultTheme";
 const palette = createPalette(
   merge({}, defaultTheme.palette, {
     primary: {
-      main: "#61b15a", // Not far from red
+      main: "#1c2237", // Not far from red
     },
     secondary: {
-      main: "#61b15a", // Not far from green
+      main: "#1c2237", // Not far from green
     },
   })
 );

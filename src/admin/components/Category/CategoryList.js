@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { FC } from 'react';
-import { Box, Chip, useMediaQuery, Theme } from '@material-ui/core';
+import { Box, Chip, useMediaQuery, Theme, CardContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   List,
@@ -17,7 +17,8 @@ import {
   ReferenceManyField,
   SingleField
 } from 'react-admin';
-
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
 
 const CategoryFilter = (props) => (
   <Filter {...props}>
@@ -35,13 +36,16 @@ const pictures = [
 var imageName = require('./test.jpg')
 
 export const CategoryList = props => (
+  <Card style={{width:1000}}>
+    <CardContent>
     <List title={<Title />} {...props}>
-        <Datagrid rowClick="edit">
-          
-            <TextField source="maLoaiMatHang" label = "Mã loại mặt hàng"/>
+        <Datagrid rowClick="edit">          
+            <TextField source="maLoaiMatHang" label = "Mã loại mặt hàng" style={{width:1}}/>
             <img src={imageName} width="100" label = "Ảnh loại mặt hàng"/>
-
             <TextField source="tenLoaiMatHang" label = "Tên loại mặt hàng" />
         </Datagrid>
     </List>
+    </CardContent>
+  </Card>
+    
 );
