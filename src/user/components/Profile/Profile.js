@@ -24,7 +24,7 @@ export default class Profile extends Component {
             role:"",
             modified: false
         }
-        console.log("constructor")
+        
         if(JSON.parse(localStorage.getItem("user")===null))
         {
             const user = {
@@ -37,12 +37,11 @@ export default class Profile extends Component {
             localStorage.setItem("user",JSON.stringify(user))
         }
     } 
-    componentWillMount(){
-        console.log("will mount")
+    componentDidMount(){
+       
         const maNguoiDung = JSON.parse(localStorage.getItem("user")).id
         config()
         fetchUserProfileData(maNguoiDung).then((data) => {
-        console.log("call api get profile")
         console.log(data.data)
         if(data.data.ngaySinh!==null)
         {
@@ -138,7 +137,7 @@ export default class Profile extends Component {
             })
         if (this.state.modified) {
             updateUserAvatar(userForm).then(res => {
-               
+               console.log(res)
             }).catch(err => {
                 
             })
@@ -209,9 +208,10 @@ export default class Profile extends Component {
     }
 
     render() {
+        console.log(this.state.userInfor)
         var birthday = new Date(this.state.userInfor.ngaySinh)
         const role = JSON.parse(localStorage.getItem("user")).role
-        console.log(this.state.userInfor.sdt)
+        console.log(this.state.userInfor.gioiTinh)
         let src = (this.state.userInfor.anhDaiDien===null||this.state.userInfor.anhDaiDien.length===0)? `${process.env.PUBLIC_URL}/images/default-avatar.jpg` :`data:image/*;base64,${this.state.userInfor.anhDaiDien}`
         if (role==="ROLE_GUEST")
         return <Redirect to='/signup' />

@@ -52,14 +52,13 @@ export default class Cart extends Component {
     if(this.state.cart.length === 0){
         return (
         <div>
-            <Header />
             <h1>Giỏ hàng trống</h1>
         </div>)
     } 
     return (
-        <>
-        <Header /> 
+        
         <div className="cart">
+        <br></br>
             <div className="row">
                 <div className = "col-8">
                     {this.state.cart.map((item, index) => (
@@ -84,7 +83,6 @@ export default class Cart extends Component {
                 </div>
             </div>
         </div>
-        </>
     );
   }
   

@@ -3,7 +3,7 @@ import "./Product.css"
 import DetailsThumb from "./DetailsThumb";
 import RatingStar from "../RatingStar/RatingStar";
 import { fetchItem } from "../../../services/ItemService";
-import Header from '../../Header/Header'
+import Comment from "../Comment/Comment"
 
 export default class Product extends React.Component {
  constructor(props)
@@ -86,52 +86,62 @@ export default class Product extends React.Component {
     }
   }
 
+  formatCash(str) {
+    return str.toFixed('').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  }
+
   render() {
     const product = this.state.product;
+    console.log(product)
     const index = this.state.index;
     if (product === undefined) return (<div>Khong tim thay</div>)
     const src=`data:image/*;base64, ${product.danhSachHinhAnh[index] !== undefined ? product.danhSachHinhAnh[index].anh: ""}`
+    const priceSplit = this.formatCash(product.gia)
     return (
         
         <>
-            <Header />
+           
             <div className="container">
+            <br></br>
                 <div className={"row"}>
+                
                     <div className="col-1"></div>
                     <div className="col-5">
                         <img src={src} className="image-show" alt="" />
                     </div>
                     <div className="col-6 box-details ">
                         <h1>{product.tenMatHang}</h1>
-                        <p>Price: {product.gia}$</p>
+                        <p>Price: {priceSplit} ₫</p>
                         <p>{product.moTa}</p>
                         {<DetailsThumb 
+                            // className="img-details"
                           images={product.danhSachHinhAnh}
                           tab={this.handleTab}
                           myRef={this.myRef} 
                         />}
-                        <button className="btn btn-primary " onClick={() => this.addToCart(product)}>Thêm vào giở hàng </button>
+                        <button className="btn btn-primary " onClick={() => this.addToCart(product)}>Thêm vào giỏ hàng </button>
                     </div>
                 </div>  
                 <br></br>
                 <h2> Đánh giá của bạn</h2>
                 <div className= "row">
-                    <div className = "col-8">
-                        <textarea className="comment" rows="4" type="text" placeholder="Đánh giá của bạn" />
-                    </div>
-                        <div className = "col-4 danhgia">
-                            <div>
+                    <textarea className="comment" rows="4" type="text" placeholder="Đánh giá của bạn" />
+                        <div className = " danhgia row">
+                            <div className="col-9">
                                 <RatingStar />
-                            </div>
-                            <div>
+                                </div>
+                                <div className="col-3">
                                 <button className="btn btn-primary btn-comment"> Đánh giá </button> 
-                            </div>
+                                </div>
                     </div>
                 </div>
                 <div>      
                     <h2> Đánh giá của khách hàng</h2>
-                      <p> -{product.danhGia} </p>
+                      {/* <p> -{product.danhGia} </p> */}
                       {/* {product.map(product => <p key={product.maMatHang} name={product.danhGia} />)} */}
+                      <div>
+                          <Comment />
+                      </div>
                  </div>
             </div>
       </>

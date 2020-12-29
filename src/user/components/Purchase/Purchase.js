@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Item from "./Item";
 import "./Purchase.css";
 import {fetchListStatusOrder} from "../../../user/services/UserService"
+import {chechURLService} from "../../../user/services/CheckURLService"
 const id = 5;
 export default class Purchase extends Component {
   constructor(props) {
@@ -27,14 +28,15 @@ export default class Purchase extends Component {
     // // console.log(this.state.trangThai);
     // if(Purchase===null) return (<div><h1>Bạn chưa mua đơn hàng nào cả</h1></div>)
     const {trangThai} = this.state;
-    const purchase= this.props.purchase;
-    console.log(purchase.data)
+    const purchase = this.props.purchase;
+    //console.log(purchase.data)
+    //console.log(trangThai)
     const danhSachDonHang =  purchase.data===undefined?null:purchase.data;
     // const danhSachDonHang = purchase.data;
-    // console.log(danhSachDonHang)
+    //  console.log(danhSachDonHang)
     return (
         <div className="purchase container">
-            <div className="contain-donhang">
+            <div className="contain-donhang container">
              {
              danhSachDonHang===null?"":
              danhSachDonHang.map((donHang,index)=>(

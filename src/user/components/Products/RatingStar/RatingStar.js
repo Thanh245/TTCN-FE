@@ -6,7 +6,10 @@ const StarRating = () => {
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
     return (
-      <div className="label">
+        <>
+        <div className = "row">
+        
+        <div className="label col-4">
         {[...Array(5)].map((star, i) => {
           const ratingValue = i + 1;
           return (
@@ -22,8 +25,12 @@ const StarRating = () => {
             </>
           )
         })}
-        <p> Bạn đánh giá {rating} * cho sản phẩm này</p>
+        
       </div>
+      <div className = "col-8">
+        <p> Bạn đánh giá {rating} * cho sản phẩm này</p>
+        </div>
+      </div></>
     );
   };
   

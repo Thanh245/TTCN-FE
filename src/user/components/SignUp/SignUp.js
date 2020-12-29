@@ -70,7 +70,7 @@ import Login from "./Login";
 import Register from "./Register";
 import { useSpring, animated } from "react-spring";
 
-function App() {
+function SignUp(onLogIn) {
   const [registrationFormStatus, setRegistartionFormStatus] = useState(false);
 
   const loginProps = useSpring({
@@ -100,6 +100,7 @@ function App() {
 
   return (
     <div className="login-register-wrapper">
+  
       <div className="nav-buttons">
         <animated.button
           id="loginBtn"
@@ -119,7 +120,7 @@ function App() {
 
       <div className="form-group">
         <animated.form action="" id="loginForm" style={loginProps}>
-          <Login />
+          <Login onLogIn={onLogIn}/>
         </animated.form>
 
         <animated.form action="" id="registerForm" style={registerProps}>
@@ -129,4 +130,4 @@ function App() {
     </div>
   );
 }
-export default App;
+export default SignUp;

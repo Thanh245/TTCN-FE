@@ -1,7 +1,7 @@
 .FormOrder {
     padding-top: 2vw;
     float: right;
-    margin-right: 3vw;
+    /* margin-right: 3vw; */
     border-radius: 20px;
     width: 25vw;
     height: 23vw;
@@ -60,10 +60,14 @@
     opacity: 0.7;
     margin-right: 27vw;
     margin: auto;
+    
   }
   .pay:hover  {
     text-decoration: none;
     color: #cccccc;
+  }
+  .cont_btnpay{
+    text-align: center;
   }
   /* .pay:focus{ */
     /* color: #ffffff; */

@@ -25,7 +25,6 @@ componentDidMount(){
     if(purchase===null) return (<div><h4>Bạn chưa mua đơn hàng nào cả</h4></div>)
         return (
             <div className="ajhfkasfklasf">
-                <Header />
                 <div className="Tong-don">Đơn hàng của bạn</div>
                 <div className ="contain_donHang">
                 {purchase===null?"":

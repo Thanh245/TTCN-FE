@@ -15,25 +15,35 @@ import Header from "./user/components/Header/Header"
 import Footer from "./user/components/Footer/Footer"
 import Purchase from "./user/components/Purchase/Purchase"
 import history from "./history";
-import Containpurchase from './user/components/Purchase/Containpurchase';
 
+import UserPage from './user/components/UserPage/UserPage';
+import {AdminPage} from './admin/AdminPage'
 function App() {
   return(    
     <BrowserRouter history={history}>    
         
+        {/* <Header/>
+        <div className="container">
+            <Switch>
+            <Route path="/" exact  component={ProductsList} />
+            <Route path="/productslist/filter/price/:from/:to"  render={({match})=>(<ProductsList params={match.params} path={match.path}></ProductsList>)} />
+            <Route path="/productslist/filter/type/:id"  render={({match})=>(<ProductsList params={match.params} path={match.path}></ProductsList>)} />
+            <Route path="/productslist/:id" render={(props)=>(<Product {...props}></Product>)} />
+            <Route path="/productslist" exact  component={ProductsList} />
+            <Route path="/signup" exact  component={ SignUp } />
+            <Route path="/cart" exact  component={ Cart } />
+            <Route path="/order" exact component={ Order } />
+            <Route path="/profile" exact component={ Profile  } />
+            </Switch>
+        </div> */}
+        
+    {/* <div> */}
         <Switch>
-        <Route path="/" exact  component={Home} />
-        <Route path="/productslist/filter/price/:from/:to"  render={({match})=>(<ProductsList params={match.params} path={match.path}></ProductsList>)} />
-        <Route path="/productslist/filter/type/:id"  render={({match})=>(<ProductsList params={match.params} path={match.path}></ProductsList>)} />
-        <Route path="/productslist/:id" render={(props)=>(<Product {...props}></Product>)} />
-        <Route path="/productslist" exact  component={ProductsList} />
-        <Route path="/signup" exact  component={ SignUp } />
-        <Route path="/cart" exact  component={ Cart } />
-        <Route path="/order" exact component={ Order } />
-        <Route path="/profile" exact component={ Profile  } />
-        <Route path="/purchase" exact component={ Containpurchase } />
+            <Route path="/" component={UserPage} />
+            <Route path='/admin' component={AdminPage}/>
         </Switch>
-    <Footer />
+        <Footer />
+    {/* </div> */}
     </BrowserRouter>
   );
 }

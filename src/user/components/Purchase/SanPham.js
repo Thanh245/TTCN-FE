@@ -24,10 +24,12 @@ export default class SanPham extends Component {
         </div>
         <div className="noiDung">
           <div className="tenMatHang">{sanPham.tenMatHang}</div>
-          <div className="moTaSanPham">{sanPham.moTa}</div>
-          <p className="donGia">Đơn giá: {sanPham.gia}đ</p>
+          {/* <div className="moTaSanPham">{sanPham.moTa}</div> */}
+          
         </div>
-        <div className="soLuong">Số lượng: {this.props.soLuong}</div>
+        <div className="soLuong">Số lượng: {this.props.soLuong}
+        <p className="donGia">Đơn giá {sanPham.gia}đ</p>
+        </div>
       </div>
         ) 
     }

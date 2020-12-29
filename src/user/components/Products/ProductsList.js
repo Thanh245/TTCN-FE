@@ -4,13 +4,16 @@ import List from './List/List';
 import Pagination from './Pagination/Pagination'
 import {  fetchItemsList, fetchItemsListFilter,fetchItemsListByType } from "../../services/ItemService";
 import history from "../../../history";
+import qs from 'qs'
+
 
 export default class ProductsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             products: [],
-            totalPages: 0
+            totalPages: 0,
+            page: 0
             // cart: [],
             // search: "",
             // to: 0,
@@ -19,93 +22,39 @@ export default class ProductsList extends React.Component {
           };
       }
 
-    getParams() {
-        const params = this.props.match.params
+    getPageable(pageNum) {
+        const query = qs.parse(this.props.location.search, { ignoreQueryPrefix: true })
         let pageable = ""
         let check = false
-        if (params !== undefined){
-            if (params.page !== undefined) {
-                pageable.concat(`page=${params.page}`)
+        if (pageNum !== null) {
+            pageable = pageable + `page=${pageNum}`
+            check = true
+        }
+        else if (query !== undefined && query.page !== undefined) {
+            pageable = pageable + `page=${query.page}`
+            check = true
+            this.setState({
+                ...this.state,
+                page: query.page
+            })
+        }
+        if (query !== undefined && query.size !== undefined) {
+            if (check) pageable = pageable + `&size=${query.size}`
+            else {
+                pageable = pageable + `size=${query.size}`
                 check = true
-            } else if (params.size !== undefined) {
-                if (check) pageable.concat(`&size=${params.size}`)
-                else {
-                    pageable.concat(`size=${params.size}`)
-                    check = true
-                }
-            } else if (params.tenMatHang !== undefined) {
-                if (check) pageable.concat(`&tenMatHang=${params.tenMatHang}`)
-                else {
-                    pageable.concat(`tenMatHang=${params.tenMatHang}`)
-                    check = true
-                }
-            } else if (params.maLoaiMatHang !== undefined) {
-                if (check) pageable.concat(`&maLoaiMatHang=${params.maLoaiMatHang}`)
-                else {
-                    pageable.concat(`maLoaiMatHang=${params.maLoaiMatHang}`)
-                    check = true
-                }
-            } else if (params.giaBatDau !== undefined) {
-                if (check) pageable.concat(`&giaBatDau=${params.giaBatDau}`)
-                else {
-                    pageable.concat(`giaBatDau=${params.giaBatDau}`)
-                    check = true
-                }
-            } else if (params.giaKetThuc !== undefined) {
-                if (check) pageable.concat(`&giaKetThuc=${params.giaKetThuc}`)
-                else {
-                    pageable.concat(`giaKetThuc=${params.giaKetThuc}`)
-                    check = true
-                }
-            } else if (params.sortType !== undefined) {
-                if (check) pageable.concat(`&sortType=${params.sortType}`)
-                else {
-                    pageable.concat(`sortType=${params.sortType}`)
-                    check = true
-                }
-            } else if (params.sort !== undefined) {
-                if (check) pageable.concat(`&sort=${params.sort}`)
-                else {
-                    pageable.concat(`sort=${params.sort}`)
-                    check = true
-                }
             }
         } 
         return pageable
     }
-    
 
-    getList = async() => {
-        // const params = this.props.match.params
-        // if (params !== undefined) {}
-        const res = await fetchItemsList(0);
-        if (res.status === 200) {
-            this.setState({
-              ...this.state,
-              totalPages: res.data.totalPages,
-              products: res.data.data
-            })
-        }
-    }
-
-    getFilter = async(from, to) => {
-      const path = `/productslist/filter/price/${from}/${to}`
-      history.push(path)
-      const filter = `?giaBatDau=${from}&giaKetThuc=${to}`
-      const res = await fetchItemsListFilter(filter);
-      if (res.status === 200) {
-          this.setState({
-            ...this.state,
-            products: res.data.data,
-            totalPages: res.data.totalPages,
-            loading: false
-          })
-      }
-    }
-    
-    getItemsListFilter = async(filter) =>{
+    getItemsListFilter = async(filter, pageNum) =>{
+        let pageable = this.getPageable(pageNum)
+        pageable = pageable === "" ? "" : `?${pageable}`
+        filter = filter !== "" ? `${filter}${pageable}` : `${pageable}`
         const res = await fetchItemsListFilter(filter);
         if (res.status === 200) {
+            // console.log(res.data.data)
           this.setState({
             ...this.state,
             products: res.data.data,
@@ -116,51 +65,62 @@ export default class ProductsList extends React.Component {
     }
 
     getItemsListByType = async(id) => {
-      history.push(`/productslist/filter/type/${id}`)
-      const res = await fetchItemsListByType(id);
-      if (res.status === 200) {
-        this.setState({
-            ...this.state,
-            totalPages: res.data.totalPages,
-            products: res.data.data
-        })
+        history.push(`/productslist/filter/type/${id}`)
+        const res = await fetchItemsListByType(id);
+        if (res.status === 200) {
+          this.setState({
+              ...this.state,
+              totalPages: res.data.totalPages,
+              products: res.data.data
+          })
+        }
       }
+
+      getFilter = async(from, to) => {
+        const path = `/productslist/filter/price/${from}/${to}`
+        history.push(path)
+        const filter = `?giaBatDau=${from}&giaKetThuc=${to}`
+        const res = await fetchItemsListFilter(filter);
+        if (res.status === 200) {
+            this.setState({
+              ...this.state,
+              products: res.data.data,
+              totalPages: res.data.totalPages,
+              loading: false
+            })
+        }
+      }
+    getFilterStr() {
+        let filter = ""
+        if (this.props.match !== undefined) {
+            const params = this.props.match.params
+            const path = this.props.match.path
+            if (path.includes("filter/price")){
+                filter = `?giaBatDau=${params.from}&giaKetThuc=${params.to}`
+            }
+            else if (path.includes("filter/type")){
+                filter = `/loai-mat-hang/${params.id}`
+            }
+        }
+        return filter
     }
 
     componentDidMount() {
-      const params = this.props.params
-      const path = this.props.path
-    //   this.getItemsTypeList()
-      if (params !== undefined && path !== undefined && path.includes("filter/price")){
-          this.getFilter(params.from, params.to)
-      }
-      else if (params !== undefined && path !== undefined && path.includes("filter/price")){
-          this.getItemsListByType(params.id)
-      }
-      else {
-          this.getList()
-      }
+        const filter = this.getFilterStr()
+        this.getItemsListFilter(filter, null)
     }
 
     navPage (numPage){
-        // if (params !== undefined && path !== undefined && path.includes("filter/price")){
-        //     this.getFilter(params.from, params.to)
-        // }
-        // else if (params !== undefined && path !== undefined && path.includes("filter/price")){
-        //     this.getItemsListByType(params.id)
-        // }
-        // else {
-        //     this.getList()
-        //  }
+        const path = this.props.match.path === "" ? '/productslist' : this.props.match.url
+        history.push(`${path}?${this.getPageable(numPage)}`)
+        this.getItemsListFilter(this.getFilterStr(), numPage)
     }
   render() {
-      
-      console.log ("asc")
     return (
-        <div>
+        <div className="container">
             <Filter getFilter = {this.getFilter.bind(this)} getItemsListByType={this.getItemsListByType.bind(this)} />
             <List list = {this.state.products}/>
-            <Pagination onNavPage = {this.navPage.bind(this)}/>
+            <Pagination page={this.state.page} totalPages={this.state.totalPages} onNavPage = {this.navPage.bind(this)} />
         </div>
     )
   }

@@ -46,7 +46,7 @@ getTrangThai(){
     const Ngay = ngay.getDate()-1+"-"+ngay.getMonth()+"-"+ngay.getFullYear()
     return (
       <div>
-        <div className="donHang-contain container ">
+        <div className="donHang-contain container">
           <div className="donNgay"> Đơn hàng ngày {Ngay}</div>
           
           {danhSachMatHang!==undefined?danhSachMatHang.map((sanPham,index)=>(
@@ -55,17 +55,17 @@ getTrangThai(){
               sanPham = {sanPham.matHang}
               soLuong = {sanPham.soLuong}
               />)):""}
-              <div className = "abc">
+             
                 <div className="tongTien">Tổng tiền {donHang.giaTongCong}</div>
                 <div className="trangThai">
                 {
                     tenTrangThai[0]
                 }
                 </div>
+                
             </div>
          </div>
-         <div></div>
-    </div>
+    
     );
   }
 }

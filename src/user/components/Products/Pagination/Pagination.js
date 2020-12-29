@@ -6,29 +6,33 @@ export default class ProductsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageCount: 10,
-            activePage: 1
+            pageCount: this.props.totalPages,
+            activePage:  10
           };
       }
 
+    onChange(data) {
+        this.props.onNavPage(data.selected)
+    }  
     render() {
-        return (
-            <div className="container">
-            <div className="navPage" >
+        if (this.props.totalPages <= 1) return <div></div>
+        else return (
+            <div id="navPage">
                 <ReactPaginate
                     previousLabel={"prev"}
                     nextLabel={"next"}
                     breakLabel={"..."}
                     breakClassName={"break-me"}
-                    pageCount={this.state.pageCount}
-                    activePage={this.state.activePage}
+                    pageCount={this.props.totalPages}
+                    activePage={this.props.page}
+                    forcePage={this.props.page}
+                    initialPage={this.props.page}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
-                    // onPageChange={this.handlePageClick}
+                    onPageChange={this.onChange.bind(this)}
                     containerClassName={"pagination"}
                     subContainerClassName={"pages pagination"}
                     activeClassName={"active"}/>
-            </div>
             </div>
         )
     }

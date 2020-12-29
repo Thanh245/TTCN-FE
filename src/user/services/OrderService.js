@@ -7,9 +7,11 @@ async function requestOrderInfo(orderInfo) {
       tenNguoiNhanHang: orderInfo.fullname,
       SDTGiaoHang:orderInfo.phonenumber,
       diaChiGiaoHang: orderInfo.address,
-      ghiChu: orderInfo.note,
-      donHang: orderInfo.order
+      trangThai:{},
+      chuThich: orderInfo.note,
+      danhSachMatHang: orderInfo.order
     };
+    console.log(body)
     return await axios({
       headers: { "Access-Control-Allow-Origin": "*" },
       method: "POST",
@@ -27,4 +29,4 @@ async function getOrderInfoList() {
     });
 }
 
-export default {requestOrderInfo, getOrderInfoList}
+export {requestOrderInfo, getOrderInfoList}

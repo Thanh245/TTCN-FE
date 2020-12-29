@@ -2,16 +2,12 @@ import React from "react";
 import PriceButton from "../PriceButton/PriceButton"
 import './Filter.css'
 import {  fetchItemsTypeList} from "../../../services/ItemService";
+import history from "../../../../history";
 
 export default class Filter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // products: [],
-            // cart: [],
-            // search: "",
-            // to: 0,
-            // from: 0,
             loaiMatHangList: []
           };
       }
@@ -25,11 +21,21 @@ export default class Filter extends React.Component {
           })
       }
     }
+
     componentDidMount() {
-        // const params = this.props.params
-        // const path = this.props.path
         this.getItemsTypeList()
     }
+
+    onChange(event) {
+        const selectedIndex = event.target.selectedIndex - 1
+        alert(this.state.loaiMatHangList.length)
+        const id = this.state.loaiMatHangList[selectedIndex].maLoaiMatHang
+        // const path = `/productslist/filter/type/${id}`
+        // history.push(path)
+        this.props.getItemsListByType(id)
+    }
+
+
   render() {
     return (
         <div>
@@ -43,11 +49,7 @@ export default class Filter extends React.Component {
                     <PriceButton from={3000000} handleClick = {this.props.getFilter}/>
                 </div>
                 <div className= "col-2 droplist">
-                    <select id="select" onChange={() => {
-                        const selectedIndex = document.getElementById('select').selectedIndex - 1
-                        const id = this.state.loaiMatHangList[selectedIndex].maLoaiMatHang
-                        this.props.getItemsListByType(id)
-                    }}>
+                    <select id="select" onChange={this.onChange}>
                         <option disabled selected>Loại mặt hàng</option>
                         {this.state.loaiMatHangList.map((item)=>(<option> {item.tenLoaiMatHang} </option>)) }
                     </select>
