@@ -117,7 +117,7 @@ export default class ProductsList extends React.Component {
 
     getItemsListByType = async(id) => {
       history.push(`/productslist/filter/type/${id}`)
-      const res = await fetchItemsListByType(id);
+      const res = await fetchItemsListByType(id, 0);
       if (res.status === 200) {
         this.setState({
             ...this.state,
@@ -128,39 +128,43 @@ export default class ProductsList extends React.Component {
     }
 
     componentDidMount() {
-      const params = this.props.params
-      const path = this.props.path
+      const params = this.props.match.params
+      const path = this.props.match.path
     //   this.getItemsTypeList()
-      if (params !== undefined && path !== undefined && path.includes("filter/price")){
-          this.getFilter(params.from, params.to)
-      }
-      else if (params !== undefined && path !== undefined && path.includes("filter/price")){
-          this.getItemsListByType(params.id)
-      }
-      else {
-          this.getList()
+    // alert( this.props.match)
+      if (this.props.match !== undefined) {
+        const pageNum = this.props.match.page  
+        if (params !== undefined && path !== undefined && path.includes("filter/price")){
+            this.getFilter(params.from, params.to, this.getParams())
+        }
+        else if (params !== undefined && path !== undefined && path.includes("filter/price")){
+            this.getItemsListByType(params.id, pageNum !== undefined ? pageNum : 0)
+        }
+        else {
+            this.getList(pageNum !== undefined ? pageNum : 0)
+        }
       }
     }
 
     navPage (numPage){
-        // if (params !== undefined && path !== undefined && path.includes("filter/price")){
-        //     this.getFilter(params.from, params.to)
-        // }
-        // else if (params !== undefined && path !== undefined && path.includes("filter/price")){
-        //     this.getItemsListByType(params.id)
-        // }
-        // else {
-        //     this.getList()
-        //  }
+        const params = this.props.params
+        const path = this.props.path
+        if (params !== undefined && path !== undefined && path.includes("filter/price")){
+            this.getFilter(params.from, params.to, numPage)
+        }
+        else if (params !== undefined && path !== undefined && path.includes("filter/price")){
+            this.getItemsListByType(params.id, numPage)
+        }
+        else {
+            this.getList(numPage)
+        }
     }
   render() {
-      
-      console.log ("asc")
     return (
         <div>
             <Filter getFilter = {this.getFilter.bind(this)} getItemsListByType={this.getItemsListByType.bind(this)} />
             <List list = {this.state.products}/>
-            <Pagination onNavPage = {this.navPage.bind(this)}/>
+            <Pagination totalPages={this.state.totalPages} onNavPage = {this.navPage.bind(this)} />
         </div>
     )
   }

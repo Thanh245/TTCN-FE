@@ -6,7 +6,7 @@ export default class ProductsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageCount: 10,
+            pageCount: this.props.totalPages,
             activePage: 1
           };
       }
@@ -23,7 +23,7 @@ export default class ProductsList extends React.Component {
                     activePage={this.state.activePage}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
-                    // onPageChange={this.handlePageClick}
+                    onPageChange={() => this.props.onNavPage(this.state.activePage)}
                     containerClassName={"pagination"}
                     subContainerClassName={"pages pagination"}
                     activeClassName={"active"}/>

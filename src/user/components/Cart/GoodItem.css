@@ -1,11 +1,9 @@
 .goodsItem {
     float: left;
+    margin-left: 20%;
     width: 70vw;
     height: 15vw;
     padding: 1vw;
-  }
-  hr {
-    margin-top: 13.5vw;
   }
   .imageItem {
     float: left;
@@ -21,41 +19,44 @@
     font-size: 1.5vw;
     font-style: italic;
     font-weight: 600;
-    width: 35vw;
-    height: 16vw;
+    width: 20vw;
+    height: 11vw;
   }
   .removeitem {
     width: 10vw;
     border: none;
-    margin-top: 0.2vw;
+    margin-top: 3vw;
     border: none;
-    font-size: 1.5vw;
-    width: 10vw;
-    height: 2.5vw;
+    font-size: 1vw;
+    width: 8vw;
+    height: 2vw;
     border-radius: 20px;
     float: right;
   }
   .removeitem:hover {
     border-radius: 20px;
     background-color: rgb(196, 198, 199);
-    width: 10vw;
-    height: 2.5vw;
   }
   .removeitem:focus{
       outline: none;
   }
   
   .description {
-    height: 8vw;
+    height: 6vw;
     font-size: 1vw;
+    font-weight: 300;
+    opacity: 70%;
+    font-style: normal;
+    font-family: Arial, Helvetica, sans-serif;
   }
   .title {
+    font-style: normal;
     font-size: 1.5vw;
   }
   .calculation {
     margin-top: 2vw;
     float: left;
-    width: 13vw;
+    width: 15vw;
     height: 10vw;
     text-align: center;
   }
@@ -88,10 +89,12 @@
     /* border: solid; */
   /* } */
   h2.mulprice {
-    margin-top: 1vw;
+    float: left;
+    margin-left: 2vw;
     text-align: center;
-    font-size: 1.5vw;
+    font-size: 1.2vw;
     height: 2vw;
+    margin-top: 0.5vw;
   }
   p.unitprice {
     float: left;

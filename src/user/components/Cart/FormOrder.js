@@ -15,7 +15,7 @@ class FormOrder extends Component {
             <div className="tdLeft" style={{fontWeight:"bold"}}>Tổng:</div>
             <div className="tdRight" >{this.props.total} VND</div>
             {/* <button className="pay">Đặt hàng</button> */}
-            <Link to="/order" className="btn pay">Đặt hàng</Link>
+            <div className="button_dat_hang"><Link to="/order" className="pay">Đặt hàng</Link></div>
         </div>
         );
     }

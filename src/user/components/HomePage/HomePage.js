@@ -34,14 +34,14 @@ class Home extends React.Component {
     render() {
         return (
           <>     
-            <Header onHomePageBtn = {this.getList.bind(this)} /> 
+            {/* <Header onHomePageBtn = {this.getList.bind(this)} />  */}
             <div className="container">
               
               {/* <Slider /> */}
               <br></br>
               {/* <Filter /> */}
               {/* <List list = {this.state.products} /> */}
-              <ProductsList reload={this.state.reload}/>
+              <ProductsList match={this.props.match} reload={this.state.reload}/>
             </div>
           </>
         );

@@ -26,6 +26,8 @@ export default class GoodsItem extends Component {
   render() {
     const src=`data:image/*;base64, ${this.props.matHang.danhSachHinhAnh[0] !== undefined ? this.props.matHang.danhSachHinhAnh[0].anh: ""}`
     return (
+        <div>
+           
       <div className="goodsItem">
         <img
           //src={process.env.PUBLIC_URL + this.state.src}
@@ -37,11 +39,10 @@ export default class GoodsItem extends Component {
           <div className="title">{this.state.title}</div>
           <div className="description">{this.state.descriptionItem}</div>
           <p className="unitprice">Đơn giá: {this.state.unitprice} VND</p>
-          <button onClick={this.props.deleteItem} className="removeitem">
-            Xóa
-          </button>
+          
         </div>
         <div className="calculation">
+        <div idName="price"><h2 className="mulprice"> {this.props.soLuong*this.state.unitprice}đ</h2> </div>
           <input
             type="number"
             min="1"
@@ -50,11 +51,11 @@ export default class GoodsItem extends Component {
             defaultValue={this.state.quantity}
             onChange={this.props.changeQuantity}
           ></input>
-          <div idName="price">
-            <h2 className="mulprice">Tổng: {this.props.soLuong*this.state.unitprice} VND</h2>
-          </div>
+          <button onClick={this.props.deleteItem} className="removeitem">
+            Xóa
+          </button>
         </div>
-        <hr></hr>
+      </div>
       </div>
     );
   }
