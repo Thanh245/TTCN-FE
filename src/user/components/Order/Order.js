@@ -3,6 +3,7 @@ import "./Order.css";
 import isEmpty from "validator/lib/isEmpty";
 import requestOrderInfo from "../../services/OrderService";
 import { Redirect } from "react-router-dom";
+import Header from '../Header/Header'
 
 export default class Order extends Component {
   constructor(props) {
@@ -42,14 +43,8 @@ export default class Order extends Component {
     e.preventDefault();
     const { fullname, phonenumber, address } = this.state;
     const msg = {};
-    if (isEmpty(fullname)) {
-      msg.fullname = "Vui lòng nhập họ tên";
-    }
-    if (isEmpty(phonenumber)) {
-      msg.phonenumber = "Vui lòng nhập số điện thoại";
-    }
-    if (isEmpty(address)) {
-      msg.address = "Vui lòng nhập địa chỉ";
+    if (isEmpty(fullname) || isEmpty(phonenumber) || isEmpty(address)) {
+      msg.warning = "Vui lòng nhập đủ thông tin giao hàng";
     }
     this.setState({
       validationMsg: msg
@@ -90,58 +85,63 @@ export default class Order extends Component {
     return <Redirect to = "/"/>
     return (
         <>
-      <React.Fragment>
-        <div className="Order">
-          <h1>Đặt hàng</h1>
-          <br />
-          <form onSubmit={this.submitForm} className="form-group">
-            
-            <p className="warning">{this.state.validationMsg.confirm_email}</p>
+        <Header />
+        <React.Fragment>
+            <div className="Order">
+            <h1 >Đặt hàng</h1>
             <br />
-            <input
-              type="text"
-              placeholder="Họ tên"
-              name="fullname"
-              value={this.state.fullname}
-              onChange={this.onChange}
-            />
-            <p className="warning">{this.state.validationMsg.fullname}</p>
-            <br />
-            <input
-              type="text"
-              placeholder="Số điện thoại"
-              name="phonenumber"
-              value={this.state.phonenumber}
-              onChange={this.onChange}
-            />
-            <p className="warning">{this.state.validationMsg.phonenumber}</p>
-            <br />
-            <input
-              type="text"
-              placeholder="Địa chỉ"
-              name="address"
-              value={this.state.address}
-              onChange={this.onChange}
-            />
-            <p className="warning">{this.state.validationMsg.address}</p>
-            <br />
-            <textarea
-              type="text"
-              placeholder="Ghi chú"
-              name="note"
-              value={this.state.note}
-              onChange={this.onChange}
-            />
-            <br />
-            <input
-              type="button"
-              className="submit"
-              value="Đặt hàng"
-              onClick={this.submitForm}
-            />
-          </form>
-        </div>
-      </React.Fragment>
+            <form onSubmit={this.submitForm} className="form-group">
+                <div className="required-field">Họ tên:</div>
+                <input
+                type="text"
+                // placeholder="Họ tên (*)"
+                name="fullname"
+                value={this.state.fullname}
+                onChange={this.onChange}
+                />
+                {/* <p className="warning">{this.state.validationMsg.fullname}</p> */}
+                <br />
+                <div className="required-field">Số điện thoại:</div>
+                <input
+                type="text"
+                className="required-field"
+                // placeholder="Số điện thoại (*)"
+                name="phonenumber"
+                value={this.state.phonenumber}
+                onChange={this.onChange}
+                />
+                {/* <p className="warning">{this.state.validationMsg.phonenumber}</p> */}
+                <br />
+                <div className="required-field">Địa chỉ:</div>
+                <input
+                type="text"
+                // placeholder="Địa chỉ (*)"
+                name="address"
+                value={this.state.address}
+                onChange={this.onChange} 
+                />
+                {/* <p className="warning">{this.state.validationMsg.address}</p> */}
+                <br />
+                <div >Ghi chú:</div>
+                <textarea
+                type="text"
+                // placeholder="Ghi chú"
+                name="note"
+                value={this.state.note}
+                onChange={this.onChange}
+                />
+                <p className="warning">{this.state.validationMsg.warning}</p>
+                <div  className="button_order"><input
+                type="button"
+                className="submit"
+                value="Đặt hàng"
+                onClick={this.submitForm}
+                />
+                </div>
+            </form>
+            </div>
+            <br/>   
+        </React.Fragment>
       </>
     );
   }

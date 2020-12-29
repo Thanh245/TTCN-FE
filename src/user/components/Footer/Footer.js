@@ -47,7 +47,7 @@ function Footer() {
           <div className='footer-logo'>
             <Link to='/' className='social-logo'>
               <MdFingerprint className='navbar-icon' />
-              Handemade Shop
+              TokiDoki Handmade Shop
             </Link>
           </div>
           <small className='website-rights'>ITF - BKDN © 2020</small>

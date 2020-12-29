@@ -1,55 +1,48 @@
-import React, {useState} from 'react'
-import Menu from '../svg/bars-solid.svg'
-import Close from '../svg/times-solid.svg'
+import React from 'react'
+import { Navbar,Nav,NavDropdown,Form,FormControl,Button } from 'react-bootstrap'
 import Cart from '../svg/cart.svg'
-import {Link} from 'react-router-dom'
 import './Header.css'
+class Header extends React.Component{
 
-export default function Header() {
-    const [menu, setMenu] = useState(false)
-
-    const toggleMenu = () =>{
-        setMenu(!menu)
-    }
-
-    const styleMenu = {
-        left: menu ? 0 : "-100%"
-    }
-
-    return (
-        <div className="header">
-            <div className="menu" onClick={toggleMenu}>
-                <img src={Menu} alt="" width="30" />
-            </div>
-            <div className="logo">
-                <h1><Link to="/" >HMS</Link></h1>
-            </div>
-            <ul style={styleMenu}>
-                <li  >
-                    <input  className="inputSearch"  type="text" placeholder="   Search..." />
-                </li>
-                <li><Link to="/">Trang chủ</Link></li>
-                <li><Link to="/productslist">Sản phẩm</Link></li>
-                <li><Link to="/signup">Đăng nhập/ Đăng ký</Link></li>
-                {/* <li><Link to="/profile">Người dùng</Link></li> */}
-                <div className="dropdown-user">
-                    NGƯỜI DÙNG
-                <div className="dropdown-content-user">
-                <Link to="/profile">Người dùng</Link>
-                <Link to="/purchase">Đơn hàng</Link>
+    render(){
+        return(
+            <div >
+            <div className="row">
+                <div className="col-md-12">
+                    <Navbar  expand="lg" sticky="top">
+                        <Navbar.Brand href="/"  onClick={this.props.onHomePageBtn}>
+                            <img src= {process.env.PUBLIC_URL + "/logo/logo.png"} alt='..'/>
+                        </Navbar.Brand>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                            <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav className="mr-auto">
+                                <Form inline>
+                                <FormControl
+                                    type="text"
+                                    placeholder="Search"
+                                    className="mr-sm-2"
+                                />
+                                <Button variant="outline-success">Search</Button>
+                                </Form>
+                            </Nav>
+                            <Nav className="header">
+                                <Nav.Link href="/">Trang chủ</Nav.Link>
+                                <Nav.Link href="/productslist">Sản phẩm</Nav.Link>
+                                <Nav.Link href="/signup">Đăng nhập/ Đăng ký</Nav.Link>
+                                <NavDropdown title="Người dùng" id="basic-nav-dropdown">
+                                    <NavDropdown.Item href="/profile">Thông tin</NavDropdown.Item>
+                                    <NavDropdown.Item href="/purchase">Đơn hàng</NavDropdown.Item>
+                                    <NavDropdown.Item href="#action/3.3">Đăng xuất</NavDropdown.Item>
+                                </NavDropdown>
+                                <Nav.Link href="/cart"><img src={Cart} alt="" width="20" /></Nav.Link>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
                 </div>
-                </div>
-                <li onClick={toggleMenu}>
-                    <img src={Close} alt="" width="30" className="menu" />
-                </li>
-            </ul>
-            <div className="cart-icon">
-                {/* <span>{Cart.length}</span> */}
-                <Link to="/cart">
-                    <img src={Cart} alt="" width="30" />
-                </Link>
             </div>
-            
-      </div>
-    )
+            </div>
+        )  
+    }
 }
+
+export default Header;

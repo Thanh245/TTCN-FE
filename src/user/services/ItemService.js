@@ -1,31 +1,31 @@
 import axios from "axios";
 import config from "../config/config"
-async function fetchItem(id) {
+async function fetchItem(id, filter) {
     config()
     // alert()
     return await axios({
       headers: { "Access-Control-Allow-Origin": "*" },
       method: "GET",
-      url: `/mat-hang-management/mat-hang/${id}`
+      url: `/mat-hang-management/mat-hang/${id}?${filter}`
     })
 }
 
-async function fetchItemsList() {
+async function fetchItemsList(pageNum) {
     config()
     // alert()
     return await axios({
       headers: { "Access-Control-Allow-Origin": "*" },
       method: "GET",
-      url: `/mat-hang-management/mat-hang`
+      url: `/mat-hang-management/mat-hang?page=${pageNum}`
     })
 }
 
-async function fetchItemsListByType(id) {
+async function fetchItemsListByType(id, pageNum) {
     config()
     return await axios({
       headers: { "Access-Control-Allow-Origin": "*" },
       method: "GET",
-      url: `/mat-hang-management/mat-hang/loai-mat-hang/${id}`
+      url: `/mat-hang-management/mat-hang/loai-mat-hang/${id}?page=${pageNum}`
     })
 }
 

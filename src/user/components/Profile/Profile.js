@@ -51,7 +51,7 @@ export default class Profile extends Component {
         let month = date.getMonth()+1;
         let year = date.getFullYear();
         var ngaySinh = year+"-"+month+"-"+day;
-        }
+        } else ngaySinh = this.state.userInfor.ngaySinh
         const userInfor = {
             anhDaiDien:data.data.anhDaiDien,
             gioiTinh:data.data.gioiTinh,
@@ -60,10 +60,10 @@ export default class Profile extends Component {
             thanhPho: data.data.thanhPho,
             sdt:data.data.sdt,
         }
-        if(userInfor.ngaySinh===null)
-        {
-            userInfor.ngaySinh=this.state.userInfor.ngaySinh
-        }
+        // if(userInfor.ngaySinh===null)
+        // {
+        //     userInfor.ngaySinh=this.state.userInfor.ngaySinh
+        // }
         this.setState(
             {...this.state,
             userInfor:userInfor

@@ -4,7 +4,7 @@ import React from 'react';
 import ProductsList from './user/components/Products/ProductsList'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 //import {DataProvider} from './user/components/Products/DataProvider'
-import Product from './user/components/Products/Product'
+import Product from './user/components/Products/Product/Product'
 import Cart from './user/components/Cart/Cart'
 //import Footer from './user/components/Footer/Footer'
 import SignUp from './user/components/SignUp/SignUp'
@@ -15,11 +15,12 @@ import Header from "./user/components/Header/Header"
 import Footer from "./user/components/Footer/Footer"
 import Purchase from "./user/components/Purchase/Purchase"
 import history from "./history";
+import Containpurchase from './user/components/Purchase/Containpurchase';
 
 function App() {
   return(    
     <BrowserRouter history={history}>    
-    <Header />     
+        
         <Switch>
         <Route path="/" exact  component={Home} />
         <Route path="/productslist/filter/price/:from/:to"  render={({match})=>(<ProductsList params={match.params} path={match.path}></ProductsList>)} />
@@ -30,7 +31,7 @@ function App() {
         <Route path="/cart" exact  component={ Cart } />
         <Route path="/order" exact component={ Order } />
         <Route path="/profile" exact component={ Profile  } />
-        <Route path="/purchase" exact component={ Purchase } />
+        <Route path="/purchase" exact component={ Containpurchase } />
         </Switch>
     <Footer />
     </BrowserRouter>

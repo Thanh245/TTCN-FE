@@ -1,4 +1,15 @@
-.purchase{
+div.contain-donhang{
+    float: none;
     width: 100%;
-    margin-bottom: 45%;
+    margin:auto;
+
+}
+div.Tong-don{
+    padding: 1vw;
+    text-align: center;
+    font-size: 3vw;
+}
+
+.purchase{
+    /* border: solid; */
 }

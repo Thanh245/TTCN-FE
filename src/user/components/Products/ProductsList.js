@@ -1,211 +1,167 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
-import ReactPaginate from "react-paginate";
-import "./Product.css";
-import {  fetchItemsList, fetchItemsListFilter,fetchItemsTypeList,fetchItemsListByType } from "../../services/ItemService";
-import PriceButton from "./PriceButton";
+import Filter from './Filter/Filter'
+import List from './List/List';
+import Pagination from './Pagination/Pagination'
+import {  fetchItemsList, fetchItemsListFilter,fetchItemsListByType } from "../../services/ItemService";
 import history from "../../../history";
-import { Row, Col, Button } from "reactstrap";
-
-import {Link } from "react-router-dom";
 
 export default class ProductsList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        products: [],
-        cart: [],
-        search: "",
-        to: 0,
-        from: 0,
-        loaiMatHangList: [],
-      };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            products: [],
+            totalPages: 0
+            // cart: [],
+            // search: "",
+            // to: 0,
+            // from: 0,
+            // loaiMatHangList: [],
+          };
+      }
 
-  getList = async() => {
-      const res = await fetchItemsList();
+    getParams() {
+        const params = this.props.match.params
+        let pageable = ""
+        let check = false
+        if (params !== undefined){
+            if (params.page !== undefined) {
+                pageable.concat(`page=${params.page}`)
+                check = true
+            } else if (params.size !== undefined) {
+                if (check) pageable.concat(`&size=${params.size}`)
+                else {
+                    pageable.concat(`size=${params.size}`)
+                    check = true
+                }
+            } else if (params.tenMatHang !== undefined) {
+                if (check) pageable.concat(`&tenMatHang=${params.tenMatHang}`)
+                else {
+                    pageable.concat(`tenMatHang=${params.tenMatHang}`)
+                    check = true
+                }
+            } else if (params.maLoaiMatHang !== undefined) {
+                if (check) pageable.concat(`&maLoaiMatHang=${params.maLoaiMatHang}`)
+                else {
+                    pageable.concat(`maLoaiMatHang=${params.maLoaiMatHang}`)
+                    check = true
+                }
+            } else if (params.giaBatDau !== undefined) {
+                if (check) pageable.concat(`&giaBatDau=${params.giaBatDau}`)
+                else {
+                    pageable.concat(`giaBatDau=${params.giaBatDau}`)
+                    check = true
+                }
+            } else if (params.giaKetThuc !== undefined) {
+                if (check) pageable.concat(`&giaKetThuc=${params.giaKetThuc}`)
+                else {
+                    pageable.concat(`giaKetThuc=${params.giaKetThuc}`)
+                    check = true
+                }
+            } else if (params.sortType !== undefined) {
+                if (check) pageable.concat(`&sortType=${params.sortType}`)
+                else {
+                    pageable.concat(`sortType=${params.sortType}`)
+                    check = true
+                }
+            } else if (params.sort !== undefined) {
+                if (check) pageable.concat(`&sort=${params.sort}`)
+                else {
+                    pageable.concat(`sort=${params.sort}`)
+                    check = true
+                }
+            }
+        } 
+        return pageable
+    }
+    
+
+    getList = async() => {
+        // const params = this.props.match.params
+        // if (params !== undefined) {}
+        const res = await fetchItemsList(0);
+        if (res.status === 200) {
+            this.setState({
+              ...this.state,
+              totalPages: res.data.totalPages,
+              products: res.data.data
+            })
+        }
+    }
+
+    getFilter = async(from, to) => {
+      const path = `/productslist/filter/price/${from}/${to}`
+      history.push(path)
+      const filter = `?giaBatDau=${from}&giaKetThuc=${to}`
+      const res = await fetchItemsListFilter(filter);
       if (res.status === 200) {
           this.setState({
             ...this.state,
-            products: res.data.data
+            products: res.data.data,
+            totalPages: res.data.totalPages,
+            loading: false
           })
       }
-  }
-
-  getFilter = async(from, to) => {
-    const path = `/productslist/filter/price/${from}/${to}`
-    history.push(path)
-    const filter = `?giaBatDau=${from}&giaKetThuc=${to}`
-    const res = await fetchItemsListFilter(filter);
-    if (res.status === 200) {
-        this.setState({
-          ...this.state,
-          products: res.data.data,
-          loading: false
-        })
     }
-  }
- 
-  getItemsListFilter = async(filter) =>{
-      const res = await fetchItemsListFilter(filter);
-      if (res.status === 200) {
-        this.setState({
-          ...this.state,
-          products: res.data.data,
-          loading: false
-        })
-    }
-  }
-
-  getItemsTypeList = async() =>{
-      const res = await fetchItemsTypeList();
-      if (res.status === 200) {
-        this.setState({
+    
+    getItemsListFilter = async(filter) =>{
+        const res = await fetchItemsListFilter(filter);
+        if (res.status === 200) {
+          this.setState({
             ...this.state,
-          loaiMatHangList: res.data.data,
-        })
-    }
-  }
-
-  getItemsListByType = async() => {
-    const selectedIndex = document.getElementById('select').selectedIndex - 1
-    const id = this.state.loaiMatHangList[selectedIndex].maLoaiMatHang
-    history.push(`/productslist/filter/type/${id}`)
-    const res = await fetchItemsListByType(id);
-    if (res.status === 200) {
-      this.setState({
-          ...this.state,
-        products: res.data.data
-      })
-    }
-  }
-
-  componentDidMount() {
-    const params = this.props.params
-    const path = this.props.path
-    this.getItemsTypeList()
-    if (params !== undefined && path !== undefined && path.includes("filter/price")){
-        this.getFilter(params.from, params.to)
-    }
-    else if (params !== undefined && path !== undefined && path.includes("filter/price")){
-        this.getItemsListByType(params.id)
-    }
-    else {
-        this.getList()
-        
-    }
-  }
-
-  addToCart(product) {
-    const cartItem = {
-      matHang: {},
-      soLuong: 1
-    };
-    let trung = false;
-    const cart = JSON.parse(sessionStorage.getItem("cart"))
-    if(cart !==null) {
-         var newCart = cart
-    }
-    else { newCart = Object.assign([], this.state.cart);}
-    for (let item of newCart) {
-      if (product.maMatHang === item.matHang.maMatHang) {
-        item.soLuong++;
-        trung = true;
-        console.log(newCart)
-        sessionStorage.removeItem("cart")
-        sessionStorage.setItem("cart", JSON.stringify(newCart))
-        this.setState({
-            ...this.state,
-             cart: newCart
-        });
+            products: res.data.data,
+            totalPages: res.data.totalPages,
+            loading: false
+          })
       }
     }
-    if (trung === false) {
-        if(newCart.length===9) {
-            alert("Giỏ hàng đã đầy")
-            return
-    }
-      cartItem.matHang = product;
-      newCart.push(cartItem);
-      sessionStorage.removeItem("cart")
-      sessionStorage.setItem("cart", JSON.stringify(newCart))
-      this.setState({ ...this.state,
-        cart: newCart });
-    }
-  }
- 
-  renderProduct = (product) => {
-    const src=`data:image/*;base64, ${product.danhSachHinhAnh[0] !== undefined ? product.danhSachHinhAnh[0].anh: ""}`
-    return (
-        <div className= "col-4">
-            <div className="card">
-                <img src={src} className="card-img-top" alt="..." />
-                <div className="card-body">
-                  <h5 className="card-title">{product.tenMatHang}</h5>
-                  <p className="card-text">Price {product.gia}</p>
-                  <Row>
-                    <Col sm="6" xs="12">
-                      <Button onClick={() => this.addToCart(product)}>Add to cart</Button>
-                    </Col>
-                    <Col sm="4" xs="12">
-                        
-                      <Link 
-                        to={"/productslist/" + product.maMatHang}
-                        className="btn btn-primary"
-                      >
-                        Details
-                      </Link>
 
-                    </Col>
-                  </Row>
-                </div>
-            </div>
-            <br></br>
-        </div>
-    );
-  };
+    getItemsListByType = async(id) => {
+      history.push(`/productslist/filter/type/${id}`)
+      const res = await fetchItemsListByType(id);
+      if (res.status === 200) {
+        this.setState({
+            ...this.state,
+            totalPages: res.data.totalPages,
+            products: res.data.data
+        })
+      }
+    }
 
+    componentDidMount() {
+      const params = this.props.params
+      const path = this.props.path
+    //   this.getItemsTypeList()
+      if (params !== undefined && path !== undefined && path.includes("filter/price")){
+          this.getFilter(params.from, params.to)
+      }
+      else if (params !== undefined && path !== undefined && path.includes("filter/price")){
+          this.getItemsListByType(params.id)
+      }
+      else {
+          this.getList()
+      }
+    }
+
+    navPage (numPage){
+        // if (params !== undefined && path !== undefined && path.includes("filter/price")){
+        //     this.getFilter(params.from, params.to)
+        // }
+        // else if (params !== undefined && path !== undefined && path.includes("filter/price")){
+        //     this.getItemsListByType(params.id)
+        // }
+        // else {
+        //     this.getList()
+        //  }
+    }
   render() {
+      
+      console.log ("asc")
     return (
-        <>
-            <div className="container">
-                <div className = "row">
-                    <p className="FilterContent">Chọn mức giá: </p>
-                    <div className = "col-6">
-                        <PriceButton to={1000000} handleClick = {this.getFilter.bind(this)}/>
-                        <PriceButton from={1000000} to={3000000} handleClick = {this.getFilter.bind(this)}/>
-                        <PriceButton from={3000000} handleClick = {this.getFilter.bind(this)}/>
-                    </div>
-                    <div className= "col-2 droplist">
-                        <select id="select" onChange={this.getItemsListByType.bind(this)}>
-                            <option disabled selected>Loại mặt hàng</option>
-                            {this.state.loaiMatHangList.map((item)=>(<option> {item.tenLoaiMatHang} </option>)) }
-                        </select>
-                    </div>
-                </div>
-                <br></br>
-                <div>
-                  <div className="row">
-                    {this.state.products.map((product) => {return this.renderProduct(product);})}                  
-                  </div>
-                </div>
-                
-                <div className="page">
-                    <ReactPaginate
-                        previousLabel={"prev"}
-                        nextLabel={"next"}
-                        breakLabel={"..."}
-                        breakClassName={"break-me"}
-                        pageCount={this.state.pageCount}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={5}
-                        onPageChange={this.handlePageClick}
-                        containerClassName={"pagination"}
-                        subContainerClassName={"pages pagination"}
-                        activeClassName={"active"}/>
-                </div>
-            </div>
-      </>
-    );
+        <div>
+            <Filter getFilter = {this.getFilter.bind(this)} getItemsListByType={this.getItemsListByType.bind(this)} />
+            <List list = {this.state.products}/>
+            <Pagination onNavPage = {this.navPage.bind(this)}/>
+        </div>
+    )
   }
 }
