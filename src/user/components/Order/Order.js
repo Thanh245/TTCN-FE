@@ -3,6 +3,7 @@ import "./Order.css";
 import isEmpty from "validator/lib/isEmpty";
 import requestOrderInfo from "../../services/OrderService";
 import { Redirect } from "react-router-dom";
+import Header from '../Header/Header'
 
 export default class Order extends Component {
   constructor(props) {
@@ -44,8 +45,7 @@ export default class Order extends Component {
     const { fullname, phonenumber, address } = this.state;
     const msg = {};
     if (isEmpty(fullname) || isEmpty(phonenumber) || isEmpty(address)) {
-        msg.warning = "Vui lòng nhập đủ thông tin giao hàng";
-        this.state.fullname.onFocus();
+      msg.warning = "Vui lòng nhập đủ thông tin giao hàng";
     }
     this.setState({
       validationMsg: msg
@@ -99,31 +99,38 @@ export default class Order extends Component {
                 <div className="required-field">Họ tên:</div>
                 <input
                 type="text"
+                // placeholder="Họ tên (*)"
                 name="fullname"
                 value={this.state.fullname}
                 onChange={this.onChange}
                 />
+                {/* <p className="warning">{this.state.validationMsg.fullname}</p> */}
                 <br />
                 <div className="required-field">Số điện thoại:</div>
                 <input
                 type="text"
                 className="required-field"
+                // placeholder="Số điện thoại (*)"
                 name="phonenumber"
                 value={this.state.phonenumber}
                 onChange={this.onChange}
                 />
+                {/* <p className="warning">{this.state.validationMsg.phonenumber}</p> */}
                 <br />
                 <div className="required-field">Địa chỉ:</div>
                 <input
                 type="text"
+                // placeholder="Địa chỉ (*)"
                 name="address"
                 value={this.state.address}
                 onChange={this.onChange} 
                 />
+                {/* <p className="warning">{this.state.validationMsg.address}</p> */}
                 <br />
                 <div >Ghi chú:</div>
                 <textarea
                 type="text"
+                // placeholder="Ghi chú"
                 name="note"
                 value={this.state.note}
                 onChange={this.onChange}

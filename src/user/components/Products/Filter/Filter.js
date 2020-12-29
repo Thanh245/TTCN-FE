@@ -40,7 +40,9 @@ export default class Filter extends React.Component {
     return (
         <div>
             <div className = "row">
-                <span className="FilterContent">Chọn mức giá: </span>
+                <div className = "col-2">
+                    <p className="FilterContent">Chọn mức giá: </p>
+                </div>
                 <div className = "col-6">
                     <PriceButton to={1000000} handleClick = {this.props.getFilter}/>
                     <PriceButton from={1000000} to={3000000} handleClick = {this.props.getFilter}/>

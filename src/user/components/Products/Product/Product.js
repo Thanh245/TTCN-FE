@@ -10,6 +10,7 @@ export default class Product extends React.Component {
  { super( props)
     this.state = {
     index: 0,
+    cart: [],
   };
  }
 
@@ -99,6 +100,7 @@ export default class Product extends React.Component {
     return (
         
         <>
+            <Header />
             <div className="container">
             <br></br>
                 <div className={"row"}>
