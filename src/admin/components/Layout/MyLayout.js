@@ -3,7 +3,7 @@ import { AppBar, UserMenu, MenuItemLink } from 'react-admin';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { forwardRef } from 'react';
 import Typography from '@material-ui/core/Typography';
-import { Layout, LayoutProps, Sidebar } from 'react-admin';
+import { Layout , Sidebar } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import Logo from './Logo';
 
@@ -50,7 +50,6 @@ const MySidebar = props => {
 
 
 const MyAppBar = props => {
-var imageName = require('./logo.png')
 const classes = useStyles();
   return  (<AppBar {...props} userMenu={<MyUserMenu />}>
             <Typography
@@ -60,6 +59,7 @@ const classes = useStyles();
                 id="react-admin-title"
             />
             <Logo />
+            Hello
             <span className={classes.spacer} />
 
 </AppBar>)}

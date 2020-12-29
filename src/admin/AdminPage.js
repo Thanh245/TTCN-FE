@@ -1,6 +1,6 @@
 // in src/App.js
 import * as React from "react";
-import { Admin, Resource, ListGuesser, EditGuesser, ShowGuesser, ResourceContext } from "react-admin";
+import { Admin, Resource, ShowGuesser } from "react-admin";
 import { Dashboard } from "./components/Dashboard/Dashboard";
 import { ProductList } from "./components/Product/ProductList";
 import { ProductCreate } from "./components/Product/ProductCreate";
@@ -63,10 +63,17 @@ export const AdminPage = () => {
         list={CustomerList}
         options={{ label: 'Người dùng' }}
         icon={AccountBoxIcon} />
-      <Resource 
-        name="trang-thai-don-hang"        
-      />
 
+      <Resource
+        name="nguoi-dung-x"
+        />
+
+        <Resource
+        name="trang-thai-don-hang"
+        />
+      <Resource 
+        name="thong-tin-don-hang"
+       />
       <Resource
         name="danh-gia"
         list={ReviewList}

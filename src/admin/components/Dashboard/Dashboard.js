@@ -1,16 +1,12 @@
 import * as React from "react";
-import { Card, CardContent, CardHeader } from '@material-ui/core';
+import { Card} from '@material-ui/core';
 import {
     useState,
     useEffect,
     useCallback,
-    FC,
-    CSSProperties,
 } from 'react';
-import { useVersion, useDataProvider, Query, Loading, useQuery } from 'react-admin';
-import { useMediaQuery, Theme } from '@material-ui/core';
-import { subDays } from 'date-fns';
-
+import { useVersion, useDataProvider} from 'react-admin';
+import NewOrders from './NewOrders';
 import Welcome from './Welcome';
 import PendingOrder from './PendingOrder';
 import MonthlyRevenue from './MonthlyRevenue';
@@ -42,7 +38,6 @@ function sum( obj ) {
 
 
 export const Dashboard = () => {
-    const dataProvider = useDataProvider();
     const version = useVersion();
     const [state, setState] = useState({});
 
@@ -54,10 +49,16 @@ export const Dashboard = () => {
             { pagination: { page: 1 , perPage: 10 }, 
                   sort: { field: "id", order: "DESC"}, 
                   filter: {} });
-        
+        const unCheckedOrders = recentOrders.filter(
+            record => record.maTrangThaiDonHang === 1
+        )
+        const numOfUncheckedOrders = unCheckedOrders.length;
+
         setState(state => ({
             ...state,
             recentOrders,
+            unCheckedOrders,
+            numOfUncheckedOrders
         }));
 
     });
@@ -67,6 +68,7 @@ export const Dashboard = () => {
             'doanh-thu',
             {}
         );
+
         setState(state => ({
             ...state,
             orderMonth
@@ -80,12 +82,15 @@ export const Dashboard = () => {
 
     const {
         recentOrders,
+        unCheckedOrders,
+        numOfUncheckedOrders,
         orderMonth
     } = state;
 
+
+
     const totalInMonth = sum(orderMonth);
-
-
+      
     // Return Component ///////////////////////////
     return (
         <div>
@@ -98,7 +103,7 @@ export const Dashboard = () => {
                     <div style={styles.flex}>
                         <MonthlyRevenue value={totalInMonth}/>
                         <Spacer />
-                        <MonthlyRevenue />
+                        <NewOrders value={numOfUncheckedOrders} />
                     </div>
                     <div style={styles.singleCol}>
                         <OrderChart orderInMonth={orderMonth} />
@@ -108,7 +113,7 @@ export const Dashboard = () => {
                 </div>
                 <div style={styles.rightCol}>
                     <div style={styles.flex}>
-                        <PendingOrder orders={recentOrders} />
+                        <PendingOrder orders={unCheckedOrders} />
                         <Spacer />
                         <PendingOrder />
                     </div>

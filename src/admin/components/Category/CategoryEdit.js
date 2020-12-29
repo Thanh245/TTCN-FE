@@ -3,10 +3,7 @@ import {
     Edit,
     SimpleForm,
     TextInput,
-    ReferenceInput,
-    SelectInput,
     NumberInput,
-    required,
     DateInput,
     useRedirect,
     useRefresh,
@@ -15,10 +12,8 @@ import {
     DeleteButton
 } from "react-admin";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import BackButton from "../BackButton/BackButton";
-import { InputAdornment } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 
 const CategoryTitle = ({ record }) => {

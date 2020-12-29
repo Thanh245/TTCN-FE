@@ -1,6 +1,6 @@
 
 import * as React from "react";
-import { CardContent, CardHeader, Chip, makeStyles, Avatar, Card, CardActions} from '@material-ui/core';
+import { CardContent,Card, CardActions} from '@material-ui/core';
 import {
   List,
   Filter,
@@ -8,15 +8,10 @@ import {
   NumberField,
   TextField,
   DateField,
-  EditButton,
-  TextInput,
   ChipField,
   ReferenceField,
   ReferenceInput,
   SelectInput,
-  ImageField,
-  ReferenceManyField,
-  SingleField
 } from 'react-admin';
 import classnames from 'classnames';
 

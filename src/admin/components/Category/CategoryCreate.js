@@ -4,17 +4,12 @@ import {
   Create,
   SimpleForm,
   TextInput,
-  ReferenceInput,
-  SelectInput,
-  NumberInput,
   useRedirect,
   useRefresh
 } from "react-admin";
 import BackButton from "../BackButton/BackButton";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import { InputAdornment } from "@material-ui/core";
 
 
 export const CategoryCreate = (props) => {

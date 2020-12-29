@@ -13,11 +13,9 @@ import {
   ReferenceField,
   ReferenceInput,
   SelectInput,
-  ImageField,
-  ListBase,
-  Pagination
+  ImageField
 } from 'react-admin';
-import GridList from './GridList';
+
 
 
 
@@ -43,16 +41,24 @@ const Title = ({ record }) => {
 const styles = {
   image: { maxHeight: '3rem' }
 }
-
-const PostPagination = props => <Pagination rowsPerPageOptions={[10, 25, 50, 100]} {...props} />;
-
 export const ProductList = (props) => {
   const imageFieldClasses = useImageFieldStyles();
   return (
-    <Card style={{ margin:20, width:1000, padding:10}}>
+    <Card>
       <List filters={<ProductFilter />} title={<Title />} {...props}>
-
-         <GridList />
+        <Datagrid rowClick="edit">
+          <NumberField source="maMatHang" label="Mã mặt hàng" />
+          <ImageField classes={imageFieldClasses} source="danhSachHinhAnhNew[0].anh" label="Ảnh mặt hàng" />
+          <TextField source="tenMatHang" label="Tên mặt hàng" />
+          <ReferenceField source="maLoaiMatHang" reference="loai-mat-hang" label="Loại mặt hàng" >
+            <ChipField source="tenLoaiMatHang" />
+          </ReferenceField>
+          <NumberField source="gia" label="Giá" />
+          {/*<CustomTextField label="Mô tả"/> */}
+          <NumberField source="soLuong" label="Số lượng" />
+          <NumberField source="soLuongDaBan" label="Số lượng đã bán" />
+          <EditButton label="Chỉnh sửa" />
+        </Datagrid>
       </List>
 
     </Card>

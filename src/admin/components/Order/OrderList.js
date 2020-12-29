@@ -15,49 +15,69 @@ import {
     SelectInput,
     ImageField,
     ReferenceManyField,
-    SingleField
-  } from 'react-admin';
-  import classnames from 'classnames';
+    SingleField,
+    useVersion, useDataProvider
+} from 'react-admin';
+import {
+    useState,
+    useEffect,
+    useCallback,
+} from 'react';
+import classnames from 'classnames';
+import SpringDataProvider from "../../utils/SpringDataProvider";
+import { FaBlackberry } from "react-icons/fa";
 
 
-  
-const useStyles = makeStyles({
-    pending: { backgroundColor: '#a8a832' },
-    accepted: { backgroundColor: '#42a832' },
-    cancelled: { backgroundColor: '#a84432' }
-});
+const dashboardProvider = SpringDataProvider("http://localhost:8081");
+
+
+
+const useStyles = makeStyles(theme => ({
+    color: {
+    backgroundColor: 'black'}
+}))
 
 const ColoredChipField = props => {
     const classes = useStyles();
 
-    const isPending = status => status === "Accepted";
+    let style = {color: 'white', backgroundColor: 'red'};
+    const type = props.record.maTrangThai;
+    if(type === 1){
+        style = {
+            color: 'black',
+            backgroundColor: 'yellow'
+        }
+    }else if (type === 2){
+        style = {
+            color: 'black',
+            backgroundColor: '#74fd74'
+        }
+    }
 
     return (
         <ChipField
-            className={classnames({
-                [classes.accepted]: isPending(props.record[props.source]),
-            
-            })}
+            className={classes.color}
+            style={style}
             {...props}
         />
     );
 };
 
-export const OrderList = props => (
-    <List {...props}>
-        <Datagrid rowClick="edit">
-            <NumberField source="maDonHang" label="Mã đơn hàng"/>
-            <DateField source="createdAt" label="Ngày đặt hàng"/>
-            <NumberField source="maTaiKhoan" label="Mã tài khoản"/>
-            <ReferenceField source="maTaiKhoan" reference="nguoi-dung" label="Người mua">
-                <TextField source="maTaiKhoan" />
-            </ReferenceField>
-            <NumberField source="giaTongCong" label="Giá tổng cộng"/>
-            <TextField source="SDTGiaoHang" label="Số điện thoại giao hàng"/>
-            <TextField source="tenNguoiNhanHang" label="Tên người nhận hàng" />
-            <ReferenceField source="maTrangThaiDonHang" reference="trang-thai-don-hang" label="Trạng thái đơn hàng">
-                <ChipField source="tenTrangThai" />
-            </ReferenceField>
-        </Datagrid>
-    </List>
-);
+export const OrderList = props => {
+
+    return (
+        <List {...props} >
+            <Datagrid rowClick="edit">
+                <NumberField source="maDonHang" label="Mã đơn hàng" />
+                <DateField source="createdAt" label="Ngày đặt hàng" />
+                <NumberField source="maTaiKhoan" label="Mã tài khoản" />
+                <NumberField source="giaTongCong" label="Giá tổng cộng" />
+                <TextField source="SDTGiaoHang" label="Số điện thoại giao hàng" />
+                <TextField source="tenNguoiNhanHang" label="Tên người nhận hàng" />
+                <ReferenceField source="maTrangThaiDonHang" reference="trang-thai-don-hang" label="Trạng thái đơn hàng">
+                    <ColoredChipField source="tenTrangThai" />
+                </ReferenceField>
+            </Datagrid>
+        </List>)
+        ;
+}

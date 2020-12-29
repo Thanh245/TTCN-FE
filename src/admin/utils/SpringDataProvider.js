@@ -92,6 +92,9 @@ export default (apiUrl, httpClient = (url, options = {}) => {
     let url = "";
     const options = {};
     console.log(type);
+    if(resource === "nguoi-dung-x"){
+      resource = "nguoi-dung";
+    }
     switch (type) {
       case GET_LIST:
         const { page, perPage } = params.pagination;
@@ -110,13 +113,13 @@ export default (apiUrl, httpClient = (url, options = {}) => {
         url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}/${params.id}`;
         break;
       case GET_MANY:
-        url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}`;
+        url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}?size=${1000}`;
 
         break;
       case GET_MANY_REFERENCE: {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
-        url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}?page=${page - 1}&size=${perPage}&sort=${order}`;
+        url = `${apiUrl}/${mapPath(resource, 'GET')}/${resource}?page=${page - 1}&size=${40}&sort=${order}`;
         console.log("This is error in get reference, take a look: " + url);
         break;
       }
@@ -169,6 +172,16 @@ export default (apiUrl, httpClient = (url, options = {}) => {
             total: parseInt(json.length, 10)
           };
         };
+        if (resource === "nguoi-dung") {
+          return {
+            data: json.data.map((resource) => ({
+              ...resource,
+              id: resource[mapPrimaryKey(targetApi)],
+              maTaiKhoan: resource.taiKhoan.maTaiKhoan
+            })),
+            total: parseInt(json.totalItems*json.totalPages, 10)
+          };
+        }
         if (resource === "don-hang") {
           return {
             data: json.data.map((resource) => ({
@@ -176,7 +189,7 @@ export default (apiUrl, httpClient = (url, options = {}) => {
               id: resource[mapPrimaryKey(targetApi)],
               maTaiKhoan: resource["createdBy"]
             })),
-            total: parseInt(json.totalItems, 10)
+            total: parseInt(json.totalItems*json.totalPages, 10)
           };
         }
         if (resource === "mat-hang") {
@@ -189,7 +202,7 @@ export default (apiUrl, httpClient = (url, options = {}) => {
                 anh: `data:image/jpeg;base64,${item.anh}`
               }))
             })),
-            total: parseInt(json.totalItems, 10)
+            total: parseInt(json.totalItems*json.totalPages, 10)
           };
         }
         return {
@@ -197,7 +210,7 @@ export default (apiUrl, httpClient = (url, options = {}) => {
             ...resource,
             id: resource[mapPrimaryKey(targetApi)]
           })),
-          total: parseInt(json.totalItems, 10)
+          total: parseInt(json.totalItems*json.totalPages, 10)
         };
       case CREATE:
         return { data: { ...params.data, id: 1 } };
@@ -243,6 +256,37 @@ export default (apiUrl, httpClient = (url, options = {}) => {
         data: response.json
       }))
     }
+
+    //Handle Order Infomation 
+    if(resource === "don-hang" && type=='GET_ONE'){
+      const arrayType = ["don-hang", "thong-tin-don-hang"];
+      return Promise.all(arrayType.map((_type)=>{
+        if(_type==="don-hang"){
+          return httpClient(`${apiUrl}/don-hang-management/authorized/don-hang/${params.id}`, {
+            method: "GET"      
+          })
+        }else{
+          return httpClient(`${apiUrl}/don-hang-management/authorized/don-hang/${params.id}/nguoi-dung`, {
+            method: "GET"      
+          })
+        }
+      })
+      ).then((response) => {
+        const orderData = response[0].json;
+        const userData = response[1].json;
+
+        return ({
+          data: {
+            id: orderData.maDonHang,
+            ...orderData,
+            userData: userData
+          }
+        })
+      })
+      
+    }
+        
+      
 
 
     //Handle Uploading fi(le

@@ -22,12 +22,18 @@ const dateFormatter = (date) =>
     new Date(date).toLocaleDateString();
 
 const getRevenuePerDay = (orderInMonth) => {
-    let dayWithRevenue = []
+    let keyArray = [];
     for (var key in orderInMonth) {
-        const date = key;
-        const total = orderInMonth[key];
-        dayWithRevenue.push({ date: date, total: total });
+        keyArray.push(key);
     }
+    keyArray.sort();
+
+    let dayWithRevenue = keyArray.map((key)=>{
+        return {
+            date: key,
+            total: orderInMonth[key]
+        }
+    })
 
     return dayWithRevenue;
 }
