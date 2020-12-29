@@ -100,7 +100,6 @@ export default class Product extends React.Component {
     return (
         
         <>
-            <Header />
             <div className="container">
             <br></br>
                 <div className={"row"}>

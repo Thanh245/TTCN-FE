@@ -14,6 +14,7 @@ export default class ProductsList extends React.Component {
     onChange(data) {
         this.props.onNavPage(data.selected)
     }  
+    
     render() {
         if (this.props.totalPages <= 1) return <div></div>
         else return (

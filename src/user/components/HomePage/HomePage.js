@@ -1,12 +1,12 @@
 import React from 'react';
 // import ProductsList from '../Products/ProductsList'
-import Slider from '../Slider/Slider';
-import Header from '../Header/Header'
-import Filter from '../Products/Filter/Filter'
-import List from '../Products/List/List';
+// import Slider from '../Slider/Slider';
+// import Header from '../Header/Header'
+// import Filter from '../Products/Filter/Filter'
+// import List from '../Products/List/List';
 // import Pagination from './Pagination/Pagination'
-import {  fetchItemsList} from "../../services/ItemService";
-import ProductsList from '../Products/ProductsList';
+// import {  fetchItemsList} from "../../services/ItemService";
+// import ProductsList from '../Products/ProductsList';
 
 class Home extends React.Component {
     constructor(props) {

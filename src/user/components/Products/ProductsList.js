@@ -13,7 +13,8 @@ export default class ProductsList extends React.Component {
         this.state = {
             products: [],
             totalPages: 0,
-            page: 0
+            page: 0,
+            isFiltered: false
             // cart: [],
             // search: "",
             // to: 0,
@@ -71,7 +72,8 @@ export default class ProductsList extends React.Component {
           this.setState({
               ...this.state,
               totalPages: res.data.totalPages,
-              products: res.data.data
+              products: res.data.data,
+              isFiltered: true
           })
         }
       }
@@ -86,7 +88,8 @@ export default class ProductsList extends React.Component {
               ...this.state,
               products: res.data.data,
               totalPages: res.data.totalPages,
-              loading: false
+              loading: false,
+              isFiltered: true
             })
         }
       }
@@ -106,8 +109,10 @@ export default class ProductsList extends React.Component {
     }
 
     componentDidMount() {
-        const filter = this.getFilterStr()
-        this.getItemsListFilter(filter, null)
+        if (!this.state.isFiltered) {
+            const filter = this.getFilterStr()
+            this.getItemsListFilter(filter, null)
+        }
     }
 
     navPage (numPage){

@@ -20,12 +20,12 @@ async function fetchItemsList(pageNum) {
     })
 }
 
-async function fetchItemsListByType(id, pageNum) {
+async function fetchItemsListByType(id) {
     config()
     return await axios({
       headers: { "Access-Control-Allow-Origin": "*" },
       method: "GET",
-      url: `/mat-hang-management/mat-hang/loai-mat-hang/${id}?page=${pageNum}`
+      url: `/mat-hang-management/mat-hang/loai-mat-hang/${id}`
     })
 }
 

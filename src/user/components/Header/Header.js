@@ -1,13 +1,14 @@
 import React from 'react'
-import { Navbar,Nav,NavDropdown,Form,FormControl,Button } from 'react-bootstrap'
+import { Navbar,Nav,NavDropdown } from 'react-bootstrap'
 import Cart from '../svg/cart.svg'
+// import Home from '../svg/home.svg'
 import './Header.css'
 import {isLoggedIn, logout} from '../../services/AuthenticationService'
 import { Link } from 'react-router-dom'
 import { Route, Router } from 'react-router'
 import ProductsList from '../Products/List/List'
 
-class BootstrapNavbar extends React.Component{
+class Header extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
@@ -58,9 +59,9 @@ class BootstrapNavbar extends React.Component{
                                 </fomr>
                             </Nav>
                             <Nav className="header-item">
-                                <Nav.Link><Link to='/'>Trang chủ</Link></Nav.Link>
+                                <Nav.Link><Link to='/'>Trang chủ </Link></Nav.Link>
                                 <Nav.Link ><Link to='/productslist'>Sản phẩm</Link></Nav.Link>
-                                <Nav.Link ><Link to='/cart'>Giỏ hàng <img src={Cart} alt="" width="20" /></Link></Nav.Link>
+                                <Nav.Link ><Link to='/cart'><img src={Cart} alt="" width="20" /> Giỏ hàng </Link></Nav.Link>
                                 {this.getNav()}
                             </Nav>
                             <Route exact path='/' Component={ProductsList}></Route>

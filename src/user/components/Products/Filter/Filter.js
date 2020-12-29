@@ -28,10 +28,7 @@ export default class Filter extends React.Component {
 
     onChange(event) {
         const selectedIndex = event.target.selectedIndex - 1
-        alert(this.state.loaiMatHangList.length)
         const id = this.state.loaiMatHangList[selectedIndex].maLoaiMatHang
-        // const path = `/productslist/filter/type/${id}`
-        // history.push(path)
         this.props.getItemsListByType(id)
     }
 
@@ -49,7 +46,7 @@ export default class Filter extends React.Component {
                     <PriceButton from={3000000} handleClick = {this.props.getFilter}/>
                 </div>
                 <div className= "col-2 droplist">
-                    <select id="select" onChange={this.onChange}>
+                    <select id="select" onChange={this.onChange.bind(this)}>
                         <option disabled selected>Loại mặt hàng</option>
                         {this.state.loaiMatHangList.map((item)=>(<option> {item.tenLoaiMatHang} </option>)) }
                     </select>
