@@ -14,8 +14,8 @@ import Profile from './user/components/Profile/Profile'
 import Header from "./user/components/Header/Header"
 import Footer from "./user/components/Footer/Footer"
 import history from "./history";
-import GeneralPage from './user/components/GeneralPage/GeneralPage';
-
+import UserPage from './user/components/UserPage/UserPage';
+import {AdminPage} from './admin/AdminPage'
 function App() {
   return(    
     <BrowserRouter history={history}>    
@@ -36,7 +36,10 @@ function App() {
         </div> */}
         
     {/* <div> */}
-        <Route path="/" component={GeneralPage} />
+        <Switch>
+            <Route path="/" component={UserPage} />
+            <Route path='/admin' component={AdminPage}/>
+        </Switch>
         <Footer />
     {/* </div> */}
     </BrowserRouter>

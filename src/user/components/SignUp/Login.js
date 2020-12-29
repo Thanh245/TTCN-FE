@@ -3,7 +3,9 @@ import "./form.css";
 import isEmpty from "validator/lib/isEmpty";
 import { Redirect } from "react-router-dom";
 import config from "../../../user/config/config";
-import requestLogin from "../../services/AuthenticationService"
+import {isLoggedIn, requestLogin} from "../../services/AuthenticationService"
+import history from '../../../history' 
+
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +13,8 @@ export default class Login extends Component {
       mail: "",
       password: "",
       validationMsg: {},
-      user:{}
+      user:{},
+      returnUrl: history.location.pathname
     };
     console.log("constructor login");
     if(JSON.parse(localStorage.getItem("user")===null))
@@ -39,11 +42,8 @@ export default class Login extends Component {
     e.preventDefault();
     const msg = {};
     const { mail, password } = this.state;
-    if (isEmpty(mail)) {
-      msg.mail = "Vui lòng nhập tên đăng nhập";
-    }
-    if (isEmpty(password)) {
-      msg.password = "Vui lòng nhập mật khẩu";
+    if (isEmpty(mail) || isEmpty(password)) {
+        msg.warning = "Vui lòng nhập đủ thông tin đăng nhập";
     }
     this.setState({
       validationMsg: msg
@@ -66,11 +66,23 @@ export default class Login extends Component {
         localStorage.removeItem("user");
         localStorage.setItem('user', JSON.stringify(userInfor));
         this.setState({user:userInfor})
+        // console.log(isLoggedIn())
+        
+        this.props.onLogIn()
+        this.setState({
+            ...this.state,
+            isLoggedIn: true
+        })
+        // return <Redirect to={this.state.returnUrl}></Redirect>
     }).catch( ()=> {alert("Đăng nhập thất bại")})
 }
   render() {
+
     const userInfor = JSON.parse(localStorage.getItem('user'));
     const role = userInfor.role
+    if(isLoggedIn()){
+        return <Redirect to = {this.state.returnUrl} />
+    }
     if(role==="ROLE_ADMIN")
     {
       return <Redirect to= "/admin" />
@@ -78,7 +90,7 @@ export default class Login extends Component {
     if(role==="ROLE_USER")
     return <Redirect to = "/"/>
     return (
-      <React.Fragment>
+        <React.Fragment>
         <div className="Login">
           <br />
           <div className="form-group">
@@ -90,7 +102,6 @@ export default class Login extends Component {
               onChange={this.onChange}
               autoComplete="false"
             />
-            <p className="warning">{this.state.validationMsg.mail}</p>
             <br />
             <input
               type="password"
@@ -99,14 +110,14 @@ export default class Login extends Component {
               value={this.state.password}
               onChange={this.onChange}
             />
-            <p className="warning">{this.state.validationMsg.password}</p>
-            <br />
-            <input
-              type="button"
-              className="submit"
-              value="Đăng nhập"
+            <p className="warning">{this.state.validationMsg.warning}</p>
+            <div className="cont_btnlogin">
+            <button
+              className="button_login"
               onClick={this.submitForm}
-            />
+            > Đăng nhập
+            </button>
+            </div>
           </div>
         </div>
       </React.Fragment>

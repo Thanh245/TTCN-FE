@@ -54,35 +54,42 @@ export default class ProductsList extends React.Component {
         cart: newCart });
     }
   }
- 
+
+  formatCash(str) {
+    return str.toFixed('').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  }
+
   renderProduct = (product) => {
     const src=`data:image/*;base64, ${product.danhSachHinhAnh[0] !== undefined ? product.danhSachHinhAnh[0].anh: ""}`
+    const priceSplit = this.formatCash(product.gia)
     return (
-        <div className= "col-4">
+        <>
+        <Col sm="3">
             <div className="card">
                 <img src={src} className="card-img-top" alt="..." />
                 <div className="card-body">
-                  <h5 className="card-title">{product.tenMatHang}</h5>
-                  <p className="card-text">Price {product.gia}</p>
-                  <Row>
-                    <Col sm="6" xs="12">
-                      <Button onClick={() => this.addToCart(product)}>Add to cart</Button>
-                    </Col>
-                    <Col sm="4" xs="12">
-                        
+                  <p className="card-title">{product.tenMatHang}</p>
+                  <p className="card-text">Giá {priceSplit} ₫</p>
+                  <div className="">
+                    <div>
+                      <Button onClick={() => this.addToCart(product)}>Chọn mua</Button>
+                    {/* </div>
+                    <div sm="6" xs="12">
+                         */}
                       <Link 
                         to={"/productslist/" + product.maMatHang}
                         className="btn btn-primary"
                       >
-                        Details
+                        Chi tiết
                       </Link>
 
-                    </Col>
-                  </Row>
+                    </div>
+                  </div>
                 </div>
             </div>
             <br></br>
-        </div>
+        </Col>
+        </>
     );
   };
 

@@ -30,6 +30,7 @@ async function fetchItemsListByType(id, pageNum) {
 }
 
 async function fetchItemsListFilter(filter) {
+    // alert(filter)
     config()
     return await axios({
       headers: { "Access-Control-Allow-Origin": "*" },

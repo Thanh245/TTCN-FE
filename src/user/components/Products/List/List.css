@@ -1,4 +1,4 @@
- .colors button,
+.colors button,
 .sizes button{
   width: 35px;
   height: 35px;
@@ -45,10 +45,29 @@
 }
 
 .card-img-top{
-    height: 20vw;
+    height: 15vw;
     padding: 1px;
 }
 
 .card{
-    box-shadow: 0px 2px 10px 0px;
+    /* box-shadow: 0px 1px 1px 1px; */
+    
+}
+
+.card:hover{
+    transform: scale(1.08);
+  transition: all 0.3s ease-out;
+}
+
+.card-title{
+    font-size: 110%;
+    height: 5vw;
+    align-items: center;
+    text-align: center;
+    padding-left: inherit;
+    font-weight: bold;
+}
+
+.card-btn{
+    padding: none;
 }

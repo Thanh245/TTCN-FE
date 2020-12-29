@@ -41,7 +41,7 @@ class Home extends React.Component {
               <br></br>
               {/* <Filter /> */}
               {/* <List list = {this.state.products} /> */}
-              <ProductsList match={this.props.match} reload={this.state.reload}/>
+              {/* <ProductsList match={this.props.match} reload={this.state.reload}/> */}
             </div>
           </>
         );

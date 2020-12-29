@@ -50,7 +50,9 @@ export default class Cart extends Component {
   render() {
     if(this.state.cart.length === 0) return (<div><h1>Giỏ hàng trống</h1></div>)
     return (
+        
         <div className="cart">
+        <br></br>
             <div className="row">
                 <div className = "col-8">
                     {this.state.cart.map((item, index) => (

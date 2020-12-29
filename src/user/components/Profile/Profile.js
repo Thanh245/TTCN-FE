@@ -24,7 +24,7 @@ export default class Profile extends Component {
             role:"",
             modified: false
         }
-        console.log("constructor")
+        
         if(JSON.parse(localStorage.getItem("user")===null))
         {
             const user = {
@@ -37,12 +37,11 @@ export default class Profile extends Component {
             localStorage.setItem("user",JSON.stringify(user))
         }
     } 
-    componentWillMount(){
-        console.log("will mount")
+    componentDidMount(){
+       
         const maNguoiDung = JSON.parse(localStorage.getItem("user")).id
         config()
         fetchUserProfileData(maNguoiDung).then((data) => {
-        console.log("call api get profile")
         console.log(data.data)
         if(data.data.ngaySinh!==null)
         {
@@ -51,7 +50,7 @@ export default class Profile extends Component {
         let month = date.getMonth()+1;
         let year = date.getFullYear();
         var ngaySinh = year+"-"+month+"-"+day;
-        }
+        } else ngaySinh = this.state.userInfor.ngaySinh
         const userInfor = {
             anhDaiDien:data.data.anhDaiDien,
             gioiTinh:data.data.gioiTinh,
@@ -60,15 +59,16 @@ export default class Profile extends Component {
             thanhPho: data.data.thanhPho,
             sdt:data.data.sdt,
         }
-        if(userInfor.ngaySinh===null)
-        {
-            userInfor.ngaySinh=this.state.userInfor.ngaySinh
-        }
+        // if(userInfor.ngaySinh===null)
+        // {
+        //     userInfor.ngaySinh=this.state.userInfor.ngaySinh
+        // }else userInfor.ngaySinh = ngaySinh
         this.setState(
             {...this.state,
             userInfor:userInfor
             })
         }).catch((err) => {
+            console.log("Tai That bai")
         })
     }
     imageHandler = (e) =>{
@@ -208,6 +208,7 @@ export default class Profile extends Component {
     }
 
     render() {
+        console.log(this.state.userInfor)
         var birthday = new Date(this.state.userInfor.ngaySinh)
         const role = JSON.parse(localStorage.getItem("user")).role
         console.log(this.state.userInfor.sdt)

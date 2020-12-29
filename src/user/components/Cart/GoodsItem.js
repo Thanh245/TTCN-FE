@@ -23,8 +23,15 @@ export default class GoodsItem extends Component {
       unitprice: this.props.matHang.gia
     });
   }
+  formatCash(str) {
+    return str.toFixed('').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  }
+
   render() {
     const src=`data:image/*;base64, ${this.props.matHang.danhSachHinhAnh[0] !== undefined ? this.props.matHang.danhSachHinhAnh[0].anh: ""}`
+    const moTaThuGon = this.state.descriptionItem.substr(0,100) 
+    const priceSplit = this.formatCash(this.state.unitprice)
+    const multyPriceSplit = this.formatCash(this.props.soLuong*this.state.unitprice)
     return (
         <div>
            
@@ -37,12 +44,12 @@ export default class GoodsItem extends Component {
         />
         <div className="content">
           <div className="title">{this.state.title}</div>
-          <div className="description">{this.state.descriptionItem}</div>
-          <p className="unitprice">Đơn giá: {this.state.unitprice} VND</p>
+          <div className="description">{moTaThuGon}...</div>
+          <p className="unitprice">Đơn giá: {priceSplit} VND</p>
           
         </div>
         <div className="calculation">
-        <div idName="price"><h2 className="mulprice"> {this.props.soLuong*this.state.unitprice}đ</h2> </div>
+        <div idName="price"><h2 className="mulprice"> {multyPriceSplit}đ</h2> </div>
           <input
             type="number"
             min="1"

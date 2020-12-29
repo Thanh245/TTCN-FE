@@ -27,20 +27,11 @@ export default class Register extends Component {
     e.preventDefault();
     const { fullname, mail, password, confirmpassword } = this.state;
     const msg = {};
-    if (isEmpty(fullname)) {
-      msg.fullname = "Vui lòng nhập họ tên";
-    }
-    if (isEmpty(mail)) {
-      msg.mail = "Vui lòng nhập tên đăng nhập";
-    }
-    if (isEmpty(password)) {
-      msg.password = "Vui lòng nhập mật khẩu";
-    }
-    if (isEmpty(confirmpassword)) {
-      msg.confirmpassword = "Vui lòng xác nhận mật khẩu";
+    if (isEmpty(fullname) || isEmpty(mail) || isEmpty(password) || isEmpty(confirmpassword)) {
+        msg.warning = "Vui lòng nhập đủ thông tin đăng ký";
     }
     if (password !== confirmpassword) {
-      msg.confirmpassword = "Mật khẩu không trùng khớp";
+        msg.warning = "Mật khẩu không trùng khớp";
     }
     this.setState({
       validationMsg: msg
@@ -66,7 +57,7 @@ export default class Register extends Component {
   render() {
     
     return (
-      <React.Fragment>
+        <React.Fragment>
         <div className="Register">
           <br />
           <div className="form-group">
@@ -77,8 +68,6 @@ export default class Register extends Component {
               value={this.state.fullname}
               onChange={this.onChange}
             />
-            <p className="warning">{this.state.validationMsg.fullname}</p>
-            <br />
             <input
               type="text"
               placeholder="Tên đăng nhập"
@@ -86,8 +75,6 @@ export default class Register extends Component {
               value={this.state.mail}
               onChange={this.onChange}
             />
-            <p className="warning">{this.state.validationMsg.mail}</p>
-            <br />
             <input
               type="password"
               placeholder="Mật khẩu"
@@ -95,8 +82,6 @@ export default class Register extends Component {
               value={this.state.password}
               onChange={this.onChange}
             />
-            <p className="warning">{this.state.validationMsg.password}</p>
-            <br />
             <input
               type="password"
               placeholder="Xác nhận mật khẩu"
@@ -104,16 +89,16 @@ export default class Register extends Component {
               value={this.state.confirmpassword}
               onChange={this.onChange}
             />
-            <p className="warning">
-              {this.state.validationMsg.confirmpassword}
-            </p>
-            <br />
-            <input
-              type="button"
-              className="submit"
-              value="Đăng ký"
+            <div className="warningctn">
+                <p className="warning">{this.state.validationMsg.warning}</p>
+            </div>
+            <div className="cont_btnlogin">
+            <button
+              className="button_login"
               onClick={this.submitForm}
-            />
+            > Đăng ký
+            </button>
+            </div>
           </div>
         </div>
       </React.Fragment>

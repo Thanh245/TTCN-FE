@@ -45,7 +45,7 @@ function Footer() {
       <div className='social-media'>
         <div className='social-media-wrap'>
           <div className='footer-logo'>
-            <Link to='/' className='social-logo'>
+            <Link className='social-logo'>
               <MdFingerprint className='navbar-icon' />
               TokiDoki Handmade Shop
             </Link>
