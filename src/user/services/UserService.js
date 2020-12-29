@@ -32,4 +32,12 @@ async function updateUserAvatar(data) {
         data: dataForm,
     })
 }
- export {fetchUserProfileData,updateUserProfileData,updateUserAvatar}
+async function fetchUserOrder(maNguoiDung) {
+    config()
+    return await axios({
+      headers: { "Access-Control-Allow-Origin": "*" },
+      method: "GET",
+      url: `don-hang-management/authorized/don-hang/tai-khoan/${maNguoiDung}`
+    })
+}
+export {fetchUserProfileData,updateUserProfileData,updateUserAvatar,fetchUserOrder}

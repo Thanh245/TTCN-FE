@@ -13,6 +13,7 @@ import Home from './user/components/HomePage/HomePage'
 import Profile from './user/components/Profile/Profile'
 import Header from "./user/components/Header/Header"
 import Footer from "./user/components/Footer/Footer"
+import Purchase from "./user/components/Purchase/Purchase"
 import history from "./history";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/cart" exact  component={ Cart } />
         <Route path="/order" exact component={ Order } />
         <Route path="/profile" exact component={ Profile  } />
+        <Route path="/purchase" exact component={ Purchase } />
         </Switch>
     <Footer />
     </BrowserRouter>

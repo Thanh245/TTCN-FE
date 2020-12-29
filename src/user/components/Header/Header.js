@@ -31,7 +31,14 @@ export default function Header() {
                 <li><Link to="/">Trang chủ</Link></li>
                 <li><Link to="/productslist">Sản phẩm</Link></li>
                 <li><Link to="/signup">Đăng nhập/ Đăng ký</Link></li>
-                <li><Link to="/profile">Người dùng</Link></li>
+                {/* <li><Link to="/profile">Người dùng</Link></li> */}
+                <div className="dropdown-user">
+                    NGƯỜI DÙNG
+                <div className="dropdown-content-user">
+                <Link to="/profile">Người dùng</Link>
+                <Link to="/purchase">Đơn hàng</Link>
+                </div>
+                </div>
                 <li onClick={toggleMenu}>
                     <img src={Close} alt="" width="30" className="menu" />
                 </li>
