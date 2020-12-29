@@ -32,16 +32,16 @@ export const AdminPage = () => {
       dashboard={Dashboard}
       theme={theme}
       layout={MyLayout}
+      authProvider={authProvider}
     >
       <Resource
         name="mat-hang"
         list={ProductList}
         icon={PostIcon}
         edit={ProductEdit}
-        show={ShowGuesser}
         create={ProductCreate}
         options={{ label: 'Mặt Hàng' }}
-        
+
       />
       <Resource
         name="loai-mat-hang"
@@ -66,14 +66,14 @@ export const AdminPage = () => {
 
       <Resource
         name="nguoi-dung-x"
-        />
+      />
 
-        <Resource
+      <Resource
         name="trang-thai-don-hang"
-        />
-      <Resource 
+      />
+      <Resource
         name="thong-tin-don-hang"
-       />
+      />
       <Resource
         name="danh-gia"
         list={ReviewList}

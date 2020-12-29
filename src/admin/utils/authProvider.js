@@ -1,11 +1,7 @@
 
 const authProvider = {
     // called when the user attempts to log in
-    login: ({ username }) => {
-        localStorage.setItem('username', username);
-        // accept all username/password combinations
-        return Promise.resolve();
-    },
+
     // called when the user clicks on the logout button
     logout: () => {
         localStorage.removeItem('username');
@@ -21,12 +17,14 @@ const authProvider = {
     },
     // called when the user navigates to a new location, to check for authentication
     checkAuth: () => {
-        return localStorage.getItem('username')
+        return localStorage.getItem("username")
             ? Promise.resolve()
-            : Promise.reject();
+            : window.location.assign("http://localhost:3000");
     },
     // called when the user navigates to a new location, to check for permissions / roles
-    getPermissions: () => Promise.resolve(),
+    getPermissions: () => {
+        return localStorage.getItem("role") === "ROLE_ADMIN"? Promise.resolve() : Promise.reject();
+    }
 };
 
 export default authProvider;
