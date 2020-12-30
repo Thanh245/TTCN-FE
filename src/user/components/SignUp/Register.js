@@ -16,8 +16,13 @@ export default class Register extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.onFocus = this.onFocus.bind(this);
   }
-
+    onFocus(e){
+        this.setState({
+        validationMsg: ""
+        });
+    }
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -27,10 +32,10 @@ export default class Register extends Component {
     e.preventDefault();
     const { fullname, mail, password, confirmpassword } = this.state;
     const msg = {};
-    if (isEmpty(fullname) || isEmpty(mail) || isEmpty(password) || isEmpty(confirmpassword)) {
+    if (fullname !== null || mail !== null || password!== null || confirmpassword!==null) {
         msg.warning = "Vui lòng nhập đủ thông tin đăng ký";
     }
-    if (password !== confirmpassword) {
+    if (password !== confirmpassword && password!== null && confirmpassword!== null) {
         msg.warning = "Mật khẩu không trùng khớp";
     }
     this.setState({
@@ -42,17 +47,14 @@ export default class Register extends Component {
         matKhau:this.state.password,
         tenNguoiDung:this.state.fullname
     };
+
+    
     config()
     requestRegister(user).then((data) => {
         if(data.status===201) alert("Đăng ký thành công");
-    //localStorage.setItem("token", data.data.accessToken)
     }).catch((err) => {
          alert("Đăng ký thất bại")
     });
-    // alert("successfully");
-    // this.setState({
-    //   successed: true
-    // });
   }
   render() {
     
@@ -60,6 +62,7 @@ export default class Register extends Component {
         <React.Fragment>
         <div className="Register">
           <br />
+          <br></br>
           <div className="form-group">
             <input
               type="text"
@@ -67,6 +70,8 @@ export default class Register extends Component {
               name="fullname"
               value={this.state.fullname}
               onChange={this.onChange}
+              onKeyDown={this.onChange}
+              onFocus={this.onFocus}
             />
             <input
               type="text"
@@ -74,6 +79,8 @@ export default class Register extends Component {
               name="mail"
               value={this.state.mail}
               onChange={this.onChange}
+              onKeyDown={this.onChange}
+              onFocus={this.onFocus}
             />
             <input
               type="password"
@@ -81,6 +88,8 @@ export default class Register extends Component {
               name="password"
               value={this.state.password}
               onChange={this.onChange}
+              onKeyDown={this.onChange}
+              onFocus={this.onFocus}
             />
             <input
               type="password"
@@ -88,6 +97,8 @@ export default class Register extends Component {
               name="confirmpassword"
               value={this.state.confirmpassword}
               onChange={this.onChange}
+              onKeyDown={this.onChange}
+              onFocus={this.onFocus}
             />
             <div className="warningctn">
                 <p className="warning">{this.state.validationMsg.warning}</p>

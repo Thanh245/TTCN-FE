@@ -1,9 +1,12 @@
 import React from "react";
 import "./Product.css"
 import DetailsThumb from "./DetailsThumb";
-import RatingStar from "../RatingStar/RatingStar";
+import UploadCmt from "../RatingStar/UploadCmt";
 import { fetchItem } from "../../../services/ItemService";
 import Comment from "../Comment/Comment"
+import {isLoggedIn} from '../../../services/AuthenticationService'
+import requestComment from "../../../services/CommentService"
+import config from "../../../config/config";
 
 export default class Product extends React.Component {
  constructor(props)
@@ -11,6 +14,10 @@ export default class Product extends React.Component {
     this.state = {
     index: 0,
     cart: [],
+    noiDung: "",
+    validationMsg: {},
+    isLoggedIn: this.props.isLoggedIn,
+    soSao: 0
   };
  }
 
@@ -26,9 +33,12 @@ export default class Product extends React.Component {
     } else console.log("tt")
 }
 
-  onStarClick(nextValue, prevValue, name) {
-    this.setState({ rating: nextValue });
-  }
+
+//   onStarClick(nextValue, prevValue, name) {
+//     this.setState({ rating: nextValue });
+//   }
+
+  
 
  myRef = React.createRef();
     handleTab = (index) => {
@@ -98,7 +108,6 @@ export default class Product extends React.Component {
     const src=`data:image/*;base64, ${product.danhSachHinhAnh[index] !== undefined ? product.danhSachHinhAnh[index].anh: ""}`
     const priceSplit = this.formatCash(product.gia)
     return (
-        
         <>
            
             <div className="container">
@@ -106,7 +115,7 @@ export default class Product extends React.Component {
                 <div className={"row"}>
                 
                     <div className="col-1"></div>
-                    <div className="col-5">
+                    <div className="col-5 image-details">
                         <img src={src} className="image-show" alt="" />
                     </div>
                     <div className="col-6 box-details ">
@@ -123,18 +132,7 @@ export default class Product extends React.Component {
                     </div>
                 </div>  
                 <br></br>
-                <h2> Đánh giá của bạn</h2>
-                <div className= "row">
-                    <textarea className="comment" rows="4" type="text" placeholder="Đánh giá của bạn" />
-                        <div className = " danhgia row">
-                            <div className="col-9">
-                                <RatingStar />
-                                </div>
-                                <div className="col-3">
-                                <button className="btn btn-primary btn-comment"> Đánh giá </button> 
-                                </div>
-                    </div>
-                </div>
+                {/* <UploadCmt /> */}
                 <div>      
                     <h2> Đánh giá của khách hàng</h2>
                       {/* <p> -{product.danhGia} </p> */}

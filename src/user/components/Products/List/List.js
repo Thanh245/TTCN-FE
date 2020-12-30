@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import "./List.css";
-import { Row, Col, Button } from "reactstrap";
+import { Col, Button } from "reactstrap";
 import {Link } from "react-router-dom";
 
 export default class ProductsList extends React.Component {

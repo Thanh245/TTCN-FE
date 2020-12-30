@@ -78,8 +78,16 @@
   }
   #loginBtn,#registerBtn{
     background-color: #ffffff;
+    width: 50%;
+    display: inline-block;
+    text-align: center;
   }
-  
+  button{
+      margin-right: 0;
+  }
+  #registerBtn{
+      float: right;
+  }
   input.submit:hover{
     outline: none;
     background-color: rgb(24, 95, 202);

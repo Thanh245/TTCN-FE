@@ -32,3 +32,8 @@ select:active{
   outline: 0;
   border-bottom-color: rgb(0, 140, 255);
 }
+
+.Filter{
+    text-align: center;
+    align-items: center;
+}

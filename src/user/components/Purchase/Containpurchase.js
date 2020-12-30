@@ -7,33 +7,40 @@ export default class Containpurchase extends Component {
     constructor(props){
         super(props);
         this.state=({
-            purchase:{}
+            purchase:null,
+            trangThaiGioHang:false
         })
     }
-componentDidMount(){
+    componentDidMount(){
     fetchUserOrder().then((res) => {
         this.setState({
             ...this.state,
-            purchase:res.data})
+            purchase: res.data
+        })
       }).catch((err)=> {
         console.log(err)
         // alert("tai that bai")
     })
     }
     render() {
-    const {purchase} = this.state;
-    if(purchase===null) return (<div><h4>Bạn chưa mua đơn hàng nào cả</h4></div>)
-        return (
-            <div className="ajhfkasfklasf">
+    // if(purchase!==null) 
+    // {const {length} = purchase.data.length
+    // console.log(purchase.data.isArray.length)
+    // }
+    if(this.state.purchase!==null)
+    {
+        //console.log(this.state.purchase.data)
+        if(this.state.purchase.data!==undefined) {return (
+            <div>
                 <div className="Tong-don">Đơn hàng của bạn</div>
-                <div className ="contain_donHang">
-                {purchase===null?"":
-                <Purchase className ="contain_donHang"
-                purchase={this.state.purchase}
-                />  
-            }  
-        </div>
-        </div>
-        )
-    }
+                
+                <div className="contain_donHang">
+                    <Purchase className ="contain_donHang"
+                        purchase={this.state.purchase.data}
+                    />
+                </div>
+           </div>
+        )}else return (<div className="donRong">Bạn chưa mua đơn hàng nào cả</div>)
+    }else return(<></>)
+}
 }

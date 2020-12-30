@@ -97,7 +97,7 @@ input.submit {
 
 #loginBtn,
 #registerBtn {
-  transition: all 0.1s ease;
+  transition: all 0.01s ease;
 }
 
 .btn-login {

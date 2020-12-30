@@ -36,27 +36,13 @@ export default class UserPage extends React.Component {
   
   render() {
     return(    
-        // <BrowserRouter history={history}>    
-        //     <Header/>
-        //     <Switch>
-        //     <Route path="/" exact  component={ProductsList} />
-        //     <Route path="/productslist/filter/price/:from/:to"  render={({match})=>(<ProductsList params={match.params} path={match.path}></ProductsList>)} />
-        //     <Route path="/productslist/filter/type/:id"  render={({match})=>(<ProductsList params={match.params} path={match.path}></ProductsList>)} />
-        //     <Route path="/productslist/:id" render={(props)=>(<Product {...props}></Product>)} />
-        //     <Route path="/productslist" exact  component={ProductsList} />
-        //     <Route path="/signup" exact  component={ SignUp } />
-        //     <Route path="/cart" exact  component={ Cart } />
-        //     <Route path="/order" exact component={ Order } />
-        //     <Route path="/profile" exact component={ Profile  } />
-        //     </Switch>
-        // </BrowserRouter>
         <BrowserRouter>
             <Header isLoggedIn={this.state.isLoggedIn}/>
             <div >
                 <Switch>
                 <Route path="/" exact  component={ProductsList} />
                 {/* <Route path="/productslist/filter/price/:from/:to"  render={({match})=>(<ProductsList params={match.params} path={match.path}></ProductsList>)} /> */}
-                
+                <Route path="/search" component={ProductsList}/>
                 <Route path="/productslist/filter/price/:from/:to" exact render={(props)=>(<ProductsList {...props}></ProductsList>)} />
                 {/* <Route path="/productslist/filter/type/:id"  render={({match})=>(<ProductsList params={match.params} path={match.path}></ProductsList>)} /> */}
                 <Route path="/productslist/filter/type/:id" exact  component={ProductsList} />

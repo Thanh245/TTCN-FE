@@ -132,6 +132,7 @@ export default class Profile extends Component {
         // const entries = dataForm.entries()
         // dataForm.append("anhDaiDien",userForm["anhDaiDien"].src)
         updateUserProfileData(this.state.userInfor).then((data) => {
+            alert(data.status)
             }).catch((err) => {
                 
             })

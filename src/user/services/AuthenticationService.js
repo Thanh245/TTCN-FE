@@ -19,6 +19,7 @@ import jwt_decode from 'jwt-decode'
 import React from 'react'
 import axios from "axios";
 import config from "../config/config"
+import {  useHistory } from "react-router-dom";
 
 
 function getToken() {
@@ -69,6 +70,8 @@ async function requestLogin(user)  {
 
 function logout(){
     localStorage.removeItem('user');
+    // history = useHistory()
+    // history.push("/")
 }
 
 export {requestLogin, logout, isLoggedIn, getTokenExpirationDate, getToken, getUserId};

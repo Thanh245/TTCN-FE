@@ -107,15 +107,16 @@ function SignUp(onLogIn) {
           onClick={loginClicked}
           style={loginBtnProps}
         >
-          Login
+          Đăng nhập
         </animated.button>
         <animated.button
           id="registerBtn"
           onClick={registerClicked}
           style={registerBtnProps}
         >
-          Register
+          Đăng ký
         </animated.button>
+        
       </div>
 
       <div className="form-group">

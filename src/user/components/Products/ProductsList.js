@@ -46,6 +46,13 @@ export default class ProductsList extends React.Component {
                 check = true
             }
         } 
+        if (query !== undefined && query.ten_mat_hang !== undefined) {
+            if (check) pageable = pageable + `&tenMatHang=${query.ten_mat_hang}`
+            else {
+                pageable = pageable + `tenMatHang=${query.ten_mat_hang}`
+                check = true
+            }
+        } 
         return pageable
     }
 
@@ -103,7 +110,11 @@ export default class ProductsList extends React.Component {
             }
             else if (path.includes("filter/type")){
                 filter = `/loai-mat-hang/${params.id}`
-            }
+            } 
+            // else if (path.includes("/search")){
+            //     const query = qs.parse(this.props.location.search, { ignoreQueryPrefix: true })
+            //     filter = `?tenMatHang=${query.ten_mat_hang}`
+            // }
         }
         return filter
     }
@@ -116,8 +127,14 @@ export default class ProductsList extends React.Component {
     }
 
     navPage (numPage){
-        const path = this.props.match.path === "" ? '/productslist' : this.props.match.url
+        let path = this.props.match.path === "/" ? '/productslist' : this.props.match.url
+        
         history.push(`${path}?${this.getPageable(numPage)}`)
+        if (this.props.match.path.includes("/search")){
+            const query = qs.parse(this.props.location.search, { ignoreQueryPrefix: true })
+            path = `?ten_mat_hang=${query.ten_mat_hang}&${numPage}`
+            history.push(path)
+        }
         this.getItemsListFilter(this.getFilterStr(), numPage)
     }
   render() {

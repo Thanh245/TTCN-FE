@@ -3,7 +3,7 @@ import "./form.css";
 import isEmpty from "validator/lib/isEmpty";
 import { Redirect } from "react-router-dom";
 import config from "../../../user/config/config";
-import {isLoggedIn, requestLogin} from "../../services/AuthenticationService"
+import {requestLogin} from "../../services/AuthenticationService"
 import history from '../../../history' 
 
 export default class Login extends Component {
@@ -30,8 +30,14 @@ export default class Login extends Component {
     // }
     this.onChange = this.onChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.onFocus = this.onFocus.bind(this);
   }
-  
+  onFocus(e){
+    this.setState({
+    validationMsg: ""
+    });
+    }
+
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -80,10 +86,9 @@ export default class Login extends Component {
     if(JSON.parse(localStorage.getItem('user'))!==null){
     const userInfor = JSON.parse(localStorage.getItem('user'));
     var role = userInfor.role
-    }else role =""
     // if(isLoggedIn()){
     //     return <Redirect to = {this.state.returnUrl} />
-    // }
+    } else role=""
     if(role==="ROLE_ADMIN")
     {
       return <Redirect to= "/admin" />
@@ -101,6 +106,8 @@ export default class Login extends Component {
               name="mail"
               value={this.state.mail}
               onChange={this.onChange}
+              onKeyDown={this.onChange}
+              onFocus={this.onFocus}
               autoComplete="false"
             />
             <br />
@@ -110,6 +117,8 @@ export default class Login extends Component {
               name="password"
               value={this.state.password}
               onChange={this.onChange}
+              onKeyDown={this.onChange}
+              onFocus={this.onFocus}
             />
             <p className="warning">{this.state.validationMsg.warning}</p>
             <div className="cont_btnlogin">

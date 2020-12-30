@@ -32,8 +32,10 @@ export default class ProductsList extends React.Component {
                     pageRangeDisplayed={5}
                     onPageChange={this.onChange.bind(this)}
                     containerClassName={"pagination"}
+                    disableInitialCallback={true}
                     subContainerClassName={"pages pagination"}
                     activeClassName={"active"}/>
+                    
             </div>
         )
     }

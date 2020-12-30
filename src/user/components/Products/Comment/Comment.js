@@ -11,19 +11,24 @@ export default class Comment extends React.Component {
           };
       }
 
+    
     render(){
         return(
             <>
                 <div>
-                    <h3> Tên người dùng</h3>
-                    <h2>Rating from state: </h2>
+                <div className = "row">
+                    <div className="col-1 avatarctn">
+                    <img className="avatar" src= {process.env.PUBLIC_URL + "/logo/user.png"} alt='..'/>
+                    </div>
+                    <div className="col-3">
+                        <h4> Tên người dùng</h4>
                         <StarRatingComponent 
-                        name="rate2" 
-                        editing={false}
-                        renderStarIcon={() => <span>*</span>}
-                        starCount={5}
-                        value={4}
+                            name="rate1" 
+                            starCount={5}
+                            value={4}
                         />
+                    </div>
+                </div>
                     <p> Đánh giá </p>
                 </div>
             </>
