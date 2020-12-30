@@ -63,18 +63,23 @@ const ColoredChipField = props => {
     );
 };
 
-export const OrderList = props => {
+const Title = ({ record }) => {
+    return <span>Danh sách Đơn hàng</span>;
+  };
 
+export const OrderList = props => {
     return (
-        <List {...props} >
+        <List {...props} title={<Title />}>
             <Datagrid rowClick="edit">
                 <NumberField source="maDonHang" label="Mã đơn hàng" />
                 <DateField source="createdAt" label="Ngày đặt hàng" />
-                <NumberField source="maTaiKhoan" label="Mã tài khoản" />
+                <ReferenceField source="maNguoiDung" reference="nguoi-dung" label="Mã người dùng" >
+                    <ChipField source="hoTen" />
+                </ReferenceField>
                 <NumberField source="giaTongCong" label="Giá tổng cộng" />
                 <TextField source="SDTGiaoHang" label="Số điện thoại giao hàng" />
                 <TextField source="tenNguoiNhanHang" label="Tên người nhận hàng" />
-                <ReferenceField source="maTrangThaiDonHang" reference="trang-thai-don-hang" label="Trạng thái đơn hàng">
+                <ReferenceField source="maTrangThai" reference="trang-thai-don-hang" label="Trạng thái đơn hàng">
                     <ColoredChipField source="tenTrangThai" />
                 </ReferenceField>
             </Datagrid>

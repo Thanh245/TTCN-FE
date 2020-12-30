@@ -7,21 +7,7 @@ import {
     Filter,
     Datagrid,
     NumberField,
-    TextField,
-    EditButton,
-    TextInput,
-    ChipField,
-    ReferenceField,
-    ReferenceInput,
-    SelectInput,
-    ImageField,
-    ReferenceManyField,
-    SingleField,
-    Toolbar,
-    SaveButton,
-    DateField,
-    BooleanField,
-    DeleteButton
+    TextField
 } from 'react-admin';
 const useStyles = makeStyles({
     toolbar: {
@@ -30,12 +16,16 @@ const useStyles = makeStyles({
     },
 });
 
+const Title = ({ record }) => {
+    return <span>Danh sách Người Dùng</span>;
+  };
+  
 
 export const CustomerList = props => {
     var imageName = require('./test.jpg')
     return (
         <Card style={{width:1000}}>
-            <List {...props} bulkActionButtons={false}>
+            <List {...props} bulkActionButtons={false} title={<Title />}>
                 <Datagrid rowClick="edit">
                     <NumberField source="maNguoiDung" label="Mã người dùng" />
                     <TextField source="hoTen" label="Họ và tên" />

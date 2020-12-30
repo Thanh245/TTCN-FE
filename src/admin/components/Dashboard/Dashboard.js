@@ -12,6 +12,7 @@ import PendingOrder from './PendingOrder';
 import MonthlyRevenue from './MonthlyRevenue';
 import SpringDataProvider from "../../utils/SpringDataProvider";
 import OrderChart from "./OrderChart";
+import NewReviews from "./NewReviews";
 const dashboardProvider = SpringDataProvider("http://localhost:8081");
 
 
@@ -50,7 +51,7 @@ export const Dashboard = () => {
                   sort: { field: "id", order: "DESC"}, 
                   filter: {} });
         const unCheckedOrders = recentOrders.filter(
-            record => record.maTrangThaiDonHang === 1
+            record => record.maTrangThai=== 1
         )
         const numOfUncheckedOrders = unCheckedOrders.length;
 
@@ -63,33 +64,55 @@ export const Dashboard = () => {
 
     });
 
+    
+
     const fetchRevenue = useCallback(async () =>{
         const { data: orderMonth } = await dashboardProvider("GET_LIST",
             'doanh-thu',
             {}
         );
 
+        const totalInMonth = orderMonth["tongDoanhThu"];
+        delete orderMonth["tongDoanhThu"]; 
+
         setState(state => ({
             ...state,
-            orderMonth
+            orderMonth,
+            totalInMonth
         }))
     })
+
+    const fetchReview = useCallback(async () => {
+        const { data: recentReviews } = await dashboardProvider('GET_LIST',
+            'danh-gia',
+            { pagination: { page: 1 , perPage: 10 }, 
+                  sort: { field: "id", order: "DESC"}, 
+                  filter: {} });
+ 
+        setState(state => ({
+            ...state,
+            recentReviews
+        }));
+
+    });
 
     useEffect(() => {
         fetchOrders();
         fetchRevenue();
+        fetchReview();
     }, [version]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const {
         recentOrders,
         unCheckedOrders,
         numOfUncheckedOrders,
-        orderMonth
+        orderMonth,
+        totalInMonth,
+        recentReviews
     } = state;
 
 
 
-    const totalInMonth = sum(orderMonth);
       
     // Return Component ///////////////////////////
     return (
@@ -115,7 +138,7 @@ export const Dashboard = () => {
                     <div style={styles.flex}>
                         <PendingOrder orders={unCheckedOrders} />
                         <Spacer />
-                        <PendingOrder />
+                        <NewReviews reviews={recentReviews}/>
                     </div>
                 </div>
             </div>

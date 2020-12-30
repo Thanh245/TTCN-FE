@@ -38,19 +38,22 @@ import {
   ChipField,
   RadioButtonGroupInput,
   useRedirect,
-  useRefresh
+  useRefresh,
+  List,
+  Datagrid
 } from "react-admin";
 import Typography from '@material-ui/core/Typography';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import RichTextInput from 'ra-input-rich-text';
-
+import GridList from '../Product/GridList';
 import { Card, CardContent, withStyles } from '@material-ui/core';
 import CardActions from "@material-ui/core/CardActions";
 import BackButton from "../BackButton/BackButton";
 import { InputAdornment, ListItem } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 const dashboardProvider = SpringDataProvider("http://localhost:8081");
+
 
 const EditActions = ({ basePath, data, hasShow }) => (
   <TopToolbar>
@@ -83,6 +86,7 @@ const OrderTitle = ({ record }) => {
 const transform = data => ({
   "maTrangThai": data.trangThaiDonHang.maTrangThai
 });
+
 const CustomCard = withStyles(theme => ({
   root: {
     [theme.breakpoints.up('sm')]: {
@@ -101,45 +105,52 @@ const Aside = ({ record }) => (
     <Typography variant="h9">Thông tin người đặt hàng</Typography>
     {record && (
       record.userData && (
-      <div>
-        <ListItem
-          button
-          component={Link}
-          to={`/nguoi-dung/${record.userData.maNguoiDung}`}
-        >
+        <div>
+          <ListItem
+            button
+            component={Link}
+            to={`/nguoi-dung/${record.userData.maNguoiDung}`}
+          >
+            <ListItemText
+              secondary="Họ và Tên"
+            />
+            <ListItemText
+              primary={record.userData.hoTen}
+            />
+          </ListItem>
+          <hr></hr>
           <ListItemText
-            secondary="Họ và Tên"
+            secondary="Số điện thoại"
           />
           <ListItemText
-            primary={record.userData.hoTen}
+            primary={record.userData.sdt}
           />
-        </ListItem>
-        <hr></hr>
-        <ListItemText
-          secondary="Số điện thoại"
-        />
-        <ListItemText
-          primary={record.userData.sdt}
-        />
-        <ListItemText
-          secondary="Thành phố"
-        />
-        <ListItemText
-          primary={record.userData.thanhPho}
-        />
-        <ListItemText
-          secondary="Giới tính"
-        />
-        <ListItemText
-          primary={record.userData.gioiTinh.tenGioiTinh}
-        />
+          <ListItemText
+            secondary="Thành phố"
+          />
+          <ListItemText
+            primary={record.userData.thanhPho}
+          />
+          <ListItemText
+            secondary="Giới tính"
+          />
+          <ListItemText
+            primary={record.userData.gioiTinh.tenGioiTinh}
+          />
 
-      </div>
-    ))}
+        </div>
+      ))}
   </CustomCard>
 );
 
+const ProductInOrders = records => {
+  return (
+          <List {...records}>
 
+                  <TextField source="tenMatHang" />
+          </List>
+  ) 
+};
 export const OrderEdit = (props) => {
 
   const redirect = useRedirect();
@@ -150,8 +161,9 @@ export const OrderEdit = (props) => {
     refresh();
   };
 
+
   return (
-    <Card style={{width:800}}>
+    <Card style={{ width: 800 }}>
       <CardContent>
         <BackButton />
 
@@ -167,6 +179,8 @@ export const OrderEdit = (props) => {
               <ReferenceInput source="trangThaiDonHang.maTrangThai" reference="trang-thai-don-hang" label="Tình trạng đơn hàng" >
                 <RadioButtonGroupInput optionText="tenTrangThai" />
               </ReferenceInput>
+            </FormTab>
+            <FormTab label="Danh sách mặt hàng">
             </FormTab>
           </TabbedForm>
         </Edit>

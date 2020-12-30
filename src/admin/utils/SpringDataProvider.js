@@ -185,9 +185,11 @@ export default (apiUrl, httpClient = (url, options = {}) => {
         if (resource === "don-hang") {
           return {
             data: json.data.map((resource) => ({
-              ...resource,
-              id: resource[mapPrimaryKey(targetApi)],
-              maTaiKhoan: resource["createdBy"]
+              ...resource.donHang,
+              id: resource.donHang.maDonHang,
+              maNguoiDung: resource.maNguoiDung,
+              maTrangThai: resource.maTrangThai
+
             })),
             total: parseInt(json.totalItems*json.totalPages, 10)
           };
